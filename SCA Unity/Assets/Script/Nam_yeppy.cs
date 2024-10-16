@@ -11,10 +11,13 @@ public class Nam_yeppy : MonoBehaviour
     RaycastHit hit;
     bool canmove;
     public Transform home;
+    public bool gohome;
+    Transform chatrans;
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         agent.isStopped = false;
+        chatrans = gameObject.transform;
     }
     void Update()
     {
@@ -22,7 +25,7 @@ public class Nam_yeppy : MonoBehaviour
         {
             agent.destination = player.position;
         }
-        if (Physics.SphereCast(transform.position, 2.5f, transform.forward, out hit, 20)&&canmove==false)
+        if (Physics.SphereCast(transform.position, 2.5f, transform.forward, out hit, 20)&&canmove==false&&gohome==false)
         {
             if(hit.transform.gameObject.name=="FPC")
             {
@@ -34,8 +37,15 @@ public class Nam_yeppy : MonoBehaviour
     {
         if (coll.name=="FPC"&&canmove == true)
         {
+            gohome = true;
             canmove = false;
             agent.destination = home.position;
+            Invoke("jegamji", 5);
         }
+    }
+    void jegamji()
+    {
+        gohome = false;
+        gameObject.transform.rotation = chatrans.rotation;
     }
 }
