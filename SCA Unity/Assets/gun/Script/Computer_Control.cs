@@ -1,16 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Hardware;
 using UnityEngine;
 
 public class Computer_Control : MonoBehaviour
 {
-    // Start is called before the first frame update
+    private GameObject USB;
+    public GameObject Computer;
+
+    
     void Start()
     {
         
     }
 
-    // Update is called once per frame
+
     void Update()
     {
         
