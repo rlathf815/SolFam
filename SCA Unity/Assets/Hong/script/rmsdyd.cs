@@ -5,23 +5,28 @@ using UnityEngine.UI;
 
 public class rmsdyd : MonoBehaviour
 {
-    public Transform player;
-    public float followDistance = 5.0f;
-    public float moveSpeed = 3.0f;
-    public float viewAngle = 45.0f;
-    // Start is called before the first frame update
-    private void Update()
+    public Transform player; 
+    public float speed = 3f; 
+    public float detectionAngle = 45f; 
+    public float detectionRange = 10f; 
+
+    void Update()
     {
+        
         float distance = Vector3.Distance(transform.position, player.position);
 
-        Vector3 diretictionToPlayer = (player.position - transform.position).normalized;
+        
+        Vector3 directionToPlayer = (player.position - transform.position).normalized;
+        float angle = Vector3.Angle(transform.forward, directionToPlayer);
 
-        float angle = Vector3.Angle(transform.forward, diretictionToPlayer);
-
-        if (distance < followDistance && angle < viewAngle)
+        
+        if (distance < detectionRange && angle < detectionAngle)
         {
-            transform.position += diretictionToPlayer * moveSpeed * Time.deltaTime;
+            
+            transform.position = Vector3.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
+
+           
+            transform.LookAt(player);
         }
-        transform.LookAt(player);
     }
 }

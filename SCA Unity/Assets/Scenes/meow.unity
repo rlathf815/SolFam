@@ -246,9 +246,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 976336161}
-  followDistance: 5
-  moveSpeed: 10
-  viewAngle: 10
+  speed: 10
+  detectionAngle: 45
+  detectionRange: 15
 --- !u!65 &375525355
 BoxCollider:
   m_ObjectHideFlags: 0
