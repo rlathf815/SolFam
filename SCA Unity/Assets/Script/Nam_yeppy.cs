@@ -14,10 +14,10 @@ public class Nam_yeppy : MonoBehaviour
     {
         player= GameObject.Find("FPC");
         agent = GetComponent<NavMeshAgent>();
+        agent.isStopped = false;
     }
     void Update()
     {
-        agent.isStopped = false;
         agent.destination = player.transform.position;
         if (yeppy_player.seewhite == true)
         {
