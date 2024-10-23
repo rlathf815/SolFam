@@ -450,7 +450,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 885eac34fd0d577439e6670a7ca3777e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 13.78
+      value: 18.12
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 885eac34fd0d577439e6670a7ca3777e, type: 3}
       propertyPath: m_LocalPosition.y
@@ -458,11 +458,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 885eac34fd0d577439e6670a7ca3777e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4.23
+      value: -1.09
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 885eac34fd0d577439e6670a7ca3777e, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.0033598384
+      value: 0.70048857
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 885eac34fd0d577439e6670a7ca3777e, type: 3}
       propertyPath: m_LocalRotation.x
@@ -470,7 +470,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 885eac34fd0d577439e6670a7ca3777e, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.9999944
+      value: -0.7136637
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 885eac34fd0d577439e6670a7ca3777e, type: 3}
       propertyPath: m_LocalRotation.z
@@ -482,7 +482,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 885eac34fd0d577439e6670a7ca3777e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -179.615
+      value: -91.068
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 885eac34fd0d577439e6670a7ca3777e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -943,7 +943,7 @@ Light:
   m_Shape: 0
   m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_Intensity: 5
-  m_Range: 4.914063
+  m_Range: 5.609772
   m_SpotAngle: 154.87642
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -1001,7 +1001,7 @@ Transform:
   m_GameObject: {fileID: 1031384485}
   serializedVersion: 2
   m_LocalRotation: {x: 0.0033554446, y: 0.051124934, z: -0.9986867, w: 0.00017177248}
-  m_LocalPosition: {x: 0.01, y: 1.954, z: 0.14}
+  m_LocalPosition: {x: -0.049, y: 1.42, z: 0.093}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

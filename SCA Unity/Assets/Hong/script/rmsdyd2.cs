@@ -24,6 +24,8 @@ public class EnemyAI : MonoBehaviour
         if (isPlayerDetected)
         {
             MoveTowardsPlayer();
+            
+            spotLight.transform.LookAt(player);
         }
     }
 
@@ -31,7 +33,11 @@ public class EnemyAI : MonoBehaviour
     {
         while (true)
         {
-            spotLight.enabled = !spotLight.enabled; 
+            
+            if (!isPlayerDetected)
+            {
+                spotLight.enabled = !spotLight.enabled; 
+            }
             yield return new WaitForSeconds(2f); 
         }
     }
