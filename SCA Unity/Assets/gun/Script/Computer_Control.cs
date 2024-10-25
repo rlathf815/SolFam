@@ -5,8 +5,11 @@ using UnityEngine;
 
 public class Computer_Control : MonoBehaviour
 {
-    private GameObject USB;
-    public GameObject Computer;
+    public GameObject USB;
+
+
+
+    private GameObject Computer;
 
     
     void Start()
@@ -18,5 +21,12 @@ public class Computer_Control : MonoBehaviour
     void Update()
     {
         
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if(USB != null)
+        {
+
+        }
     }
 }
