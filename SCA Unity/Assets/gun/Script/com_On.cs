@@ -7,35 +7,55 @@ public class com_On : MonoBehaviour
 
 
     private bool state;
+    private bool isClose;
     private bool on;
     public GameObject Target;
     void Start()
     {
         state = false;
+        isClose = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E)) //E 키 누름
+
+        if (isClose && Input.GetKeyDown(KeyCode.E)) //E 키 누름
         {
-            if(state == true)
+            Debug.Log("E pressed");
+
+            if (state == true)
             {
                 Target.SetActive(false); //사라짐
                 state = false;
+                Debug.Log("on " + state);
             }
             else
             {
                 Target.SetActive(true); //생김
                 state = true;
+                Debug.Log("off " + state);
+
             }
-        }  
+        }
+
     }
     public void OnTriggerEnter(Collider other)
     {
+        Debug.Log(other.tag);
         if (other.gameObject.tag == "Player")
         {
-            on = true;
+            Debug.Log("player entered");
+            isClose = true;
+        }
+    }
+    public void OnTriggerExit(Collider other)
+    {
+        Debug.Log(other.tag);
+        if (other.gameObject.tag == "Player")
+        {
+            Debug.Log("player entered");
+            isClose = false;
         }
     }
 }
