@@ -1,95 +1,80 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyAI : MonoBehaviour
+public class MonsterAI : MonoBehaviour
 {
-    public Transform targetPlayer; // 플레이어를 참조
-    public float speed = 3f;
-    public float detectionAngle = 45f;
-    public float wallDetectionDistance = 1f;
-    public float avoidanceForce = 3f;
-    public LayerMask obstacleMask;
-    public Light enemyLight;
-    public float detectionInterval = 2f;
+    public Transform player;              
+    public Transform spotlight;           
+    public float detectionRadius = 10f;   
+    public float chaseSpeed = 5f;         
+    public float checkInterval = 2f;      
 
-    private bool isPlayerDetected = false;
+    private float nextCheckTime;
+    private bool isChasing = false;       
 
     void Start()
     {
-        StartCoroutine(HandleLightAndDetection()); // 메서드 이름 변경
+        StartCoroutine(ToggleSpotlight());
     }
 
-    void FixedUpdate()
+    void Update()
     {
-        if (isPlayerDetected)
+        if (isChasing)
         {
-            MoveTowardsPlayer();
-            FollowLight();
+            ChasePlayer();
+        }
+
+        if (Time.time >= nextCheckTime)
+        {
+            nextCheckTime = Time.time + checkInterval;
+            DetectPlayer();
         }
     }
 
-    private IEnumerator HandleLightAndDetection() // 이름 변경
+    void DetectPlayer()
+    {
+        Vector3 directionToPlayer = player.position - spotlight.position;
+        float distanceToPlayer = directionToPlayer.magnitude;
+
+        if (distanceToPlayer <= detectionRadius && spotlight.gameObject.activeSelf)
+        {
+            if (!IsWallBetween(spotlight.position, player.position))
+            {
+                isChasing = true; 
+            }
+        }
+        else
+        {
+            isChasing = false; 
+        }
+    }
+
+    void ChasePlayer()
+    {
+        Vector3 directionToPlayer = (player.position - transform.position).normalized;
+        transform.position += directionToPlayer * chaseSpeed * Time.deltaTime;
+    }
+
+    bool IsWallBetween(Vector3 from, Vector3 to)
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(from, to - from, out hit, Vector3.Distance(from, to)))
+        {
+            if (hit.collider.CompareTag("Wall")) 
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    System.Collections.IEnumerator ToggleSpotlight()
     {
         while (true)
         {
-            DetectPlayer();
-            yield return new WaitForSeconds(detectionInterval);
-        }
-    }
-
-    private void DetectPlayer()
-    {
-        RaycastHit hit;
-        Vector3 lightDirection = enemyLight.transform.forward;
-
-        if (Physics.Raycast(enemyLight.transform.position, lightDirection, out hit, enemyLight.range, obstacleMask))
-        {
-            float angle = Vector3.Angle(enemyLight.transform.forward, hit.transform.position - enemyLight.transform.position);
-            isPlayerDetected = hit.transform == targetPlayer && angle < enemyLight.spotAngle / 2 && IsPlayerInDetectionAngle();
-        }
-        else
-        {
-            isPlayerDetected = false;
-        }
-    }
-
-    private bool IsPlayerInDetectionAngle()
-    {
-        Vector3 directionToPlayer = (targetPlayer.position - transform.position).normalized;
-        float angleToPlayer = Vector3.Angle(transform.forward, directionToPlayer);
-        return angleToPlayer < detectionAngle / 2;
-    }
-
-    private void MoveTowardsPlayer()
-    {
-        Vector3 directionToPlayer = (targetPlayer.position - transform.position).normalized;
-
-        if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, wallDetectionDistance, obstacleMask))
-        {
-            Vector3 avoidanceDirection = Vector3.Reflect(transform.forward, hit.normal);
-            transform.position += avoidanceDirection * avoidanceForce * Time.deltaTime;
-            Debug.Log("Avoiding wall");
-        }
-        else
-        {
-            transform.position = Vector3.MoveTowards(transform.position, targetPlayer.position, speed * Time.deltaTime);
-            transform.LookAt(targetPlayer);
-        }
-    }
-
-    private void FollowLight()
-    {
-        enemyLight.transform.position = Vector3.MoveTowards(enemyLight.transform.position, targetPlayer.position, speed * Time.deltaTime);
-        enemyLight.transform.LookAt(targetPlayer);
-    }
-
-    void OnDrawGizmos()
-    {
-        if (enemyLight)
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawLine(enemyLight.transform.position, enemyLight.transform.position + enemyLight.transform.forward * enemyLight.range);
+            spotlight.gameObject.SetActive(true); 
+            yield return new WaitForSeconds(2f); 
+            spotlight.gameObject.SetActive(false); 
+            yield return new WaitForSeconds(2f); 
         }
     }
 }
