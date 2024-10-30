@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - whiteT
+  - USB
   layers:
   - Default
   - TransparentFX
