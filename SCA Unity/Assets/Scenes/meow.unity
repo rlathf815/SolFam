@@ -509,6 +509,7 @@ MonoBehaviour:
   chaseSpeed: 5
   checkInterval: 2
   avoidanceDistance: 1
+  maxAvoidanceForce: 2
 --- !u!4 &375525365 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 885eac34fd0d577439e6670a7ca3777e, type: 3}
@@ -718,7 +719,7 @@ Transform:
   m_GameObject: {fileID: 537991781}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.7312797, z: -0, w: 0.68207777}
-  m_LocalPosition: {x: -3.25, y: 5.4, z: 23.39}
+  m_LocalPosition: {x: -2.26, y: 5.4, z: 24.8}
   m_LocalScale: {x: 1, y: 10, z: 25}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1143,8 +1144,8 @@ Light:
   m_Shape: 0
   m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_Intensity: 10
-  m_Range: 18.5514
-  m_SpotAngle: 113.33258
+  m_Range: 11.56662
+  m_SpotAngle: 113.74223
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
@@ -2116,7 +2117,7 @@ Transform:
   m_GameObject: {fileID: 1715028836}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.7312797, z: -0, w: 0.68207777}
-  m_LocalPosition: {x: 21.9, y: 5.4, z: 25.2}
+  m_LocalPosition: {x: 22.74, y: 5.4, z: 26.63}
   m_LocalScale: {x: 1, y: 10, z: 25}
   m_ConstrainProportionsScale: 0
   m_Children: []
