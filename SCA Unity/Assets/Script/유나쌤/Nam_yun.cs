@@ -22,6 +22,7 @@ public class Nam_yun : MonoBehaviour
         if (catched == true)
         {
             agent.isStopped = true;
+            yun_ui.uiopen = true;
         }
         else
         {
