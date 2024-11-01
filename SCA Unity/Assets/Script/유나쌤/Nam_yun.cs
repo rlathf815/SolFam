@@ -28,6 +28,11 @@ public class Nam_yun : MonoBehaviour
         {
             agent.isStopped = false;
         }
+        if (yun_ui.del == true)
+        {
+            yun_ui.del = false;
+            Destroy(gameObject);
+        }
     }
     void OnTriggerEnter(Collider col)
     {
