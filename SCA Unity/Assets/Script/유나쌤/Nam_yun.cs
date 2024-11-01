@@ -31,6 +31,7 @@ public class Nam_yun : MonoBehaviour
         if (yun_ui.del == true)
         {
             yun_ui.del = false;
+            Yun_Spawn.spawn = false;
             Destroy(gameObject);
         }
     }
