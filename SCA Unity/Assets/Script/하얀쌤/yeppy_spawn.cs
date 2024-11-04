@@ -13,7 +13,7 @@ public class yeppy_spawn : MonoBehaviour
     IEnumerator Spawn()
     {
         yield return new WaitForSeconds(40);
-        if (Random.Range(0, 5) == 1 &&spawned==false)
+        if (Random.Range(0, 3) == 1 &&spawned==false)
         {
             spawned = true;
             Instantiate(whiteT,gameObject.transform);

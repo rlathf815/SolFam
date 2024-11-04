@@ -10,6 +10,7 @@ public class com_On : MonoBehaviour
     private bool isClose;
     private bool on;
     public GameObject Target;
+    public GameObject text;
     void Start()
     {
         state = false;
@@ -47,6 +48,8 @@ public class com_On : MonoBehaviour
         {
             Debug.Log("player entered");
             isClose = true;
+            text.SetActive(true);
+
         }
     }
     public void OnTriggerExit(Collider other)
@@ -56,6 +59,7 @@ public class com_On : MonoBehaviour
         {
             Debug.Log("player entered");
             isClose = false;
+            text.SetActive(false);
         }
     }
 }
