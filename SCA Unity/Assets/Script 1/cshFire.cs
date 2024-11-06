@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class hitdamage : MonoBehaviour
+public class NewBehaviourScript : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
@@ -14,16 +14,5 @@ public class hitdamage : MonoBehaviour
     void Update()
     {
         
-    }
-    void OnTriggerEnter(Collider coll)
-    {
-
-        if (coll.gameObject.tag == "BULLET")
-        {
-
-            Destroy(coll.gameObject);
-
-        }
-
     }
 }
