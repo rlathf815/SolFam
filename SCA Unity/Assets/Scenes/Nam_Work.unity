@@ -153,10 +153,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 1124904420}
-  moon: {fileID: 0}
-  dab1: {fileID: 0}
-  dab2: {fileID: 0}
-  dab3: {fileID: 0}
+  moon: {fileID: 1038049420}
+  dab1: {fileID: 1265400780}
+  dab2: {fileID: 617674714}
+  dab3: {fileID: 252075347}
 --- !u!4 &200695443
 Transform:
   m_ObjectHideFlags: 0
