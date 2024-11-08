@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class com_On : MonoBehaviour
 {
-
-
     private bool state;
     private bool isClose;
     private bool on;
@@ -36,10 +34,8 @@ public class com_On : MonoBehaviour
                 Target.SetActive(true); //»ý±è
                 state = true;
                 Debug.Log("off " + state);
-
             }
         }
-
     }
     public void OnTriggerEnter(Collider other)
     {
