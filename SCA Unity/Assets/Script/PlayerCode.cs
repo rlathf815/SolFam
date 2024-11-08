@@ -16,12 +16,12 @@ public class PlayerCode : MonoBehaviour
         // 인식 범위 내에 아이템이 없을 경우
         if (ItemsInScope.Count == 0)
         {
-            Player.Instance.LetterF.SetActive(false);
+            Player.Instance.LetterE.SetActive(false);
         }
         // 인식 범위 내에 아이템이 하나라도 있을 경우
         else
         {
-            Player.Instance.LetterF.SetActive(true);
+            Player.Instance.LetterE.SetActive(true);
             // F키를 누르면
             if (Input.GetKeyDown(KeyCode.E))
             {
