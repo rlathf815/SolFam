@@ -7,7 +7,7 @@ public class Player : MonoBehaviour
     // Singleton instance
     public static Player Instance { get; private set; }
 
-    public GameObject LetterF;
+    public GameObject LetterE;
 
     private void Awake()
     {
@@ -24,9 +24,9 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        if (LetterF != null)
+        if (LetterE != null)
         {
-            LetterF.SetActive(false); // 초기에는 LetterF가 비활성화되도록 설정
+            LetterE.SetActive(false); // 초기에는 LetterF가 비활성화되도록 설정
         }
     }
 }
