@@ -7,6 +7,7 @@ public class Rest : MonoBehaviour
     public float speed;
     public int point=3;
     private bool state;
+    public int HP = 3;
     // Start is called before the first frame update
     void Start()
     {
@@ -34,8 +35,12 @@ public class Rest : MonoBehaviour
             point -= 1;
         }
         if(other.gameObject.crm && other.gameObject.tag == "item")
-        { 
-            
+        {
+            point -= 1;
+        }
+        if(other.gameObject.crm13)
+        {
+            HP -=3;
         }
     }
 }
