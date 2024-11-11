@@ -7,17 +7,34 @@ public class InventoryManager : MonoBehaviour
     public GameData gameData; 
     public GameObject inventoryUI; 
     public Transform itemSlotContainer; 
-    public GameObject itemSlotPrefab; 
+    public GameObject itemSlotPrefab;
+    private bool isInventoryOpen = false;
 
     private void Start()
     {
+        inventoryUI.SetActive(isInventoryOpen);
         UpdateInventoryUI(); 
     }
-
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            ToggleInventory();
+        }
+    }
     public void AddItemToInventory(string itemName)
     {
         gameData.AddItem(itemName);
         UpdateInventoryUI();
+    }
+    public void ToggleInventory()
+    {
+        isInventoryOpen = !isInventoryOpen; 
+        inventoryUI.SetActive(isInventoryOpen);
+        if (isInventoryOpen)
+        {
+            UpdateInventoryUI(); 
+        }
     }
 
     public void UseItemFromInventory(string itemName)
