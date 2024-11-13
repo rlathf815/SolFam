@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Rest : MonoBehaviour
@@ -25,20 +26,13 @@ public class Rest : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
-        if (state == true && other.gameObject.corridor)
+        if (state == true && other.gameObject.tag == "corridor" || 
+            other.gameObject.tag == "corridor" && speed > 1 || 
+            other.gameObject.tag == "crm" && other.gameObject.tag == "item")
         {
             point -= 1;
         }
-
-        if (other.gameObject.corridor && speed>1)
-        {
-            point -= 1;
-        }
-        if(other.gameObject.crm && other.gameObject.tag == "item")
-        {
-            point -= 1;
-        }
-        if(other.gameObject.crm13)
+        if(other.gameObject.tag == "crm13")
         {
             HP -=3;
         }
