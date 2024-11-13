@@ -7,22 +7,27 @@ public class com_On : MonoBehaviour
     private bool state;
     private bool isClose;
     private bool on;
+    private bool PcClose;
+    private bool PlayerC;
     public GameObject Target;
     public GameObject text;
+    public GameObject PcCam;
+    public GameObject PlayerCam;
 
     void Start()
     {
         state = false;
         isClose = false;
-        Screen.fullScreen = false; // 시작할 때 전체화면이 아님
+        PlayerC = true;
+        PcClose = false;
+        Cursor.visible = false; // 기본 커서 숨기기
+        Cursor.lockState = CursorLockMode.Locked; // 커서 잠금
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (isClose && Input.GetKeyDown(KeyCode.E)) // E 키 누름
         {
-
             if (state == true)
             {
                 Target.SetActive(false); // 사라짐
@@ -38,15 +43,29 @@ public class com_On : MonoBehaviour
         }
 
         // 마우스 클릭 시 전체화면 전환
-        if(state == true)
+        if (state == true)
         {
             if (Input.GetMouseButtonDown(0)) // 왼쪽 마우스 버튼 클릭
             {
-            Debug.Log("버튼 클릭");
-                ToggleFullScreen();
+                Debug.Log("왼쪽 버튼 클릭");
+                PlayerCam.SetActive(false);
+                PlayerC = false;
+                PcCam.SetActive(true);
+                PcClose = true;
+                Cursor.visible = true; // 하드웨어 커서 표시
+                Cursor.lockState = CursorLockMode.None; // 커서 잠금 해제
+            }
+            else if (Input.GetMouseButtonDown(1)) // 오른쪽 마우스 버튼 클릭
+            {
+                Debug.Log("오른쪽 버튼 클릭");
+                PlayerCam.SetActive(true);
+                PlayerC = true;
+                PcCam.SetActive(false);
+                PcClose = false;
+                Cursor.visible = false; // 하드웨어 커서 숨기기
+                Cursor.lockState = CursorLockMode.Locked; // 커서 잠금
             }
         }
-        
     }
 
     public void OnTriggerEnter(Collider other)
@@ -67,11 +86,5 @@ public class com_On : MonoBehaviour
             isClose = false;
             text.SetActive(false);
         }
-    }
-
-    private void ToggleFullScreen()
-    {
-        Screen.fullScreen = !Screen.fullScreen; // 전체화면 모드 전환
-        Debug.Log("Full Screen: " + Screen.fullScreen);
     }
 }
