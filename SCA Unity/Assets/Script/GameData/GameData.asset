@@ -13,3 +13,6 @@ MonoBehaviour:
   m_Name: GameData
   m_EditorClassIdentifier: 
   "\uADDC\uCE59\uC5B4\uAE40": 1
+  itemList:
+  - Monster
+  - Monster
