@@ -9,8 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b91135928a4de7740a87c2523469521c, type: 3}
-  m_Name: GameData
+  m_Script: {fileID: 11500000, guid: 955f6c9be248dc249a31bad716cc6963, type: 3}
+  m_Name: Earthquake
   m_EditorClassIdentifier: 
-  "\uADDC\uCE59\uC5B4\uAE40": 1
-  itemList: []
+  shakeType: 1
+  strength: 0.1
+  roughness: 10
+  fadeIn: 3
+  fadeOut: 3
+  positionInfluence: {x: 0.5, y: 1, z: 0.5}
+  rotationInfluence: {x: 15, y: 5, z: 15}
