@@ -11,7 +11,6 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-        // Singleton 패턴을 위한 인스턴스 설정
         if (Instance == null)
         {
             Instance = this;
@@ -26,7 +25,7 @@ public class Player : MonoBehaviour
     {
         if (LetterE != null)
         {
-            LetterE.SetActive(false); // 초기에는 LetterF가 비활성화되도록 설정
+            LetterE.SetActive(false); // 초기에는 LetterE가 비활성화되도록 설정
         }
     }
 }
