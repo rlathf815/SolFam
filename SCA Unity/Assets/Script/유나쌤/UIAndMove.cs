@@ -50,6 +50,17 @@ public class yun_ui : MonoBehaviour
                 uiopen = false;
                 del = true;
             }
+            if (Input.GetKey(KeyCode.Alpha1) || Input.GetKey(KeyCode.Keypad1)){
+                cool = false;
+                uiopen = false;
+                del = true;
+            }
+            if (Input.GetKey(KeyCode.Alpha3) || Input.GetKey(KeyCode.Keypad3))
+            {
+                cool = false;
+                uiopen = false;
+                del = true;
+            }
         }
     }
 }
