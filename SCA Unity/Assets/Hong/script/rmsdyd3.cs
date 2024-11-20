@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections.Generic;
 
 public class MonsterAI : MonoBehaviour
 {
@@ -7,19 +6,19 @@ public class MonsterAI : MonoBehaviour
     public Transform spotlight;
     public float detectionRadius = 10f;
     public float chaseSpeed = 5f;
-    public float pathFollowDistance = 0.5f;
-    public float recordInterval = 0.5f; // Interval for recording player position
+    public float obstacleDetectionDistance = 2f;
+    public float viewAngle = 45f;
+    public float rotationSpeed = 5f;
+    public float lostPlayerDelay = 3f; // 플레이어를 잃은 후 Idle로 전환되는 시간
 
-    private bool isChasing = false;
-    private List<Vector3> playerPath;
-    private float lastRecordTime = 0f;
-
+    private float timeSinceLastSeen = 0f; // 마지막으로 플레이어를 본 시간
+    private Vector3 lastKnownPosition;   // 마지막으로 감지된 플레이어 위치
+    private bool isPlayerInSight = false; // 플레이어가 현재 시야에 있는지 확인
     private enum AIState { Idle, Chasing }
     private AIState currentState;
 
     void Start()
     {
-        playerPath = new List<Vector3>();
         currentState = AIState.Idle;
         StartCoroutine(ToggleSpotlight());
     }
@@ -29,14 +28,34 @@ public class MonsterAI : MonoBehaviour
         switch (currentState)
         {
             case AIState.Chasing:
-                FollowPlayerPath();
-                LookAtPlayer();
-                spotlight.gameObject.SetActive(true);
-                RecordPlayerPosition();
+                if (IsPlayerInFieldOfView() && IsPlayerWithinRange())
+                {
+                    isPlayerInSight = true;
+                    timeSinceLastSeen = 0f;
+                    lastKnownPosition = player.position; // 플레이어 위치 갱신
+                    ChasePlayer(player.position);
+                }
+                else
+                {
+                    isPlayerInSight = false;
+                    timeSinceLastSeen += Time.deltaTime;
+
+                    if (timeSinceLastSeen > lostPlayerDelay)
+                    {
+                        // 일정 시간이 지나면 Idle 상태로 복귀
+                        currentState = AIState.Idle;
+                    }
+                    else
+                    {
+                        // 플레이어가 보이지 않으면 마지막 위치를 추적
+                        ChasePlayer(lastKnownPosition);
+                    }
+                }
+                spotlight.gameObject.SetActive(true); // 추격 중에는 항상 켜기
                 break;
+
             case AIState.Idle:
                 DetectPlayer();
-                LookAtMovingDirection(); // 이동 방향을 바라보도록 추가
                 break;
         }
     }
@@ -50,58 +69,39 @@ public class MonsterAI : MonoBehaviour
             if (distanceToPlayer <= detectionRadius)
             {
                 currentState = AIState.Chasing;
-                RecordPlayerPosition();
+                timeSinceLastSeen = 0f; // 추적 시작 시 초기화
+                lastKnownPosition = player.position; // 플레이어의 현재 위치 저장
             }
         }
     }
 
-    void FollowPlayerPath()
+    void ChasePlayer(Vector3 targetPosition)
     {
-        if (playerPath.Count == 0) return;
-
-        Vector3 targetPosition = playerPath[0];
         Vector3 directionToTarget = (targetPosition - transform.position).normalized;
 
-        // Smooth movement
-        transform.position = Vector3.MoveTowards(transform.position, targetPosition, chaseSpeed * Time.deltaTime);
-
-        // Remove the target if reached
-        if (Vector3.Distance(transform.position, targetPosition) < pathFollowDistance)
+        // 벽 감지 및 회피 로직
+        if (Physics.Raycast(transform.position, directionToTarget, out RaycastHit hit, obstacleDetectionDistance))
         {
-            playerPath.RemoveAt(0);
-        }
-    }
-
-    void RecordPlayerPosition()
-    {
-        // Check if it's time to record the player's position
-        if (Time.time - lastRecordTime >= recordInterval)
-        {
-            if (playerPath.Count == 0 || Vector3.Distance(playerPath[playerPath.Count - 1], player.position) > pathFollowDistance)
+            if (hit.collider.CompareTag("Wall"))
             {
-                playerPath.Add(player.position);
-                lastRecordTime = Time.time;
+                Vector3 avoidDirection = Vector3.Cross(hit.normal, Vector3.up).normalized;
+                directionToTarget = (directionToTarget + avoidDirection).normalized;
             }
         }
+
+        // 이동
+        transform.position += directionToTarget * chaseSpeed * Time.deltaTime;
+
+        // 이동 방향으로 시선 회전
+        RotateTowards(directionToTarget);
     }
 
-    void LookAtPlayer()
+    void RotateTowards(Vector3 direction)
     {
-        Vector3 directionToPlayer = player.position - transform.position;
-        Quaternion lookRotation = Quaternion.LookRotation(directionToPlayer);
-        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
-    }
-
-    void LookAtMovingDirection()
-    {
-        if (playerPath.Count > 0)
+        if (direction != Vector3.zero)
         {
-            Vector3 directionToNextPoint = (playerPath[0] - transform.position).normalized;
-            if (directionToNextPoint != Vector3.zero)
-            {
-                Quaternion lookRotation = Quaternion.LookRotation(directionToNextPoint);
-                transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
-            }
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
         }
     }
 
@@ -109,7 +109,12 @@ public class MonsterAI : MonoBehaviour
     {
         Vector3 directionToPlayer = player.position - transform.position;
         float angle = Vector3.Angle(transform.forward, directionToPlayer);
-        return angle < 45f;
+        return angle < viewAngle;
+    }
+
+    bool IsPlayerWithinRange()
+    {
+        return Vector3.Distance(transform.position, player.position) <= detectionRadius;
     }
 
     System.Collections.IEnumerator ToggleSpotlight()
@@ -123,6 +128,7 @@ public class MonsterAI : MonoBehaviour
             }
             else
             {
+                spotlight.gameObject.SetActive(true); // 추격 중일 때는 항상 켜기
                 yield return null;
             }
         }
@@ -132,16 +138,16 @@ public class MonsterAI : MonoBehaviour
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, detectionRadius);
-        foreach (Vector3 point in playerPath)
-        {
-            Gizmos.DrawSphere(point, 0.1f);
-        }
 
-        // Draw the field of view
+        // 시야각 그리기
         Gizmos.color = Color.red;
-        Vector3 leftBoundary = Quaternion.Euler(0, -45, 0) * transform.forward * detectionRadius;
-        Vector3 rightBoundary = Quaternion.Euler(0, 45, 0) * transform.forward * detectionRadius;
+        Vector3 leftBoundary = Quaternion.Euler(0, -viewAngle, 0) * transform.forward * detectionRadius;
+        Vector3 rightBoundary = Quaternion.Euler(0, viewAngle, 0) * transform.forward * detectionRadius;
         Gizmos.DrawLine(transform.position, transform.position + leftBoundary);
         Gizmos.DrawLine(transform.position, transform.position + rightBoundary);
+
+        // 장애물 감지 거리 표시
+        Gizmos.color = Color.blue;
+        Gizmos.DrawLine(transform.position, transform.position + transform.forward * obstacleDetectionDistance);
     }
 }
