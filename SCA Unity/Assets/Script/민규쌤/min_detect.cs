@@ -5,6 +5,7 @@ using UnityEngine;
 public class min_detect : MonoBehaviour
 {
     bool detect = false;
+    bool aniplay = false;
     private Animator ani;
     void Start()
     {
@@ -15,15 +16,20 @@ public class min_detect : MonoBehaviour
         if (detect == true)
         {
             FirstPersonMovement.speed = 0f;
+            FirstPersonMovement.canRun = false;
             yeppy_player.catched = true;
-            ani.setBool("isHello",true);
-            StartCoroutine(WaitAni);
+            if (aniplay == false)
+            {
+                aniplay= true;
+                ani.SetBool("isHello", true);
+                StartCoroutine("WaitAni");
+            }
         }
     }
     IEnumerator WaitAni()
     {
         yield return new WaitForSeconds(4.067f);
-        ani.setBool("isHello", false);
+        ani.SetBool("isHello",false);
     }
     void OnTriggerEnter(Collider col)
     {
