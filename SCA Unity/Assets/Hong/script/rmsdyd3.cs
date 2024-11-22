@@ -1,19 +1,24 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class MonsterAI : MonoBehaviour
 {
     public Transform player;
     public Transform spotlight;
-    public float detectionRadius = 10f;
-    public float chaseSpeed = 5f;
-    public float obstacleDetectionDistance = 2f;
-    public float viewAngle = 45f;
-    public float rotationSpeed = 5f;
-    public float lostPlayerDelay = 3f; // 플레이어를 잃은 후 Idle로 전환되는 시간
+    public float detectionRadius1 = 10f; // 감지 범위 1
+    public float detectionRadius2 = 30f; // 감지 범위 2
+    public float detectionRadius3 = 15f; // 감지 범위 3
+    public float chaseSpeed = 5f;        // 추격 속도
+    public float rotationSpeed = 5f;    // 회전 속도
+    public float lostPlayerDelay = 3f;  // 플레이어를 잃었을 때 대기 시간
+    public float positionThreshold = 0.5f; // 마지막 위치에 도달했다고 간주하는 거리
+
+    public float viewAngle = 45f; // **시야각**: 플레이어를 감지할 수 있는 각도
 
     private float timeSinceLastSeen = 0f; // 마지막으로 플레이어를 본 시간
     private Vector3 lastKnownPosition;   // 마지막으로 감지된 플레이어 위치
     private bool isPlayerInSight = false; // 플레이어가 현재 시야에 있는지 확인
+    private List<Vector3> playerPath = new List<Vector3>(); // 플레이어 경로 저장
     private enum AIState { Idle, Chasing }
     private AIState currentState;
 
@@ -28,27 +33,38 @@ public class MonsterAI : MonoBehaviour
         switch (currentState)
         {
             case AIState.Chasing:
-                if (IsPlayerInFieldOfView() && IsPlayerWithinRange())
+                if (IsPlayerInFieldOfView() && IsPlayerWithinRange(detectionRadius1))
                 {
+                    // 범위 1 내에서 플레이어 추격
                     isPlayerInSight = true;
                     timeSinceLastSeen = 0f;
-                    lastKnownPosition = player.position; // 플레이어 위치 갱신
+                    lastKnownPosition = player.position;
                     ChasePlayer(player.position);
+                    RotateTowards(player.position - transform.position);
+                }
+                else if (IsPlayerWithinRange(detectionRadius3))
+                {
+                    // 범위 3 내에서 플레이어 추격 (실시간 추적)
+                    isPlayerInSight = false;
+                    playerPath.Clear(); // 기존 경로 초기화
+                    ChasePlayer(player.position);
+                    RotateTowards(player.position - transform.position);
+                }
+                else if (IsPlayerWithinRange(detectionRadius2))
+                {
+                    // 범위 2 내에서 이동 경로를 따라 이동
+                    isPlayerInSight = false;
+                    SavePlayerPath(); // 플레이어 경로 저장
+                    FollowPlayerPath();
                 }
                 else
                 {
-                    isPlayerInSight = false;
+                    // 범위 2 및 3에서 벗어난 경우
                     timeSinceLastSeen += Time.deltaTime;
 
                     if (timeSinceLastSeen > lostPlayerDelay)
                     {
-                        // 일정 시간이 지나면 Idle 상태로 복귀
                         currentState = AIState.Idle;
-                    }
-                    else
-                    {
-                        // 플레이어가 보이지 않으면 마지막 위치를 추적
-                        ChasePlayer(lastKnownPosition);
                     }
                 }
                 spotlight.gameObject.SetActive(true); // 추격 중에는 항상 켜기
@@ -66,34 +82,55 @@ public class MonsterAI : MonoBehaviour
         {
             float distanceToPlayer = Vector3.Distance(spotlight.position, player.position);
 
-            if (distanceToPlayer <= detectionRadius)
+            if (distanceToPlayer <= detectionRadius1)
             {
                 currentState = AIState.Chasing;
-                timeSinceLastSeen = 0f; // 추적 시작 시 초기화
-                lastKnownPosition = player.position; // 플레이어의 현재 위치 저장
+                timeSinceLastSeen = 0f;
+                lastKnownPosition = player.position;
+            }
+        }
+    }
+
+    void SavePlayerPath()
+    {
+        // 플레이어의 현재 위치를 경로에 저장
+        if (playerPath.Count == 0 || Vector3.Distance(player.position, playerPath[playerPath.Count - 1]) > positionThreshold)
+        {
+            playerPath.Add(player.position);
+        }
+    }
+
+    void FollowPlayerPath()
+    {
+        // 경로 따라 이동
+        if (playerPath.Count > 0)
+        {
+            Vector3 targetPosition = playerPath[0];
+            float distanceToTarget = Vector3.Distance(transform.position, targetPosition);
+
+            if (distanceToTarget <= positionThreshold)
+            {
+                // 경로의 현재 지점에 도달하면 제거
+                playerPath.RemoveAt(0);
+            }
+            else
+            {
+                // 경로 따라 이동
+                MoveTowards(targetPosition);
+                RotateTowards(targetPosition - transform.position);
             }
         }
     }
 
     void ChasePlayer(Vector3 targetPosition)
     {
+        MoveTowards(targetPosition);
+    }
+
+    void MoveTowards(Vector3 targetPosition)
+    {
         Vector3 directionToTarget = (targetPosition - transform.position).normalized;
-
-        // 벽 감지 및 회피 로직
-        if (Physics.Raycast(transform.position, directionToTarget, out RaycastHit hit, obstacleDetectionDistance))
-        {
-            if (hit.collider.CompareTag("Wall"))
-            {
-                Vector3 avoidDirection = Vector3.Cross(hit.normal, Vector3.up).normalized;
-                directionToTarget = (directionToTarget + avoidDirection).normalized;
-            }
-        }
-
-        // 이동
         transform.position += directionToTarget * chaseSpeed * Time.deltaTime;
-
-        // 이동 방향으로 시선 회전
-        RotateTowards(directionToTarget);
     }
 
     void RotateTowards(Vector3 direction)
@@ -112,9 +149,9 @@ public class MonsterAI : MonoBehaviour
         return angle < viewAngle;
     }
 
-    bool IsPlayerWithinRange()
+    bool IsPlayerWithinRange(float range)
     {
-        return Vector3.Distance(transform.position, player.position) <= detectionRadius;
+        return Vector3.Distance(transform.position, player.position) <= range;
     }
 
     System.Collections.IEnumerator ToggleSpotlight()
@@ -137,17 +174,18 @@ public class MonsterAI : MonoBehaviour
     void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, detectionRadius);
+        Gizmos.DrawWireSphere(transform.position, detectionRadius1);
 
-        // 시야각 그리기
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, detectionRadius2);
+
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireSphere(transform.position, detectionRadius3);
+
         Gizmos.color = Color.red;
-        Vector3 leftBoundary = Quaternion.Euler(0, -viewAngle, 0) * transform.forward * detectionRadius;
-        Vector3 rightBoundary = Quaternion.Euler(0, viewAngle, 0) * transform.forward * detectionRadius;
+        Vector3 leftBoundary = Quaternion.Euler(0, -viewAngle, 0) * transform.forward * detectionRadius1;
+        Vector3 rightBoundary = Quaternion.Euler(0, viewAngle, 0) * transform.forward * detectionRadius1;
         Gizmos.DrawLine(transform.position, transform.position + leftBoundary);
         Gizmos.DrawLine(transform.position, transform.position + rightBoundary);
-
-        // 장애물 감지 거리 표시
-        Gizmos.color = Color.blue;
-        Gizmos.DrawLine(transform.position, transform.position + transform.forward * obstacleDetectionDistance);
     }
 }

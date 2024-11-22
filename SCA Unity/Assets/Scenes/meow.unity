@@ -2201,12 +2201,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 976336161}
   spotlight: {fileID: 1031384487}
-  detectionRadius: 9
-  chaseSpeed: 8.5
-  obstacleDetectionDistance: 2
-  viewAngle: 45
+  detectionRadius1: 10
+  detectionRadius2: 1000
+  detectionRadius3: 20
+  chaseSpeed: 7
   rotationSpeed: 50
   lostPlayerDelay: 3
+  positionThreshold: 0.5
+  viewAngle: 45
 --- !u!4 &375525365 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 885eac34fd0d577439e6670a7ca3777e, type: 3}
@@ -6017,8 +6019,8 @@ Light:
   m_Shape: 0
   m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_Intensity: 25
-  m_Range: 9.263006
-  m_SpotAngle: 97.353226
+  m_Range: 10.15
+  m_SpotAngle: 97
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
