@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Jen : MonoBehaviour
@@ -8,19 +9,22 @@ public class Jen : MonoBehaviour
     public Transform player; // 플레이어의 Transform을 할당할 변수
     public int MenSeter_I;
     public int Coffee_I;
-    public int MenSeter_o;
-    public int Coffee_o;
+
+    public Transform Player;
+    public float distance = 1.0f;
 
     // Update is called once per frame
     void Update()
     {
-        MenSeter_o = MenSeter_I;
-        Coffee_o = Coffee_I;
         if (point == 0)
         {
             // 오브젝트를 플레이어의 위치로 즉시 이동
-            transform.position = player.position;
-            Coffee_I=0;
+            Vector3 playerPosition = player.position;
+            Vector3 playerForward = player.forward;
+
+            // 플레이어의 앞쪽으로 일정 거리만큼 이동합니다.
+            transform.position = playerPosition + playerForward * distance;
+            Coffee_I =0;
             MenSeter_I=0;
         }
     }

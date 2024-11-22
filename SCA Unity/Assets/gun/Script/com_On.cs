@@ -67,7 +67,7 @@ public class com_On : MonoBehaviour
             }
         }
     }
-
+    
     public void OnTriggerEnter(Collider other)
     {
         Debug.Log(other.tag);
