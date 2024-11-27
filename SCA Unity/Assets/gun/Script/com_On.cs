@@ -43,7 +43,7 @@ public class com_On : MonoBehaviour
         }
 
         // 마우스 클릭 시 전체화면 전환
-        if (state == true)
+        if (state == true && isClose == true)
         {
             if (Input.GetMouseButtonDown(0)) // 왼쪽 마우스 버튼 클릭
             {
@@ -67,7 +67,7 @@ public class com_On : MonoBehaviour
             }
         }
     }
-
+    
     public void OnTriggerEnter(Collider other)
     {
         Debug.Log(other.tag);
