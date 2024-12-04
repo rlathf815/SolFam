@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class min_detect : MonoBehaviour
 {
     bool detect = false;
     bool aniplay = false;
+    public GameObject Schang;
     private Animator ani;
     void Start()
     {
@@ -20,7 +22,7 @@ public class min_detect : MonoBehaviour
             yeppy_player.catched = true;
             if (aniplay == false)
             {
-                aniplay= true;
+                aniplay = true;
                 ani.SetBool("isHello", true);
                 StartCoroutine("WaitAni");
             }
@@ -31,8 +33,12 @@ public class min_detect : MonoBehaviour
         yield return new WaitForSeconds(4.067f);
         ani.SetBool("isHello",false);
     }
-    void OnTriggerEnter(Collider col)
+    void OnTriggerStay(Collider col)
     {
-        detect = true;
+        if (Input.GetKey(KeyCode.E)&&detect==false)
+        {
+            detect = true;
+            Schang.SetActive(true);
+        }
     }
 }
