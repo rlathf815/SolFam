@@ -17,11 +17,13 @@ public class yun_ui : MonoBehaviour
     {
         if (uiopen == true)
         {
-            if (cool == false)
+            if (cool == false&&yeppy_player.catched==false)
             {
                 cool = true;
                 canvas.SetActive(true);
                 FirstPersonMovement.speed = 0f;
+                FirstPersonMovement.canRun = false;
+                yeppy_player.catched = true;
                 if (Random.Range(0, 2) == 1)
                 {
                     moon.text = "  컴퓨터가 바이러스에 감염됐을 때 치료법은?";
@@ -42,6 +44,8 @@ public class yun_ui : MonoBehaviour
         {
             canvas.SetActive(false);
             FirstPersonMovement.speed = 5f;
+            FirstPersonMovement.canRun = true;
+            yeppy_player.catched = false;
         }
         if (cool == true)
         {
