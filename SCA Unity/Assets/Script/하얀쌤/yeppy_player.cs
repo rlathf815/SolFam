@@ -6,6 +6,7 @@ public class yeppy_player : MonoBehaviour
 {
     RaycastHit hit;
     public static bool seewhite=false;
+    public static bool catched = false;
     void Update()
     {
         if (Physics.SphereCast(transform.position, 2.5f, transform.forward, out hit,80))
