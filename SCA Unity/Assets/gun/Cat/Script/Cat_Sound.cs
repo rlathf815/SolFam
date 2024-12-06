@@ -20,7 +20,7 @@ public class Cat_ : MonoBehaviour
     private System.Collections.IEnumerator PlaySoundAfterRandomTime()
     {
         // 180초에서 300초 사이의 랜덤 시간 생성
-        float randomTime = Random.Range(0f, 1f);
+        float randomTime = Random.Range(180f, 240);
 
         // 랜덤 시간 대기
         yield return new WaitForSeconds(randomTime);
