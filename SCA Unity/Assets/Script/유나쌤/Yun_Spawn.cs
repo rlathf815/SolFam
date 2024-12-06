@@ -13,7 +13,7 @@ public class Yun_Spawn : MonoBehaviour
     }
     IEnumerator Spawn()
     {
-        yield return new WaitForSeconds(35);
+        yield return new WaitForSeconds(25);
         if (Random.Range(0, 3) == 1 && spawn == false)
         {
             spawn = true;
