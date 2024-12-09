@@ -1,15 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
+using System.Drawing;
 using UnityEngine;
 
 public class Rest : MonoBehaviour
 {
-    public float speed;
-    public int point=3;
+    public int point = 3;
+    public static float speed;
+    public float runSpeed;
     private bool state;
-    public int HP = 3;
-    // Start is called before the first frame update
+
     void Start()
     {
         
@@ -26,15 +26,16 @@ public class Rest : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
-        if (state == true && other.gameObject.tag == "corridor" || 
-            other.gameObject.tag == "corridor" && speed > 1 || 
+        if (state == true && other.gameObject.tag == "corridor" ||
+            other.gameObject.tag == "corridor" && speed > 3 || runSpeed > 3||
             other.gameObject.tag == "crm" && other.gameObject.tag == "item")
         {
             point -= 1;
         }
-        if(other.gameObject.tag == "crm13")
+        if (other.gameObject.tag == "crm13")
         {
-            HP -=3;
-        }
+            Debug.Log("¥Í¿Ω");
+            Player_Item.HP -= 3;
+        } 
     }
 }
