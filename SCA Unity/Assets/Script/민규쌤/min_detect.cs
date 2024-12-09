@@ -5,9 +5,10 @@ using UnityEngine;
 
 public class min_detect : MonoBehaviour
 {
-    bool detect = false;
-    bool aniplay = false;
+    public static bool detect = false;
+    public static bool aniplay = false;
     public GameObject Schang;
+    public GameObject Epress;
     private Animator ani;
     void Start()
     {
@@ -22,6 +23,9 @@ public class min_detect : MonoBehaviour
             yeppy_player.catched = true;
             if (aniplay == false)
             {
+                Cursor.visible = true;
+                Cursor.lockState= CursorLockMode.None;
+                Epress.SetActive(false);
                 aniplay = true;
                 ani.SetBool("isHello", true);
                 StartCoroutine("WaitAni");
@@ -40,5 +44,13 @@ public class min_detect : MonoBehaviour
             detect = true;
             Schang.SetActive(true);
         }
+    }
+    void OnTriggerEnter(Collider col)
+    {
+        Epress.SetActive(true);
+    }
+    void OnTriggerExit(Collider col)
+    {
+        Epress.SetActive(false);
     }
 }
