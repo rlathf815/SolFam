@@ -26,16 +26,18 @@ public class Rest : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
+        if (other.gameObject.tag == "crm13")
+        {
+            Debug.Log("¥Í¿Ω");
+            Player_Item.HP -= 3;
+        }
+
+
         if (state == true && other.gameObject.tag == "corridor" ||
             other.gameObject.tag == "corridor" && speed > 3 || runSpeed > 3||
             other.gameObject.tag == "crm" && other.gameObject.tag == "item")
         {
             point -= 1;
-        }
-        if (other.gameObject.tag == "crm13")
-        {
-            Debug.Log("¥Í¿Ω");
-            Player_Item.HP -= 3;
         } 
     }
 }
