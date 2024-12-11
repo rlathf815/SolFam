@@ -300,10 +300,10 @@ MonoBehaviour:
   m_Description: 
   m_Category: {fileID: 1767484460316629153}
   m_IsSellable: 1
-  m_BuyPrice: 0
+  m_BuyPrice: 2000
   m_CanBuyBack: 1
   m_BuyCurrency: {fileID: 5159491216954419924}
-  m_SellPrice: 0
+  m_SellPrice: 1100
   m_SellCurrency: {fileID: 5159491216954419924}
   m_Stack: 1
   m_MaxStack: 1
