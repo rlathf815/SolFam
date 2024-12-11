@@ -7,7 +7,7 @@ public class yun_ui : MonoBehaviour
 {
     public static bool uiopen = false;
     public static bool del = false;
-    bool cool = false;
+    public static bool cool = false;
     public GameObject canvas;
     public TextMeshProUGUI moon;
     public TextMeshProUGUI dab1;
@@ -24,6 +24,10 @@ public class yun_ui : MonoBehaviour
                 FirstPersonMovement.speed = 0f;
                 FirstPersonMovement.canRun = false;
                 yeppy_player.catched = true;
+                min_detect.dontmovescreen = true;
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
+
                 if (Random.Range(0, 2) == 1)
                 {
                     moon.text = "  컴퓨터가 바이러스에 감염됐을 때 치료법은?";
@@ -38,32 +42,6 @@ public class yun_ui : MonoBehaviour
                     dab2.text = "2.포맷을 시도한다";
                     dab3.text = "3.랜섬웨어를 깐다";
                 }
-            }
-        }
-        else
-        {
-            canvas.SetActive(false);
-            FirstPersonMovement.speed = 5f;
-            FirstPersonMovement.canRun = true;
-            yeppy_player.catched = false;
-        }
-        if (cool == true)
-        {
-            if(Input.GetKey(KeyCode.Alpha2)||Input.GetKey(KeyCode.Keypad2)) {
-                cool = false;
-                uiopen = false;
-                del = true;
-            }
-            if (Input.GetKey(KeyCode.Alpha1) || Input.GetKey(KeyCode.Keypad1)){
-                cool = false;
-                uiopen = false;
-                del = true;
-            }
-            if (Input.GetKey(KeyCode.Alpha3) || Input.GetKey(KeyCode.Keypad3))
-            {
-                cool = false;
-                uiopen = false;
-                del = true;
             }
         }
     }

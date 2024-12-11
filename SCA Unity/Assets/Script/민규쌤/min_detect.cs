@@ -7,8 +7,10 @@ public class min_detect : MonoBehaviour
 {
     public static bool detect = false;
     public static bool aniplay = false;
+    public static bool dontmovescreen = false;
     public GameObject Schang;
     public GameObject Epress;
+    public Transform player;
     private Animator ani;
     void Start()
     {
@@ -23,8 +25,11 @@ public class min_detect : MonoBehaviour
             yeppy_player.catched = true;
             if (aniplay == false)
             {
+                yeppy_player.gojung = player.rotation;
                 Cursor.visible = true;
+                Jump.jumpStrength = 0;
                 Cursor.lockState= CursorLockMode.None;
+                dontmovescreen = true;
                 Epress.SetActive(false);
                 aniplay = true;
                 ani.SetBool("isHello", true);
