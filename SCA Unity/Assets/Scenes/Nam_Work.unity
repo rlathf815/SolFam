@@ -310,6 +310,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Schang: {fileID: 1861954342}
   Epress: {fileID: 806087705}
+  player: {fileID: 1758307317}
 --- !u!1 &229470600
 GameObject:
   m_ObjectHideFlags: 0
@@ -1987,8 +1988,8 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1861954343}
   - {fileID: 806087706}
+  - {fileID: 1861954343}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2506,6 +2507,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Schang: {fileID: 1861954342}
+  Epress: {fileID: 806087705}
 --- !u!1 &1168238511
 GameObject:
   m_ObjectHideFlags: 0
@@ -3394,6 +3396,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7235112df914af4cbd65db47523ee53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 1758307317}
+--- !u!4 &1758307317 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4207293392497186, guid: 11aaea5348574644a9eb4f4504fcce3f, type: 3}
+  m_PrefabInstance: {fileID: 1179156243}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1861954342
 GameObject:
   m_ObjectHideFlags: 0
