@@ -13,24 +13,25 @@ MonoBehaviour:
   m_Name: Pickup
   m_EditorClassIdentifier: 
   actions:
-  - id: 0
-  - id: 1
-  - id: 2
-  - id: 3
-  - id: 4
-  - id: 5
-  - id: 6
-  - id: 7
-  - id: 8
+  - rid: 0
+  - rid: 1
+  - rid: 2
+  - rid: 3
+  - rid: 4
+  - rid: 5
+  - rid: 6
+  - rid: 7
+  - rid: 8
   references:
-    version: 1
-    00000000:
+    version: 2
+    RefIds:
+    - rid: 0
       type: {class: CanPickup, ns: DevionGames.InventorySystem, asm: DevionGames.InventorySystem}
       data:
         m_Type: DevionGames.InventorySystem.CanPickup
         m_Enabled: 1
         m_WindowName: Inventory
-    00000001:
+    - rid: 1
       type: {class: SetEnabled, ns: DevionGames, asm: DevionGames.Triggers}
       data:
         m_Type: DevionGames.SetEnabled
@@ -38,20 +39,20 @@ MonoBehaviour:
         m_Target: 1
         m_ComponentName: ThirdPersonController
         m_Enable: 0
-    00000002:
+    - rid: 2
       type: {class: LookAtTrigger, ns: DevionGames, asm: DevionGames.Triggers}
       data:
         m_Type: DevionGames.LookAtTrigger
         m_Enabled: 1
         m_Speed: 15
-    00000003:
+    - rid: 3
       type: {class: SetConstraints, ns: DevionGames, asm: DevionGames.Triggers}
       data:
         m_Type: DevionGames.SetConstraints
         m_Enabled: 1
         m_Target: 1
         m_Constraints: 126
-    00000004:
+    - rid: 4
       type: {class: CrossFade, ns: DevionGames, asm: DevionGames.Triggers}
       data:
         m_Type: DevionGames.CrossFade
@@ -59,13 +60,13 @@ MonoBehaviour:
         m_Target: 1
         m_AnimatorState: Pickup
         m_TransitionDuration: 0.2
-    00000005:
+    - rid: 5
       type: {class: Wait, ns: DevionGames, asm: DevionGames.Triggers}
       data:
         m_Type: DevionGames.Wait
         m_Enabled: 1
         duration: 1
-    00000006:
+    - rid: 6
       type: {class: SetEnabled, ns: DevionGames, asm: DevionGames.Triggers}
       data:
         m_Type: DevionGames.SetEnabled
@@ -73,14 +74,14 @@ MonoBehaviour:
         m_Target: 1
         m_ComponentName: ThirdPersonController
         m_Enable: 1
-    00000007:
+    - rid: 7
       type: {class: SetConstraints, ns: DevionGames, asm: DevionGames.Triggers}
       data:
         m_Type: DevionGames.SetConstraints
         m_Enabled: 1
         m_Target: 1
-        m_Constraints: 112
-    00000008:
+        m_Constraints: 0
+    - rid: 8
       type: {class: Pickup, ns: DevionGames.InventorySystem, asm: DevionGames.InventorySystem}
       data:
         m_Type: DevionGames.InventorySystem.Pickup
