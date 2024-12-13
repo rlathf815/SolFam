@@ -6,26 +6,13 @@ using UnityEngine;
 public class Yun_button : MonoBehaviour
 {
     public GameObject Yui;
-    void isGood()
+    public void isGood()
     {
-        yun_ui.cool = false;
-        yeppy_player.catched = false;
-        yun_ui.uiopen = false;
-        FirstPersonMovement.canRun = true;
-        min_detect.dontmovescreen = false;
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
-        Yui.SetActive(false);
+        //시 내 코드가 이상해요
     }
-    void isBad()
+
+    public void isBad()
     {
-        yun_ui.cool = false;
-        yeppy_player.catched = false;
-        yun_ui.uiopen = false;
-        FirstPersonMovement.canRun = true;
-        min_detect.dontmovescreen = false;
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
-        Yui.SetActive(false);
+        //발 내 코드가 이상해요
     }
 }

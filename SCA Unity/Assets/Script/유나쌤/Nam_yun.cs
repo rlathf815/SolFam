@@ -18,28 +18,6 @@ public class Nam_yun : MonoBehaviour
 
     void Update()
     {
-        agent.destination = player.transform.position;
-        if (catched == true)
-        {
-            agent.isStopped = true;
-            yun_ui.uiopen = true;
-        }
-        else
-        {
-            agent.isStopped = false;
-        }
-        if (yun_ui.del == true)
-        {
-            yun_ui.del = false;
-            Yun_Spawn.spawn = false;
-            Destroy(gameObject);
-        }
-    }
-    void OnTriggerEnter(Collider col)
-    {
-        if (col.name=="FPC")
-        {
-            catched = true;
-        }
+        //พร
     }
 }
