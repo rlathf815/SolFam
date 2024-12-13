@@ -292,7 +292,7 @@ MonoBehaviour:
   m_Name: coffee
   m_EditorClassIdentifier: 
   m_Id: 30ca0b8e-56c6-457c-91d7-bb9be58c52bc
-  m_ItemName: coffee
+  m_ItemName: "\uCEE4\uD53C"
   m_UseItemNameAsDisplayName: 1
   m_DisplayName: New Item
   m_Icon: {fileID: 21300000, guid: fb38af54312632d47bc615bfe636f9a4, type: 3}

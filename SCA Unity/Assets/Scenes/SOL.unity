@@ -10319,8 +10319,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2740522862135884627, guid: 73000691bb97ca545a8d09fd0c6f5865, type: 3}
+      propertyPath: delegates.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2740522862135884627, guid: 73000691bb97ca545a8d09fd0c6f5865, type: 3}
       propertyPath: moveItemConditions.Array.size
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2740522862135884627, guid: 73000691bb97ca545a8d09fd0c6f5865, type: 3}
+      propertyPath: delegates.Array.data[2].eventID
+      value: OnUseItem
       objectReference: {fileID: 0}
     - target: {fileID: 2740522862135884627, guid: 73000691bb97ca545a8d09fd0c6f5865, type: 3}
       propertyPath: moveItemConditions.Array.data[0].window
@@ -10347,6 +10355,14 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2740522862135884627, guid: 73000691bb97ca545a8d09fd0c6f5865, type: 3}
+      propertyPath: delegates.Array.data[2].callback.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2740522862135884627, guid: 73000691bb97ca545a8d09fd0c6f5865, type: 3}
+      propertyPath: delegates.Array.data[2].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2740522862135884627, guid: 73000691bb97ca545a8d09fd0c6f5865, type: 3}
       propertyPath: delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 460411374}
@@ -10355,12 +10371,32 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 460411374}
     - target: {fileID: 2740522862135884627, guid: 73000691bb97ca545a8d09fd0c6f5865, type: 3}
+      propertyPath: delegates.Array.data[2].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 460411374}
+    - target: {fileID: 2740522862135884627, guid: 73000691bb97ca545a8d09fd0c6f5865, type: 3}
+      propertyPath: delegates.Array.data[2].callback.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2740522862135884627, guid: 73000691bb97ca545a8d09fd0c6f5865, type: 3}
       propertyPath: delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: PlayOneShot
       objectReference: {fileID: 0}
     - target: {fileID: 2740522862135884627, guid: 73000691bb97ca545a8d09fd0c6f5865, type: 3}
       propertyPath: delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: PlayOneShot
+      objectReference: {fileID: 0}
+    - target: {fileID: 2740522862135884627, guid: 73000691bb97ca545a8d09fd0c6f5865, type: 3}
+      propertyPath: delegates.Array.data[2].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PlayOneShot
+      objectReference: {fileID: 0}
+    - target: {fileID: 2740522862135884627, guid: 73000691bb97ca545a8d09fd0c6f5865, type: 3}
+      propertyPath: delegates.Array.data[2].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 8300000, guid: d6731e54559ccfc4b920106882f4c4cb, type: 3}
+    - target: {fileID: 2740522862135884627, guid: 73000691bb97ca545a8d09fd0c6f5865, type: 3}
+      propertyPath: delegates.Array.data[2].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.AudioClip, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 2740522862135884628, guid: 73000691bb97ca545a8d09fd0c6f5865, type: 3}
       propertyPath: m_Alpha
@@ -12151,7 +12187,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 702359653272919827, guid: b05696a52f21d1b4f85a01d316b7dcc4, type: 3}
       propertyPath: m_Name
-      value: New coffee(Clone)
+      value: "\uCEE4\uD53C"
       objectReference: {fileID: 0}
     - target: {fileID: 3356216943653171649, guid: b05696a52f21d1b4f85a01d316b7dcc4, type: 3}
       propertyPath: actionTemplate
