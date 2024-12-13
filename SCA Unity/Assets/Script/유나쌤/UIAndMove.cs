@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using TMPro;
+using Unity.Properties;
 using UnityEngine;
 
 public class yun_ui : MonoBehaviour
@@ -11,10 +13,13 @@ public class yun_ui : MonoBehaviour
     public TextMeshProUGUI dab1;
     public TextMeshProUGUI dab2;
     public TextMeshProUGUI dab3;
+    public static bool openui=false;
     void Update()
     {
-        /*매우 성기같은!
-        나는 어떤걸 하다 모르는
-        코드를 삭제한 나는 방금*/
+        if (openui==true)
+        {
+            openui = false;
+
+        }
     }
 }
