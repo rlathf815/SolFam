@@ -305,8 +305,8 @@ MonoBehaviour:
   m_BuyCurrency: {fileID: 5159491216954419924}
   m_SellPrice: 1100
   m_SellCurrency: {fileID: 5159491216954419924}
-  m_Stack: 1
-  m_MaxStack: 1
+  m_Stack: 17
+  m_MaxStack: 20
   m_IsDroppable: 1
   m_DropSound: {fileID: 0}
   m_OverridePrefab: {fileID: 0}
