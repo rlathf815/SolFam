@@ -8,7 +8,7 @@ public class Crouch : MonoBehaviour
     [Tooltip("Movement to slow down when crouched.")]
     public FirstPersonMovement movement;
     [Tooltip("Movement speed when crouched.")]
-    public float movementSpeed = 2;
+    public static float movementSpeed = 2;
 
     [Header("Low Head")]
     [Tooltip("Head to lower when crouched.")]

@@ -21,6 +21,7 @@ public class min_detect : MonoBehaviour
         if (detect == true)
         {
             FirstPersonMovement.speed = 0f;
+            Crouch.movementSpeed = 0f;
             FirstPersonMovement.canRun = false;
             yeppy_player.catched = true;
             if (aniplay == false)

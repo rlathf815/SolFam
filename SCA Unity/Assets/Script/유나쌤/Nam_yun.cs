@@ -18,6 +18,20 @@ public class Nam_yun : MonoBehaviour
 
     void Update()
     {
-        //พร
+        if (yun_ui.hasopenui == true)
+        {
+            agent.isStopped = true;
+        }
+        else
+        {
+            agent.destination = player.transform.position;
+        }
+    }
+    void OnTriggerEnter(Collider col)
+    {
+        if (col.name == "FPC")
+        {
+            yun_ui.openui = true;
+        }
     }
 }
