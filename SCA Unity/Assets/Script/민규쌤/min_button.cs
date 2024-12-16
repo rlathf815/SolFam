@@ -20,5 +20,7 @@ public class min_button : MonoBehaviour
         FirstPersonMovement.canRun = true;
         min_detect.detect = false;
         min_detect.aniplay = false;
+        FirstPersonMovement.speed = 3f;
+        Crouch.movementSpeed = 2f;
     }
 }
