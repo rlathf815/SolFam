@@ -1856,6 +1856,21 @@ namespace DevionGames.InventorySystem
                 }
             }
         }
+        public static bool AddItemToActionBar(Item item)
+        {
+            string actionBarName = "ActionBarContainer";
+            // Try to add the item to the ActionBar
+            if (ItemContainer.AddItem(actionBarName, item, true))
+            {
+                Debug.Log($"Item {item.DisplayName} added to ActionBar.");
+                return true;
+            }
+            else
+            {
+                Debug.LogWarning($"Failed to add {item.DisplayName} to ActionBar.");
+                return false;
+            }
+        }
 
         [System.Serializable]
         public class MoveItemCondition {
