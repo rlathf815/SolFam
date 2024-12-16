@@ -1000,6 +1000,8 @@ MonoBehaviour:
   Coffee_I: 0
   MenSeter_I: 0
   Noudell_I: 0
+  player: {fileID: 1566136224}
+  prefab: {fileID: 6271620609657795734, guid: ac123c0989a6dc14db39670bdbfdaf90, type: 3}
 --- !u!4 &1566136224 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4207293392497186, guid: 11aaea5348574644a9eb4f4504fcce3f, type: 3}
