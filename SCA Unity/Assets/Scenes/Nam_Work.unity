@@ -227,6 +227,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fe19d463155a9a4286ebe80bd14633e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
   canvas: {fileID: 1124904420}
   moon: {fileID: 1038049420}
   dab1: {fileID: 1265400780}
@@ -543,7 +544,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 242058876}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1124904425}
+        m_TargetAssemblyTypeName: Yun_button, Assembly-CSharp
+        m_MethodName: isBad
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &242058876
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2143,6 +2156,7 @@ GameObject:
   - component: {fileID: 1124904423}
   - component: {fileID: 1124904422}
   - component: {fileID: 1124904421}
+  - component: {fileID: 1124904425}
   m_Layer: 5
   m_Name: yunaT_ui
   m_TagString: Untagged
@@ -2238,6 +2252,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1124904425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1124904420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e25f0246923045845b84e6b06220aa3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Yui: {fileID: 1124904420}
 --- !u!1 &1126800588
 GameObject:
   m_ObjectHideFlags: 0
@@ -3345,7 +3372,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1745363261}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1124904425}
+        m_TargetAssemblyTypeName: Yun_button, Assembly-CSharp
+        m_MethodName: isBad
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1745363261
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3711,7 +3750,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1952511372}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1124904425}
+        m_TargetAssemblyTypeName: Yun_button, Assembly-CSharp
+        m_MethodName: isGood
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1952511372
 MonoBehaviour:
   m_ObjectHideFlags: 0
