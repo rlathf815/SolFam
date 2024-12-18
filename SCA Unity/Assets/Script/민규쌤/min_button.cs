@@ -13,14 +13,9 @@ public class min_button : MonoBehaviour
         Schang.SetActive(false);
         Epress.SetActive(true);
         min_detect.dontmovescreen = false;
-        Jump.jumpStrength = 2;
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
+        Yun_button.Reset();
         yeppy_player.catched = false;
-        FirstPersonMovement.canRun = true;
         min_detect.detect = false;
         min_detect.aniplay = false;
-        FirstPersonMovement.speed = 3f;
-        Crouch.movementSpeed = 2f;
     }
 }

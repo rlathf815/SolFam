@@ -45,7 +45,7 @@ public class min_detect : MonoBehaviour
     }
     void OnTriggerStay(Collider col)
     {
-        if (Input.GetKey(KeyCode.E)&&detect==false)
+        if (Input.GetKey(KeyCode.E)&&detect==false&&yeppy_player.catched == false)
         {
             detect = true;
             Schang.SetActive(true);
