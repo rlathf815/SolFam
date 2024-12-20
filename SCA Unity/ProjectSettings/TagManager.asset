@@ -3,7 +3,11 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - whiteT
+  - ' item'
+  - crm13
+  - corridor
   layers:
   - Default
   - TransparentFX
