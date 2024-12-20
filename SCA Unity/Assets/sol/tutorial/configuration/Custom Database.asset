@@ -227,8 +227,8 @@ MonoBehaviour:
   settings:
   - {fileID: -7087291006823809589}
   - {fileID: -566272180027621132}
-  - {fileID: -3034908316751245697}
   - {fileID: 285080121993303830}
+  - {fileID: -3034908316751245697}
   - {fileID: 821947071584835143}
 --- !u!114 &285080121993303830
 MonoBehaviour:
@@ -242,7 +242,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cefcd19cdc9839d449772c4dce1503f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  autoSave: 1
+  autoSave: 0
   savingKey: Player
   savingRate: 60
   provider: 0
@@ -292,21 +292,21 @@ MonoBehaviour:
   m_Name: coffee
   m_EditorClassIdentifier: 
   m_Id: 30ca0b8e-56c6-457c-91d7-bb9be58c52bc
-  m_ItemName: coffee
+  m_ItemName: "\uCEE4\uD53C"
   m_UseItemNameAsDisplayName: 1
   m_DisplayName: New Item
   m_Icon: {fileID: 21300000, guid: fb38af54312632d47bc615bfe636f9a4, type: 3}
-  m_Prefab: {fileID: 7505499703950806449, guid: 8d1205197ce57bf48b0d586eccfd9e61, type: 3}
+  m_Prefab: {fileID: 702359653272919827, guid: b05696a52f21d1b4f85a01d316b7dcc4, type: 3}
   m_Description: 
   m_Category: {fileID: 1767484460316629153}
   m_IsSellable: 1
-  m_BuyPrice: 0
+  m_BuyPrice: 2000
   m_CanBuyBack: 1
   m_BuyCurrency: {fileID: 5159491216954419924}
-  m_SellPrice: 0
+  m_SellPrice: 1100
   m_SellCurrency: {fileID: 5159491216954419924}
-  m_Stack: 1
-  m_MaxStack: 1
+  m_Stack: 17
+  m_MaxStack: 20
   m_IsDroppable: 1
   m_DropSound: {fileID: 0}
   m_OverridePrefab: {fileID: 0}

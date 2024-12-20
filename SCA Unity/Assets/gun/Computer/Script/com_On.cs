@@ -16,7 +16,7 @@ public class com_On : MonoBehaviour
 
     void Start()
     {
-        state = false;
+        state = false; //화면상태
         isClose = false;
         PlayerC = true;
         PcClose = false;

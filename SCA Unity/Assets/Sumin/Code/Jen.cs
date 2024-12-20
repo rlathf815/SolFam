@@ -16,7 +16,7 @@ public class Jen : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (point == 0)
+        if (Rest.point == 0)
         {
             // 오브젝트를 플레이어의 위치로 즉시 이동
             Vector3 playerPosition = player.position;

@@ -475,6 +475,22 @@ namespace DevionGames.InventorySystem
             //Check if the item can be used.
             if (CanUse())
             {
+                if (ObservedItem != null)
+                {
+                    string itemName = ObservedItem.DisplayName;
+                    switch (itemName)
+                    {
+                        case "커피":
+                            Debug.Log("커피 마심");
+                            break;
+                        case "라면":
+                            Debug.Log("라면 먹음");
+                            break;
+                        default:
+                            Debug.Log($"{itemName} 사용됨");
+                            break;
+                    }
+                }
                 //Check if there is an override item behavior on trigger.
                 if ((Trigger.currentUsedTrigger as Trigger) != null && (Trigger.currentUsedTrigger as Trigger).OverrideUse(this, ObservedItem))
                 {

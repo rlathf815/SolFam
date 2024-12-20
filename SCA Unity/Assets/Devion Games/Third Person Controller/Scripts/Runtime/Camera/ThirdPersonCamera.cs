@@ -240,6 +240,7 @@ namespace DevionGames
                 this.m_ActivePreset.Zoom -= Input.GetAxis("Mouse ScrollWheel") * this.m_ActivePreset.ZoomSpeed;
                 this.m_ActivePreset.Zoom = Mathf.Clamp(this.m_ActivePreset.Zoom, this.m_ActivePreset.ZoomLimit.x - this.m_ActivePreset.Distance, this.m_ActivePreset.ZoomLimit.y - this.m_ActivePreset.Distance);
             }
+
         }
 
         private float ClampAngle (float angle, float min, float max)

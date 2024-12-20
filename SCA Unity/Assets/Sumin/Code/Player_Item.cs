@@ -5,11 +5,14 @@ using UnityEngine;
 public class Player_Item : MonoBehaviour
 {
     public static int HP = 3;
-    public int Coffee_I = 0;
+    public int Coffee_I = 1;
     public int MenSeter_I = 0;
     public int Noudell_I = 0;
     private float time = 5;
     private bool state;
+
+    public Transform player;
+    public GameObject prefab;
 
 
     void Start()
@@ -42,6 +45,13 @@ public class Player_Item : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.Keypad3) && Coffee_I >= 1) // 미완
         {
             Coffee_I -= 1;
+            Vector3 spawnDirection = player.forward;
+
+            // 프리팹을 생성할 위치 (플레이어 위치 + 바라보는 방향)
+            Vector3 spawnPosition = player.position + spawnDirection;
+
+            // 프리팹 생성
+            Instantiate(prefab, spawnPosition, Quaternion.identity);
         }
     }
 }
