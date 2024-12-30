@@ -25,7 +25,7 @@ public class FirstPersonLook : MonoBehaviour
 
     void Update()
     {
-        if (min_detect.dontmovescreen == false)
+        if (true)
         {
             // Get smooth velocity.
             Vector2 mouseDelta = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));

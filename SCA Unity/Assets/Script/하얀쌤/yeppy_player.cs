@@ -19,7 +19,7 @@ public class yeppy_player : MonoBehaviour
                 seewhite = true;
             }
         }
-        if (min_detect.dontmovescreen == true)
+        if (false)
         {
             player.rotation = gojung;
         }
