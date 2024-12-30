@@ -24,7 +24,6 @@ public class Yun_button : MonoBehaviour
 
     public static void Reset()
     {
-        min_detect.dontmovescreen = false;
         Jump.jumpStrength = 2;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
