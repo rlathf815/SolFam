@@ -26,8 +26,9 @@ namespace DevionGames.InventorySystem
         }
 
         [System.Serializable]
+        //인벤토리 저장 위치 설정??
         public class Entry {
-            public string name = "Inventory";
+            public string name = "Actionbar";
             [ItemGroupPicker]
             public ItemGroup group;
         }
