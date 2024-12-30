@@ -1,20 +1,23 @@
+using DevionGames;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class min_detect : MonoBehaviour
 {
     public static bool detect = false;
     public static bool aniplay = false;
     public static bool dontmovescreen = false;
-    public GameObject Schang;
-    public GameObject Epress;
-    public Transform player;
+    public GameObject minUI;
+    public GameObject player;
     private Animator ani;
     void Start()
     {
         ani=GetComponent<Animator>();
+        player = GameObject.Find("FPC");
+        player = GameObject.Find("mingT_ui");
     }
     void Update()
     {
@@ -26,7 +29,7 @@ public class min_detect : MonoBehaviour
             yeppy_player.catched = true;
             if (aniplay == false)
             {
-                yeppy_player.gojung = player.rotation;
+                yeppy_player.gojung = player.transform.rotation;
                 Cursor.visible = true;
                 Jump.jumpStrength = 0;
                 Cursor.lockState= CursorLockMode.None;
