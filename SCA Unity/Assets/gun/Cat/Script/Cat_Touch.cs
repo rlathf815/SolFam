@@ -30,15 +30,16 @@ public class Cat_Touch : MonoBehaviour
                 Debug.Log("냥택");
                 text.SetActive(false);
 
-                //고양이가 따라오는
-                cat.transform.position += player.transform.position;
-                
+                //고양이가 따라오는 실시간으로 플레이어 위치 값을 찾아서 이동
+                cat.transform.Translate(new Vector3(0.0f, 0.0f, 3.0f * Time.deltaTime));
+
             }
-            else
+            else if (Random.value <0.7f)
             {
+                Debug.Log("실패");
                 //플레이어를 공격(데미지는 5? 10?)
 
-                
+                //사라졌다가 5초 뒤에 생성
                 cat.SetActive(false);
                 text.SetActive(false);
                 if (CreateTime >= 5)
