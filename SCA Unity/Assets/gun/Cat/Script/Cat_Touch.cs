@@ -11,12 +11,13 @@ public class Cat_Touch : MonoBehaviour
     public float followConditionDistance = 10.0f; // NPC가 따라다닐 조건 거리
     public GameObject text;
     public GameObject cat;
-    private float CreateTime = 0;
+    private float CreateTime;
 
-    //만나면 확률적으로 냥택을하고 아닐경우(플레이어에게 딜을 넣는다) 호감도작을 하여 호감스택을 쌓아야한다 호감작키[E]키 
+    //만나면 확률적으로 냥택을하고 아닐경우(플레이어에게 딜을 넣는다) 호감도작을 하여 호감스택을 쌓아야한다 호감작키[E]키
     void Start()
     {
         isClose = false;
+        CreateTime = 0;
     }
 
 
@@ -28,42 +29,31 @@ public class Cat_Touch : MonoBehaviour
             {
                 Debug.Log("냥택");
                 text.SetActive(false);
-                // 플레이어와의 거리 계산
-                float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
-                // 조건을 만족할 때만 플레이어를 따라다님
+                //고양이가 따라오는
+                cat.transform.position += player.transform.position;
                 
-                if (distanceToPlayer < followConditionDistance)
-                {
-                    Follow();
-                }
             }
             else
             {
                 //플레이어를 공격(데미지는 5? 10?)
-                CreateTime += Time.deltaTime;
-                Debug.Log((int)CreateTime);
+
+                
                 cat.SetActive(false);
                 text.SetActive(false);
-                if ((int)CreateTime >= 5)
+                if (CreateTime >= 5)
                 {
                     cat.SetActive(true);
                     text.SetActive(true);
                     CreateTime = 0;
                 }
+                else
+                {
+                    CreateTime += Time.deltaTime;
+                    Debug.Log(CreateTime);
+                }
+                
             }
-        }
-    }
-
-    private void Follow()
-    {
-        // 플레이어와의 방향 계산
-        Vector3 direction = (player.position - transform.position).normalized;
-
-        // NPC의 위치를 업데이트
-        if (Vector3.Distance(transform.position, player.position) > followDistance)
-        {
-            transform.position += direction * followSpeed * Time.deltaTime;
         }
     }
 

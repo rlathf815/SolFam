@@ -12,7 +12,7 @@ public class MonsterAI : MonoBehaviour
     public float detectionRadius3 = 15f;
 
     // 몬스터 속성
-    public float chaseSpeed = 5f;
+    public float chaseSpeed = 4.5f;
     public float rotationSpeed = 5f;
     public float lostPlayerDelay = 3f;
     public float positionThreshold = 0.5f;

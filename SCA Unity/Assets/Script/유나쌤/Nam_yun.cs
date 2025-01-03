@@ -39,7 +39,6 @@ public class Nam_yun : MonoBehaviour
             yun_ui.openui = true;
             yeppy_player.catched = true;
             yeppy_player.gojung = player.transform.rotation;
-            min_detect.dontmovescreen = true;
             Jump.jumpStrength = 0;
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
