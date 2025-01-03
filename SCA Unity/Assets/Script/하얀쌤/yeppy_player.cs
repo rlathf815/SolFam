@@ -19,7 +19,7 @@ public class yeppy_player : MonoBehaviour
                 seewhite = true;
             }
         }
-        if (false)
+        if (FirstPersonLook.canlook == false)
         {
             player.rotation = gojung;
         }
