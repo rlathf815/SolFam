@@ -29,6 +29,7 @@ public class Yun_button : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         FirstPersonMovement.canRun = true;
         FirstPersonMovement.speed = 3f;
+        FirstPersonLook.canlook = true;
         Crouch.movementSpeed = 2f;
         yeppy_player.catched = false;
     }

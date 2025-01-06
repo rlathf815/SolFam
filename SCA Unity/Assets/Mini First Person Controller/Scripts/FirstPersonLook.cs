@@ -7,6 +7,8 @@ public class FirstPersonLook : MonoBehaviour
     public float sensitivity = 2;
     public float smoothing = 1.5f;
 
+    public static bool canlook=true;//원래 없는 변수
+
     Vector2 velocity;
     Vector2 frameVelocity;
 
@@ -25,7 +27,7 @@ public class FirstPersonLook : MonoBehaviour
 
     void Update()
     {
-        if (true)
+        if (canlook)
         {
             // Get smooth velocity.
             Vector2 mouseDelta = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
