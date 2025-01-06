@@ -6,12 +6,11 @@ public class MonsterAI : MonoBehaviour
     public Transform player;
     public Transform spotlight;
 
-    // 감지 범위
     public float detectionRadius1 = 10f;
     public float detectionRadius2 = 30f;
     public float detectionRadius3 = 15f;
 
-    // 몬스터 속성
+    
     public float chaseSpeed = 4.5f;
     public float rotationSpeed = 5f;
     public float lostPlayerDelay = 3f;
@@ -19,7 +18,7 @@ public class MonsterAI : MonoBehaviour
     public float viewAngle = 45f;
     public float obstacleAvoidanceDistance = 2f;
 
-    // 내부 상태 관리
+    
     private float timeSinceLastSeen = 0f;
     private Vector3 lastKnownPosition;
     private List<Vector3> playerPath = new List<Vector3>();
@@ -66,7 +65,7 @@ public class MonsterAI : MonoBehaviour
             timeSinceLastSeen = 0f;
             lastKnownPosition = player.position;
             MoveTowards(player.position);
-            RotateTowards(player.position - transform.position); // 플레이어를 바라봄
+            RotateTowards(player.position - transform.position); 
         }
         else if (IsPlayerWithinRange(detectionRadius3))
         {
@@ -75,7 +74,7 @@ public class MonsterAI : MonoBehaviour
             playerPath.Clear();
             lastKnownPosition = player.position;
             MoveTowards(player.position);
-            RotateTowards(player.position - transform.position); // 플레이어를 바라봄
+            RotateTowards(player.position - transform.position); 
         }
         else if (IsPlayerWithinRange(detectionRadius2))
         {
@@ -83,7 +82,7 @@ public class MonsterAI : MonoBehaviour
             isPlayerInSight = false;
             SavePlayerPath();
             FollowPlayerPath();
-            RotateTowards(player.position - transform.position); // 플레이어를 바라봄
+            RotateTowards(player.position - transform.position); 
         }
         else
         {
@@ -98,7 +97,7 @@ public class MonsterAI : MonoBehaviour
             else
             {
                 MoveTowards(lastKnownPosition);
-                RotateTowards(lastKnownPosition - transform.position); // 마지막 위치를 바라봄
+                RotateTowards(lastKnownPosition - transform.position); 
             }
         }
 
@@ -159,7 +158,7 @@ public class MonsterAI : MonoBehaviour
     {
         Vector3 directionToTarget = (targetPosition - transform.position).normalized;
 
-        // 레이캐스트로 장애물 감지
+        
         if (Physics.Raycast(transform.position, directionToTarget, out RaycastHit hit, obstacleAvoidanceDistance))
         {
             if (hit.collider.CompareTag("Wall"))
