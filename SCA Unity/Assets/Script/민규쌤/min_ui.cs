@@ -7,7 +7,7 @@ public class min_ui : MonoBehaviour
     public static GameObject PressE;
     public static GameObject ShopUI;
     public GameObject player;
-    public static bool UI_opened=false;
+    public static bool UI_opened = false;
     public static bool delete = false;
     private Animator animator;
     void Start()
@@ -15,13 +15,13 @@ public class min_ui : MonoBehaviour
         PressE = GameObject.Find("Press_E");
         ShopUI = GameObject.Find("Shop_UI");
         player = GameObject.Find("FPC");
-        animator= GetComponent<Animator>();
+        animator = GetComponent<Animator>();
         PressE.SetActive(false);
         ShopUI.SetActive(false);
     }
     void Update()
     {
-        if (delete==true)
+        if (delete == true)
         {
             delete = false;
             Destroy(gameObject);
@@ -58,10 +58,16 @@ public class min_ui : MonoBehaviour
                 Cursor.lockState = CursorLockMode.None;
                 Crouch.movementSpeed = 0f;
                 FirstPersonMovement.speed = 0f;
-                animator.SetBool("isHello",true);
+                animator.SetBool("isHello", true);
+                StartCoroutine("offAni");
                 PressE.SetActive(false);
                 ShopUI.SetActive(true);
             }
         }
+    }
+    IEnumerator offAni()
+    {
+        yield return new WaitForSeconds(0.05f); //아니 이래야 작동이 됨;;
+        animator.SetBool("isHello",false);
     }
 }
