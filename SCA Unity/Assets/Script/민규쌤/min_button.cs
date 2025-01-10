@@ -1,26 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Data;
-using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
 
 public class min_button : MonoBehaviour
 {
-    public GameObject Schang;
-    public GameObject Epress;
-    public void CloseClick()
+    public void close()
     {
-        Schang.SetActive(false);
-        Epress.SetActive(true);
-        min_detect.dontmovescreen = false;
-        Jump.jumpStrength = 2;
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
-        yeppy_player.catched = false;
-        FirstPersonMovement.canRun = true;
-        min_detect.detect = false;
-        min_detect.aniplay = false;
-        FirstPersonMovement.speed = 3f;
-        Crouch.movementSpeed = 2f;
+        Yun_button.Reset();
+        min_ui.UI_opened = false;
+        min_ui.delete = true;
+        min_spawn.spawned = false;
+        min_ui.ShopUI.SetActive(false);
     }
 }

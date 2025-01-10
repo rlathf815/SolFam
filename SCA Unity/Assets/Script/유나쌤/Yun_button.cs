@@ -5,14 +5,32 @@ using UnityEngine;
 
 public class Yun_button : MonoBehaviour
 {
-    public GameObject Yui;
+    public GameObject canvas;
     public void isGood()
     {
-        //시 내 코드가 이상해요
+        yun_ui.openui = false;
+        canvas.SetActive(false);
+        Reset();
+        Yun_Spawn.spawn = false;
     }
 
     public void isBad()
     {
-        //발 내 코드가 이상해요
+        yun_ui.openui = false;
+        canvas.SetActive(false);
+        Reset();
+        Yun_Spawn.spawn = false;
+    }
+
+    public static void Reset()
+    {
+        Jump.jumpStrength = 2;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        FirstPersonMovement.canRun = true;
+        FirstPersonMovement.speed = 3f;
+        FirstPersonLook.canlook = true;
+        Crouch.movementSpeed = 2f;
+        yeppy_player.catched = false;
     }
 }
