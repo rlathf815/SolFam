@@ -8,8 +8,7 @@ public class min_button : MonoBehaviour
     {
         Yun_button.Reset();
         min_ui.UI_opened = false;
+        min_ui.PressE.SetActive(true);
         min_ui.delete = true;
-        min_spawn.spawned = false;
-        min_ui.ShopUI.SetActive(false);
     }
 }

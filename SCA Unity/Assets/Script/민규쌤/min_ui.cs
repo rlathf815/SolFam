@@ -24,6 +24,8 @@ public class min_ui : MonoBehaviour
         if (delete == true)
         {
             delete = false;
+            min_spawn.spawned = false;
+            min_spawn.GoSpawn = true;
             Destroy(gameObject);
         }
     }
@@ -46,7 +48,7 @@ public class min_ui : MonoBehaviour
     {
         if (col.name == "FPC")
         {
-            if (Input.GetKey(KeyCode.E) && UI_opened == false)
+            if (Input.GetKey(KeyCode.E) && UI_opened == false&&yeppy_player.catched==false)
             {
                 UI_opened = true;
                 yeppy_player.catched = true;
@@ -58,16 +60,10 @@ public class min_ui : MonoBehaviour
                 Cursor.lockState = CursorLockMode.None;
                 Crouch.movementSpeed = 0f;
                 FirstPersonMovement.speed = 0f;
-                animator.SetBool("isHello", true);
-                StartCoroutine("offAni");
+                animator.SetTrigger("isHello");
                 PressE.SetActive(false);
                 ShopUI.SetActive(true);
             }
         }
-    }
-    IEnumerator offAni()
-    {
-        yield return new WaitForSeconds(0.05f); //아니 이래야 작동이 됨;;
-        animator.SetBool("isHello",false);
     }
 }
