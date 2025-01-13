@@ -6,7 +6,6 @@ using UnityEngine.AI;
 
 public class Nam_yun : MonoBehaviour
 {
-    bool catched = false;
     public GameObject player;
     private NavMeshAgent agent;
     void Start()
@@ -34,7 +33,7 @@ public class Nam_yun : MonoBehaviour
     }
     void OnTriggerStay(Collider col)
     {
-        if (col.name == "FPC"&&yeppy_player.catched==false)
+        if (col.tag == "Player"&&yeppy_player.catched==false)
         {
             yun_ui.openui = true;
             yeppy_player.catched = true;
