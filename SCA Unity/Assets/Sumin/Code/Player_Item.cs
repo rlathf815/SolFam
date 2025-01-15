@@ -19,7 +19,7 @@ public class Player_Item : MonoBehaviour
     {
         
     }
-    void EnergyDrink()
+    public void EnergyDrink()
     {
         Debug.Log("플레이어는 몬스터를 마셨다!");
         FirstPersonMovement.speed = FirstPersonMovement.speed * 1.3f;
