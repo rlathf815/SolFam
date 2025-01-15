@@ -24,13 +24,13 @@ MonoBehaviour:
       data:
         m_Type: DevionGames.InventorySystem.CanPickup
         m_Enabled: 1
-        m_WindowName: Inventory
+        m_WindowName: Actionbar
     - rid: 8
       type: {class: Pickup, ns: DevionGames.InventorySystem, asm: DevionGames.InventorySystem}
       data:
         m_Type: DevionGames.InventorySystem.Pickup
         m_Enabled: 1
-        m_WindowName: Inventory
+        m_WindowName: Actionbar
         m_DestroyWhenEmpty: 1
         m_Amount: -1
     - rid: 6036701725110042624
