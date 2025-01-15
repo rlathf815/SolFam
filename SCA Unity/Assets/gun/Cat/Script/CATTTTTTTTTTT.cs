@@ -56,7 +56,7 @@ public class CATTTTTTTTTTT : MonoBehaviour
             Follow();
             if (Input.GetKeyDown(KeyCode.W))
             {
-                //Animator.SetBool("Walk", true);
+                controller.SetBool("Walk", true);
                 controller.SetBool("Stop", false);
             }
             else
