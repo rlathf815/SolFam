@@ -9,13 +9,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9179488530053468686}
+  - component: {fileID: -8588772167682245185}
   - component: {fileID: 3356216943653171649}
   - component: {fileID: 7269649777574512900}
-  - component: {fileID: 7683132359603116679}
   - component: {fileID: 7187092059229229308}
+  - component: {fileID: -8007432174189368198}
   m_Layer: 0
   m_Name: New coffee(Clone)
-  m_TagString: ' item'
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -36,6 +37,27 @@ Transform:
   - {fileID: 3693871487621387880}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &-8588772167682245185
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 702359653272919827}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &3356216943653171649
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -52,7 +74,7 @@ MonoBehaviour:
   useDistance: 1.2
   triggerType: 9
   key: 102
-  actionTemplate: {fileID: 0}
+  actionTemplate: {fileID: 11400000, guid: 879f18a22f123114aa3660128ebe88bf, type: 2}
   actions: []
   m_Interruptable: 0
   references:
@@ -72,35 +94,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   saveable: 1
   m_Items:
-  - {fileID: 3953857891982721978, guid: acb2ef3ef6e42a14c92c8cb847284b7a, type: 2}
+  - {fileID: -1018607806659806927, guid: acb2ef3ef6e42a14c92c8cb847284b7a, type: 2}
   m_Amounts: 01000000
   m_Modifiers:
   - modifiers: []
   onChange:
     m_PersistentCalls:
       m_Calls: []
---- !u!64 &7683132359603116679
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 702359653272919827}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 0}
 --- !u!54 &7187092059229229308
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -128,6 +128,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &-8007432174189368198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 702359653272919827}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95ff8949b55037043a6183d61fd8dcff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Title: "\uCEE4\uD53C"
+  m_Instruction: Pickup
 --- !u!1 &3722315822081835412
 GameObject:
   m_ObjectHideFlags: 0
