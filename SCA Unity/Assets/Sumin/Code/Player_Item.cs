@@ -19,7 +19,30 @@ public class Player_Item : MonoBehaviour
     {
         
     }
+    public void EnergyDrink()
+    {
+        Debug.Log("플레이어는 몬스터를 마셨다!");
+        FirstPersonMovement.speed = FirstPersonMovement.speed * 1.3f;
+        FirstPersonMovement.runSpeed = FirstPersonMovement.runSpeed * 1.3f;
+        if (time > 0)
+        {
+            time -= Time.deltaTime;
+        }
+        FirstPersonMovement.speed = 3f;
+        FirstPersonMovement.runSpeed = 5f;
+    }
 
+    void Ramen()
+    {
+        Debug.Log("플레이어는 라면을 먹었다!");
+        HP += 1;
+    }
+
+    void Coffee()
+    {
+        Debug.Log("플레이어는 커피(뇌물)을 사용했다!");
+        //미완
+    }
     // Update is called once per frame
     void Update()
     {
