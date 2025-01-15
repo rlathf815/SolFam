@@ -8,6 +8,7 @@ TagManager:
   - ' item'
   - crm13
   - corridor
+  - playerArea
   layers:
   - Default
   - TransparentFX
