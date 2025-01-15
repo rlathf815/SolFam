@@ -8,19 +8,18 @@ public class CATTTTTTTTTTT : MonoBehaviour
     public GameObject text;
     public Transform player; // 플레이어의 Transform
     public float disappearTime = 5f; // 사라지는 시간
+    public GameObject cat;
+    public Animator controller;
 
     private bool isFollowing = false; // 현재 따라오고 있는지 여부
     private Renderer objectRenderer; // 오브젝트의 Renderer
     private bool isClose;
-    private Animation Animator;
-    public GameObject cat;
-    public Animator controller;
     void Start()
     {
         isClose = false;
         objectRenderer = GetComponent<Renderer>();
         objectRenderer.enabled = true; // 처음에는 보이도록 설정
-        Animator = GetComponent<Animation>();
+        controller = GetComponent<Animator>();
     }
 
     void Update()
@@ -37,9 +36,9 @@ public class CATTTTTTTTTTT : MonoBehaviour
             // 30% 확률로 따라오기
             if (Random.value <= 0.9f) // 30% 확률
             {
+
                 isFollowing = true;
                 Debug.Log("Following the player.");
-                controller.SetTrigger("Follow");
             }
             else
             {
@@ -54,16 +53,6 @@ public class CATTTTTTTTTTT : MonoBehaviour
         {
             text.SetActive(false);
             Follow();
-            if (Input.GetKeyDown(KeyCode.W))
-            {
-                controller.SetBool("Walk", true);
-                controller.SetBool("Stop", false);
-            }
-            else
-            {
-                controller.SetBool("Walk", false);
-                controller.SetBool("Stop", true);
-            }
         }
     }
 
@@ -79,6 +68,7 @@ public class CATTTTTTTTTTT : MonoBehaviour
             Quaternion lookRotation = Quaternion.LookRotation(direction); // 방향 벡터를 기반으로 회전 생성
             cat.transform.rotation = Quaternion.Slerp(cat.transform.rotation, lookRotation, Time.deltaTime * 5f); // 부드럽게 회전
         }
+        
     }
 
     private IEnumerator DisappearAndReappear()
