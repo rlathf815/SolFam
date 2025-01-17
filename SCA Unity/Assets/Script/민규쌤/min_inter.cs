@@ -12,12 +12,14 @@ public class min_inter : MonoBehaviour
     void Start()
     {
         anim = GetComponent<Animator>();
-        player = GameObject.Find("FPC");
+        player = GameObject.FindGameObjectWithTag("Player");
     }
     void Update()
     {
         if (delete)
         {
+            delete = false;
+            min_spawn.spawned= false;
             Destroy(gameObject);
         }
     }
