@@ -10,16 +10,23 @@ public class CATTTTTTTTTTT : MonoBehaviour
     public float disappearTime = 5f; // 사라지는 시간
     public GameObject cat;
     public Animator controller;
+    public float followDistance = 1.5f; //플레이어랑 고양이 사이 간격
 
     private bool isFollowing = false; // 현재 따라오고 있는지 여부
     private Renderer objectRenderer; // 오브젝트의 Renderer
     private bool isClose;
+
+    public AudioClip soundClip; // 재생할 사운드 클립
+    private AudioSource audioSource; // 오디오 소스 컴포넌트
     void Start()
     {
         isClose = false;
         objectRenderer = GetComponent<Renderer>();
         objectRenderer.enabled = true; // 처음에는 보이도록 설정
-        controller = GetComponent<Animator>();
+        //controller = GetComponent<Animator>();
+
+        audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.clip = soundClip;
     }
 
     void Update()
@@ -34,17 +41,19 @@ public class CATTTTTTTTTTT : MonoBehaviour
             }
 
             // 30% 확률로 따라오기
-            if (Random.value <= 0.9f) // 30% 확률
+            if (Random.value <= 0.98f) // 30% 확률
             {
-
                 isFollowing = true;
+                controller.SetTrigger("Follow");
                 Debug.Log("Following the player.");
+                audioSource.Play();
             }
             else
             {
                 isFollowing = false;
                 Debug.Log("Not following. Starting disappear coroutine.");
                 StartCoroutine(DisappearAndReappear());
+                return;
             }
         }
 
@@ -58,8 +67,9 @@ public class CATTTTTTTTTTT : MonoBehaviour
 
     void Follow()
     {
+        Vector3 targetPosition = player.position - player.forward * followDistance;//목표 지점(플레이어위치 + 간격)을 미리 계산
         // 플레이어의 위치로 부드럽게 이동
-        cat.transform.position = Vector3.Lerp(cat.transform.position, player.position, Time.deltaTime);
+        cat.transform.position = Vector3.Lerp(cat.transform.position, targetPosition, Time.deltaTime);
 
         // 플레이어를 바라보도록 회전
         Vector3 direction = (player.position - cat.transform.position).normalized; // 플레이어 방향 벡터
@@ -68,8 +78,18 @@ public class CATTTTTTTTTTT : MonoBehaviour
             Quaternion lookRotation = Quaternion.LookRotation(direction); // 방향 벡터를 기반으로 회전 생성
             cat.transform.rotation = Quaternion.Slerp(cat.transform.rotation, lookRotation, Time.deltaTime * 5f); // 부드럽게 회전
         }
-        
+        // 플레이어의 속도를 체크하여 animator의 isWalking 파라미터 업데이트
+        if (player.GetComponent<Rigidbody>().velocity.magnitude > 0.1f) // 플레이어가 움직일 때
+        {
+            controller.SetBool("isWalking", true);
+        }
+        else // 플레이어가 멈출 때
+        {
+            controller.SetBool("isWalking", false);
+        }
     }
+
+
 
     private IEnumerator DisappearAndReappear()
     {

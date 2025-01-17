@@ -11,6 +11,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: Follow
     m_EventTreshold: 0
+  - m_ConditionMode: 1
+    m_ConditionEvent: isWalking
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -1146391822987086930}
   m_Solo: 0
@@ -20,7 +23,7 @@ AnimatorStateTransition:
   m_TransitionDuration: 0.5881176
   m_TransitionOffset: 0
   m_ExitTime: 0.75951654
-  m_HasExitTime: 1
+  m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
@@ -88,19 +91,19 @@ AnimatorStateMachine:
     m_Position: {x: 190, y: 120, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -1146391822987086930}
-    m_Position: {x: 430, y: 140, z: 0}
+    m_Position: {x: 580, y: 30, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -3507997247406973372}
-    m_Position: {x: 670, y: 140, z: 0}
+    m_Position: {x: 880, y: 0, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -4896924987434604987}
-    m_Position: {x: 1040, y: 140, z: 0}
+    m_Position: {x: 1400, y: 190, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -6823733723484106694}
-    m_Position: {x: 900, y: 230, z: 0}
+    m_Position: {x: 890, y: 230, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 2595644243818779260}
-    m_Position: {x: 880, y: 70, z: 0}
+    m_Position: {x: 1330, y: -30, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -147,7 +150,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 2
-    m_ConditionEvent: Stop
+    m_ConditionEvent: isWalking
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 2595644243818779260}
@@ -158,7 +161,7 @@ AnimatorStateTransition:
   m_TransitionDuration: 0.44984382
   m_TransitionOffset: 0
   m_ExitTime: 0.55635256
-  m_HasExitTime: 1
+  m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
@@ -275,17 +278,11 @@ AnimatorController:
   m_Name: CAT_ 1
   serializedVersion: 5
   m_AnimatorParameters:
-  - m_Name: Walk
+  - m_Name: isWalking
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
-    m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
-  - m_Name: Stop
-    m_Type: 4
-    m_DefaultFloat: 0
-    m_DefaultInt: 0
-    m_DefaultBool: 0
+    m_DefaultBool: 1
     m_Controller: {fileID: 9100000}
   - m_Name: Follow
     m_Type: 9
@@ -385,8 +382,8 @@ AnimatorStateTransition:
   m_PrefabAsset: {fileID: 0}
   m_Name: 
   m_Conditions:
-  - m_ConditionMode: 2
-    m_ConditionEvent: Walk
+  - m_ConditionMode: 1
+    m_ConditionEvent: isWalking
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -6823733723484106694}
@@ -397,7 +394,7 @@ AnimatorStateTransition:
   m_TransitionDuration: 0.50503504
   m_TransitionOffset: 0
   m_ExitTime: 0.7432024
-  m_HasExitTime: 1
+  m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
@@ -409,10 +406,7 @@ AnimatorStateTransition:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
-  m_Conditions:
-  - m_ConditionMode: 2
-    m_ConditionEvent: Walk
-    m_EventTreshold: 0
+  m_Conditions: []
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -3507997247406973372}
   m_Solo: 0
