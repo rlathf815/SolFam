@@ -12,7 +12,7 @@ public class yeppy_player : MonoBehaviour
     public Transform player;
     void Update()
     {
-        if (Physics.SphereCast(transform.position, 2, transform.forward, out hit,80))
+        if (Physics.SphereCast(transform.position, 2.5f, transform.forward, out hit,80))
         {
             if (hit.transform.gameObject.tag=="whiteT")
             {

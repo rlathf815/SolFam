@@ -32,13 +32,13 @@ public class Player_Item : MonoBehaviour
         FirstPersonMovement.runSpeed = 5f;
     }
 
-    void Ramen()
+    public void Ramen()
     {
         Debug.Log("플레이어는 라면을 먹었다!");
         HP += 1;
     }
 
-    void Coffee()
+    public void Coffee()
     {
         Debug.Log("플레이어는 커피(뇌물)을 사용했다!");
         //미완

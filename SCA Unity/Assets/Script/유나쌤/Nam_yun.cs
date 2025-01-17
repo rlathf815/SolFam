@@ -10,8 +10,8 @@ public class Nam_yun : MonoBehaviour
     private NavMeshAgent agent;
     void Start()
     {
-        player = GameObject.Find("FPC");
-        agent=GetComponent<NavMeshAgent>();
+        player = GameObject.FindGameObjectWithTag("Player");
+        agent =GetComponent<NavMeshAgent>();
         agent.isStopped = false;
     }
 
