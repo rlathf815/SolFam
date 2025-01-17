@@ -8,11 +8,14 @@ public class Nam_yun : MonoBehaviour
 {
     public GameObject player;
     private NavMeshAgent agent;
+    private Animator anim;
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
         agent =GetComponent<NavMeshAgent>();
+        anim = GetComponent<Animator>();
         agent.isStopped = false;
+        anim.SetBool("isWalk",true);
     }
 
     void Update()
@@ -35,6 +38,7 @@ public class Nam_yun : MonoBehaviour
     {
         if (col.tag == "Player"&&yeppy_player.catched==false)
         {
+            anim.SetBool("isWalk", false);
             yun_ui.openui = true;
             yeppy_player.catched = true;
             yeppy_player.gojung = player.transform.rotation;
