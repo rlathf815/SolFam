@@ -217,8 +217,6 @@ GameObject:
   - component: {fileID: 6244905901879155394}
   - component: {fileID: 7924565700224763983}
   - component: {fileID: 3309280699945470838}
-  - component: {fileID: 5054055477135983126}
-  - component: {fileID: 505150936013035124}
   m_Layer: 0
   m_Name: CAT_
   m_TagString: Untagged
@@ -326,34 +324,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &5054055477135983126
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 761051543620836119}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b87badca53a98c4b9333470364ec402, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  text: {fileID: 0}
-  player: {fileID: 0}
-  disappearTime: 5
---- !u!114 &505150936013035124
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 761051543620836119}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65e56c1ed7b14f541a83085e574cd6a7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  text: {fileID: 0}
 --- !u!1 &888390546829899264
 GameObject:
   m_ObjectHideFlags: 0
