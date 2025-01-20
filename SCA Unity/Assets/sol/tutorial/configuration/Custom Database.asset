@@ -21,10 +21,10 @@ MonoBehaviour:
   m_Description: "\uB9C8\uC2DC\uBA74 \uC18D\uB3C4\uAC00 1.5\uBC30 \uC0C1\uC2B9\uD55C\uB2E4"
   m_Category: {fileID: 1767484460316629153}
   m_IsSellable: 1
-  m_BuyPrice: 0
+  m_BuyPrice: 2300
   m_CanBuyBack: 0
   m_BuyCurrency: {fileID: 5159491216954419924}
-  m_SellPrice: 0
+  m_SellPrice: 1700
   m_SellCurrency: {fileID: 5159491216954419924}
   m_Stack: 1
   m_MaxStack: 60
@@ -292,10 +292,10 @@ MonoBehaviour:
   m_Description: "\uB1CC\uBB3C\uB85C \uC0AC\uC6A9 \uAC00\uB2A5\uD558\uB2E4"
   m_Category: {fileID: 1767484460316629153}
   m_IsSellable: 1
-  m_BuyPrice: 0
+  m_BuyPrice: 2000
   m_CanBuyBack: 0
   m_BuyCurrency: {fileID: 5159491216954419924}
-  m_SellPrice: 0
+  m_SellPrice: 1500
   m_SellCurrency: {fileID: 5159491216954419924}
   m_Stack: 1
   m_MaxStack: 60
@@ -381,8 +381,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   items:
   - {fileID: 1376978777363189}
-  - {fileID: -1018607806659806927}
   - {fileID: -7435678795052779386}
+  - {fileID: -1018607806659806927}
   currencies:
   - {fileID: 5159491216954419924}
   raritys: []
@@ -417,10 +417,10 @@ MonoBehaviour:
   m_Description: "\uB1CC\uBB3C\uB85C \uC0AC\uC6A9 \uAC00\uB2A5\uD558\uB2E4"
   m_Category: {fileID: 1767484460316629153}
   m_IsSellable: 1
-  m_BuyPrice: 0
+  m_BuyPrice: 1500
   m_CanBuyBack: 0
   m_BuyCurrency: {fileID: 5159491216954419924}
-  m_SellPrice: 0
+  m_SellPrice: 1000
   m_SellCurrency: {fileID: 5159491216954419924}
   m_Stack: 1
   m_MaxStack: 60
@@ -527,6 +527,28 @@ MonoBehaviour:
   name: Default
   m_EditorColor: {r: 0, g: 0, b: 0, a: 0}
   m_Cooldown: 1
+--- !u!114 &3362433665754962722
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28fccac83a2fa2245991bffe45a6cdd1, type: 3}
+  m_Name: Vendor
+  m_EditorClassIdentifier: 
+  m_GroupName: Vendor
+  m_Items:
+  - {fileID: 1376978777363189}
+  - {fileID: -1018607806659806927}
+  - {fileID: -7435678795052779386}
+  m_Amounts: 010000000100000001000000
+  m_Modifiers:
+  - modifiers: []
+  - modifiers: []
+  - modifiers: []
 --- !u!114 &5159491216954419924
 MonoBehaviour:
   m_ObjectHideFlags: 1
