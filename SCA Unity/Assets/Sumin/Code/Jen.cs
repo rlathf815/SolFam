@@ -11,7 +11,6 @@ public class Jen : MonoBehaviour
     public int MenSeter_I;
     public int Coffee_I;
 
-    public Transform Player;
     public float distance = 1.0f;
 
     public GameObject jen;
