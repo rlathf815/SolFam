@@ -45,4 +45,17 @@ public class Player_Item : MonoBehaviour
         yield return new WaitForSeconds(time);
         FirstPersonMovement.speed = 3;
     }
+
+    public void OnCollisionEnter(Collision other)
+    {
+        if(Coffee_I >=1 && other.gameObject.tag == "Euna")
+        {
+
+        }
+
+        if(Coffee_I >= 1 && other.gameObject.tag == "gn")
+        {
+
+        }
+    }
 }
