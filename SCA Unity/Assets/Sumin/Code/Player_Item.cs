@@ -5,11 +5,9 @@ using UnityEngine;
 public class Player_Item : MonoBehaviour
 {
     public static int HP = 3;
-    public int Coffee_I = 1;
+    public int Coffee_I = 0;
     public int MenSeter_I = 0;
     public int Noudell_I = 0;
-    private float time = 5;
-    private bool state;
 
     public Transform player;
     public GameObject prefab;
@@ -24,57 +22,27 @@ public class Player_Item : MonoBehaviour
         Debug.Log("플레이어는 몬스터를 마셨다!");
         FirstPersonMovement.speed = FirstPersonMovement.speed * 1.3f;
         FirstPersonMovement.runSpeed = FirstPersonMovement.runSpeed * 1.3f;
-        if (time > 0)
-        {
-            time -= Time.deltaTime;
-        }
-        FirstPersonMovement.speed = 3f;
-        FirstPersonMovement.runSpeed = 5f;
+        
+
+        StartCoroutine(DisappearAfterTime(3f,prefab));
     }
 
-    void Ramen()
+    public void Ramen()
     {
         Debug.Log("플레이어는 라면을 먹었다!");
         HP += 1;
     }
 
-    void Coffee()
+    public void Coffee()
     {
         Debug.Log("플레이어는 커피(뇌물)을 사용했다!");
         //미완
     }
-    // Update is called once per frame
-    void Update()
+
+    public IEnumerator DisappearAfterTime(float time, GameObject target)
     {
-        if (Input.GetKeyDown(KeyCode.Keypad1)&&MenSeter_I>=1)
-        {
-            MenSeter_I -= 1;
-            FirstPersonMovement.speed = FirstPersonMovement.speed * 1.3f;
-            FirstPersonMovement.runSpeed = FirstPersonMovement.runSpeed * 1.3f;
-            if (time > 0)
-            {
-                time -= Time.deltaTime;
-            }
-            FirstPersonMovement.speed = 3f;
-            FirstPersonMovement.runSpeed = 5f;
-        }
-
-        if (Input.GetKeyDown(KeyCode.Keypad2)&&Noudell_I>=1)
-        {
-            Noudell_I -= 1;
-            HP += 1;
-        }
-
-        if (Input.GetKeyUp(KeyCode.Keypad3) && Coffee_I >= 1) // 미완
-        {
-            Coffee_I -= 1;
-            Vector3 spawnDirection = player.forward;
-
-            // 프리팹을 생성할 위치 (플레이어 위치 + 바라보는 방향)
-            Vector3 spawnPosition = player.position + spawnDirection;
-
-            // 프리팹 생성
-            Instantiate(prefab, spawnPosition, Quaternion.identity);
-        }
+        // 지정된 시간만큼 대기
+        yield return new WaitForSeconds(time);
+        FirstPersonMovement.speed = 3;
     }
 }
