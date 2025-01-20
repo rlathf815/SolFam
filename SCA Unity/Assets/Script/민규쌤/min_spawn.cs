@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
 
 public class min_spawn : MonoBehaviour
@@ -9,37 +10,30 @@ public class min_spawn : MonoBehaviour
     public Transform spawn3;
     public GameObject minT;
     public static bool spawned = false;
-    int random=0;
+
     void Start()
     {
-        StartCoroutine("Spawn");
+        StartCoroutine("spawn");
     }
-
-    IEnumerator Spawn()
+    IEnumerator spawn()
     {
-        if (spawned == false)
+        yield return new WaitForSeconds(10);
+        if (Random.Range(0, 3) == 0 &&spawned==false)
         {
-            if(Random.Range(0, 4) == 0)
+            spawned = true;
+            switch (Random.Range(0, 3))
             {
-                random = Random.Range(0, 3);
-                if (random == 0)
-                {
-                    spawned = true;
-                    Instantiate(minT, spawn1);
-                }
-                else if (random == 1)
-                {
-                    spawned = true;
-                    Instantiate(minT, spawn2);
-                }
-                else if (random == 2)
-                {
-                    spawned = true;
-                    Instantiate(minT, spawn3);
-                }
+                case 0:
+                    Instantiate(minT,spawn1);
+                    break;
+                case 1:
+                    Instantiate(minT,spawn2);
+                    break;
+                case 2:
+                    Instantiate(minT,spawn3);
+                    break;
             }
-            yield return new WaitForSeconds(5);
         }
-        StartCoroutine("Spawn");
+        StartCoroutine("spawn");
     }
 }

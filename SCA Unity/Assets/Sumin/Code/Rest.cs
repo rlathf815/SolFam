@@ -6,7 +6,7 @@ using UnityEngine;
 public class Rest : MonoBehaviour
 {
     public static int point = 3;
-    private bool state;
+    public bool re = false;
 
     void Start()
     {
@@ -30,14 +30,15 @@ public class Rest : MonoBehaviour
             Player_Item.HP -= 3;
         }
 
-
-        if (state == true && other.gameObject.tag == "corridor")
+        else if (re == true && other.gameObject.tag == "corridor")
         {
             point -= 1;
+            Debug.Log("1");
         } 
-        else if(other.gameObject.tag == "corridor" && FirstPersonMovement.speed > 3 || FirstPersonMovement.runSpeed > 3)
+        else if(other.gameObject.tag == "corridor" && FirstPersonMovement.speed > 3 )
         {
             point -= 1;
+            Debug.Log("2");
         }
         else if(other.gameObject.tag == "crm" && other.gameObject.tag == "item")
         {

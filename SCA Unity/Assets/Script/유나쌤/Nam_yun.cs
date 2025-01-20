@@ -6,14 +6,16 @@ using UnityEngine.AI;
 
 public class Nam_yun : MonoBehaviour
 {
-    bool catched = false;
     public GameObject player;
     private NavMeshAgent agent;
+    private Animator anim;
     void Start()
     {
-        player = GameObject.Find("FPC");
-        agent=GetComponent<NavMeshAgent>();
+        player = GameObject.FindGameObjectWithTag("Player");
+        agent =GetComponent<NavMeshAgent>();
+        anim = GetComponent<Animator>();
         agent.isStopped = false;
+        anim.SetBool("isWalk",true);
     }
 
     void Update()
@@ -34,8 +36,9 @@ public class Nam_yun : MonoBehaviour
     }
     void OnTriggerStay(Collider col)
     {
-        if (col.name == "FPC"&&yeppy_player.catched==false)
+        if (col.tag == "Player"&&yeppy_player.catched==false)
         {
+            anim.SetBool("isWalk", false);
             yun_ui.openui = true;
             yeppy_player.catched = true;
             yeppy_player.gojung = player.transform.rotation;

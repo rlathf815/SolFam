@@ -4,47 +4,27 @@ using UnityEngine;
 
 public class min_ui : MonoBehaviour
 {
-    public GameObject PressE;
-    public GameObject ShopUI;
-    public GameObject player;
-    public static bool UI_opened=false;
-    void Start()
-    {
-        PressE = GameObject.Find("Press_E");
-        ShopUI = GameObject.Find("Shop_UI");
-        player = GameObject.Find("FPC");
-        PressE.SetActive(false);
-        ShopUI.SetActive(false);
-    }
-
+    public GameObject Epress;
+    public GameObject Shop;
+    public static bool Eopen;
+    public static bool Sopen;
     void Update()
     {
-
-    }
-    void OnTriggerEnter(Collider col)
-    {
-        if (col.name == "FPC")
+        if (Eopen)
         {
-            PressE.SetActive(true);
+            Epress.SetActive(true);
         }
-    }
-    void OnTriggerExit(Collider col)
-    {
-        if (col.name == "FPC")
+        else
         {
-            PressE.SetActive(false);
+            Epress.SetActive(false);
         }
-    }
-    void OnTriggerStay(Collider col)
-    {
-        if (col.name == "FPC")
+        if (Sopen)
         {
-            if (Input.GetKeyDown(KeyCode.E) && UI_opened == false)
-            {
-                UI_opened = true;
-                yeppy_player.gojung = player.transform.rotation;
-                FirstPersonLook.canlook = false;
-            }
+            Shop.SetActive(true);
+        }
+        else
+        {
+            Shop.SetActive(false);
         }
     }
 }
