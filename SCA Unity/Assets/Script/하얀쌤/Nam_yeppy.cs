@@ -21,13 +21,13 @@ public class Nam_yeppy : MonoBehaviour
     }
     void Update()
     {
-        Debug.Log(player.transform.position);
         agent.destination = player.transform.position;
     }
     void OnTriggerStay(Collider col)
     {
         if (col.tag == "Player"&& yeppy_player.catched==false)
         {
+            //여기다가 아이템 빼가는거 넣어주세요
             yeppy_spawn.spawned = false;
             Destroy(gameObject);
         }
