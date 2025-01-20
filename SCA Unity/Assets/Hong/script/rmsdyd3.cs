@@ -8,7 +8,7 @@ public class MonsterAI : MonoBehaviour
 
     public float detectionRadius1 = 10f;
     public float detectionRadius2 = 30f;
-    public float detectionRadius3 = 15f;
+    public float detectionRadius3 = 20f;
 
     
     public float chaseSpeed = 4.5f;
