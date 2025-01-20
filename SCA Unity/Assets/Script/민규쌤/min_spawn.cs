@@ -17,7 +17,7 @@ public class min_spawn : MonoBehaviour
     }
     IEnumerator spawn()
     {
-        yield return new WaitForSeconds(7);
+        yield return new WaitForSeconds(10);
         if (Random.Range(0, 3) == 0 &&spawned==false)
         {
             spawned = true;
