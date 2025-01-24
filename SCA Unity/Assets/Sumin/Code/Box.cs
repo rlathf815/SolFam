@@ -11,15 +11,16 @@ public class Box : MonoBehaviour
     public int Coffee_b;
     public int MenSeter_b;
 
-    public GameObject text;
-    private bool isClose;
-    private bool state;
+    public GameObject BoxPanel; // UI 패널
+    public GameObject box;
+    private bool BoxInRange = false;
 
     public int point;
     // Start is called before the first frame update
     void Start()
     {
-        state = false;
+        Renderer jenRenderer = box.GetComponent<Renderer>();
+        BoxInRange = false;
     }
 
     // Update is called once per frame
@@ -27,35 +28,18 @@ public class Box : MonoBehaviour
     {
         if (point == 0)
         {
-            Coffee_b = Coffee_I;
-            MenSeter_b = MenSeter_I;
-            state = true;
-        }
-
-        if (isClose && Input.GetKeyDown(KeyCode.E)) // E 키 누름
-        {
-            if (state == true && (Coffee_b>=1 || MenSeter_b>=1))
-            { 
-                state = false;
-                Debug.Log("on " + state);
-                Coffee_I += Coffee_b;
-                MenSeter_I += MenSeter_b;
-            }
-            /*else
-            {
-                state = true;
-                Debug.Log("off " + state);
-            }*/
+            Renderer boxState = box.GetComponent<Renderer>();
+            boxState.enabled = true;
         }
     }
 
     public void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other.tag);
-        if (other.gameObject.tag == "Player")
+        
+        if (other.CompareTag("Player")) // 플레이어가 범위를 벗어날 시
         {
-            isClose = true;
-            text.SetActive(true);
+            BoxInRange = false; // 플레이어가 범위에서 나감
+            BoxPanel.SetActive(false); // 패널 비활성화
         }
     }
 }
