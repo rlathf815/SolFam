@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class MonsterAI : MonoBehaviour
 {
-    public Transform player;
+    public GameObject player;
     public Transform spotlight;
 
     public float detectionRadius1 = 10f;
@@ -31,12 +31,15 @@ public class MonsterAI : MonoBehaviour
 
     void Start()
     {
+        player = GameObject.FindWithTag("Player");
+        spotlight = transform.GetChild(3).transform;
+
         currentState = AIState.Idle;
         rb = GetComponent<Rigidbody>();
 
         if (rb == null)
         {
-            Debug.LogError("Rigidbody가 설정되지 않았습니다! Rigidbody를 추가하세요.");
+            //Debug.LogError("Rigidbody가 설정되지 않았습니다! Rigidbody를 추가하세요.");
         }
 
         StartCoroutine(ToggleSpotlight());
@@ -60,38 +63,38 @@ public class MonsterAI : MonoBehaviour
     {
         if (IsPlayerInFieldOfView() && IsPlayerWithinRange(detectionRadius1))
         {
-            Debug.Log("범위 1: 플레이어 추적 중");
+            //Debug.Log("범위 1: 플레이어 추적 중");
             isPlayerInSight = true;
             timeSinceLastSeen = 0f;
-            lastKnownPosition = player.position;
-            MoveTowards(player.position);
-            RotateTowards(player.position - transform.position); 
+            lastKnownPosition = player.transform.position;
+            MoveTowards(player.transform.position);
+            RotateTowards(player.transform.position - transform.position); 
         }
         else if (IsPlayerWithinRange(detectionRadius3))
         {
-            Debug.Log("범위 3: 플레이어 실시간 추적 중");
+            //Debug.Log("범위 3: 플레이어 실시간 추적 중");
             isPlayerInSight = false;
             playerPath.Clear();
-            lastKnownPosition = player.position;
-            MoveTowards(player.position);
-            RotateTowards(player.position - transform.position); 
+            lastKnownPosition = player.transform.position;
+            MoveTowards(player.transform.position);
+            RotateTowards(player.transform.position - transform.position); 
         }
         else if (IsPlayerWithinRange(detectionRadius2))
         {
-            Debug.Log("범위 2: 경로 따라 이동 중");
+            //Debug.Log("범위 2: 경로 따라 이동 중");
             isPlayerInSight = false;
             SavePlayerPath();
             FollowPlayerPath();
-            RotateTowards(player.position - transform.position); 
+            RotateTowards(player.transform.position - transform.position); 
         }
         else
         {
-            Debug.Log("범위 2 및 3 벗어남: 마지막 위치로 이동");
+            //Debug.Log("범위 2 및 3 벗어남: 마지막 위치로 이동");
             timeSinceLastSeen += Time.deltaTime;
 
             if (timeSinceLastSeen > lostPlayerDelay)
             {
-                Debug.Log("Idle 상태로 전환");
+                //Debug.Log("Idle 상태로 전환");
                 currentState = AIState.Idle;
             }
             else
@@ -108,24 +111,24 @@ public class MonsterAI : MonoBehaviour
     {
         if (spotlight.gameObject.activeSelf && IsPlayerInFieldOfView())
         {
-            float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+            float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
 
             if (distanceToPlayer <= detectionRadius1)
             {
-                Debug.Log("플레이어 감지: 추적 시작");
+                //Debug.Log("플레이어 감지: 추적 시작");
                 currentState = AIState.Chasing;
                 timeSinceLastSeen = 0f;
-                lastKnownPosition = player.position;
+                lastKnownPosition = player.transform.position;
             }
         }
     }
 
     void SavePlayerPath()
     {
-        if (playerPath.Count == 0 || Vector3.Distance(player.position, playerPath[playerPath.Count - 1]) > positionThreshold)
+        if (playerPath.Count == 0 || Vector3.Distance(player.transform.position, playerPath[playerPath.Count - 1]) > positionThreshold)
         {
-            Debug.Log("경로 저장: " + player.position);
-            playerPath.Add(player.position);
+            //Debug.Log("경로 저장: " + player.transform.position);
+            playerPath.Add(player.transform.position);
         }
     }
 
@@ -138,18 +141,18 @@ public class MonsterAI : MonoBehaviour
 
             if (distanceToTarget <= positionThreshold)
             {
-                Debug.Log("경로 지점 도달: " + targetPosition);
+                //Debug.Log("경로 지점 도달: " + targetPosition);
                 playerPath.RemoveAt(0);
             }
             else
             {
-                Debug.Log("경로 따라 이동 중: " + targetPosition);
+                //Debug.Log("경로 따라 이동 중: " + targetPosition);
                 MoveTowards(targetPosition);
             }
         }
         else
         {
-            Debug.Log("경로 없음: 마지막 위치로 이동");
+            //Debug.Log("경로 없음: 마지막 위치로 이동");
             MoveTowards(lastKnownPosition);
         }
     }
@@ -163,7 +166,7 @@ public class MonsterAI : MonoBehaviour
         {
             if (hit.collider.CompareTag("Wall"))
             {
-                Debug.Log("장애물 감지: 회피 중");
+                //Debug.Log("장애물 감지: 회피 중");
                 Vector3 avoidDirection = Vector3.Cross(hit.normal, Vector3.up).normalized;
                 directionToTarget = (directionToTarget + avoidDirection).normalized;
             }
@@ -185,14 +188,14 @@ public class MonsterAI : MonoBehaviour
 
     bool IsPlayerInFieldOfView()
     {
-        Vector3 directionToPlayer = player.position - transform.position;
+        Vector3 directionToPlayer = player.transform.position - transform.position;
         float angle = Vector3.Angle(transform.forward, directionToPlayer);
         return angle < viewAngle;
     }
 
     bool IsPlayerWithinRange(float range)
     {
-        return Vector3.Distance(transform.position, player.position) <= range;
+        return Vector3.Distance(transform.position, player.transform.position) <= range;
     }
 
     System.Collections.IEnumerator ToggleSpotlight()
