@@ -34,6 +34,7 @@ public class Player_Item : MonoBehaviour
     {
         Debug.Log("플레이어는 라면을 먹었다!");
         PlayerStats.Instance.Heal(1);
+        if(HP<3) HP++;
     }
 
     public void Coffee()
