@@ -1,240 +1,81 @@
+using System.Collections;
 using UnityEngine;
-using System.Collections.Generic;
+using UnityEngine.AI;
 
-public class MonsterAI : MonoBehaviour
+public class EnemyAI : MonoBehaviour
 {
-    public GameObject player;
-    public Transform spotlight;
+    public Transform player; // 플레이어 오브젝트
+    public float detectionRange = 10f; // 감지 거리 증가
+    public Light alertLight; // 경고 빛
+    public float detectionAngle = 60f; // 감지 각도 더욱 좁게 설정하여 측면 및 뒤쪽 감지 원천 차단
+    public float closeRangeDetection = 4f; // 근거리 감지 거리 증가
 
-    public float detectionRadius1 = 10f;
-    public float detectionRadius2 = 30f;
-    public float detectionRadius3 = 20f;
-
-    
-    public float chaseSpeed = 4.5f;
-    public float rotationSpeed = 5f;
-    public float lostPlayerDelay = 3f;
-    public float positionThreshold = 0.5f;
-    public float viewAngle = 45f;
-    public float obstacleAvoidanceDistance = 2f;
-
-    
-    private float timeSinceLastSeen = 0f;
-    private Vector3 lastKnownPosition;
-    private List<Vector3> playerPath = new List<Vector3>();
-    private bool isPlayerInSight = false;
-
-    private enum AIState { Idle, Chasing }
-    private AIState currentState;
-
+    private NavMeshAgent agent;
+    private bool isChasing = false; // 감지 여부 체크
     private Rigidbody rb;
 
     void Start()
     {
-        player = GameObject.FindWithTag("Player");
-        spotlight = transform.GetChild(3).transform;
-
-        currentState = AIState.Idle;
+        agent = GetComponent<NavMeshAgent>();
         rb = GetComponent<Rigidbody>();
 
-        if (rb == null)
+        agent.updateRotation = true; // NavMeshAgent가 자동으로 회전하도록 설정
+        agent.updatePosition = true;
+        agent.avoidancePriority = 50; // 다른 오브젝트와 충돌 시 우선순위 조정
+        agent.stoppingDistance = 0f; // 플레이어를 끝까지 추적
+        agent.autoBraking = false; // 감속 없이 계속 이동
+
+        if (player == null)
         {
-            //Debug.LogError("Rigidbody가 설정되지 않았습니다! Rigidbody를 추가하세요.");
+            player = GameObject.FindGameObjectWithTag("Player").transform;
+        }
+        if (alertLight == null)
+        {
+            alertLight = GetComponentInChildren<Light>();
         }
 
-        StartCoroutine(ToggleSpotlight());
+        // 감지 거리 및 각도를 빛의 범위에 맞게 조정
+        alertLight.range = detectionRange * 1.1f; // 감지 거리보다 약간 넓게 조정
+        alertLight.spotAngle = detectionAngle; // 감지 각도 조정
+
+        alertLight.enabled = true; // 빛을 항상 켜둠 (감지 기준이므로)
     }
 
     void Update()
     {
-        switch (currentState)
-        {
-            case AIState.Chasing:
-                HandleChasingState();
-                break;
+        float distance = Vector3.Distance(transform.position, player.position);
+        Vector3 directionToPlayer = (player.position - transform.position).normalized;
+        float angleToPlayer = Vector3.Angle(transform.forward, directionToPlayer);
 
-            case AIState.Idle:
-                DetectPlayer();
-                break;
+        // 뒤쪽 및 측면 감지 완전 차단 (몹이 정면에 있는 플레이어만 감지)
+        if (!isChasing && (distance <= closeRangeDetection || (distance <= detectionRange && angleToPlayer <= detectionAngle / 2 && Vector3.Dot(transform.forward, directionToPlayer) > 0.999f)))
+        {
+            isChasing = true; // 감지 시작
+            alertLight.enabled = false; // 감지되면 빛 끄기
+            Debug.Log("[EnemyAI] Player detected! Chasing started.");
         }
-    }
 
-    void HandleChasingState()
-    {
-        if (IsPlayerInFieldOfView() && IsPlayerWithinRange(detectionRadius1))
+        if (isChasing)
         {
-            //Debug.Log("범위 1: 플레이어 추적 중");
-            isPlayerInSight = true;
-            timeSinceLastSeen = 0f;
-            lastKnownPosition = player.transform.position;
-            MoveTowards(player.transform.position);
-            RotateTowards(player.transform.position - transform.position); 
-        }
-        else if (IsPlayerWithinRange(detectionRadius3))
-        {
-            //Debug.Log("범위 3: 플레이어 실시간 추적 중");
-            isPlayerInSight = false;
-            playerPath.Clear();
-            lastKnownPosition = player.transform.position;
-            MoveTowards(player.transform.position);
-            RotateTowards(player.transform.position - transform.position); 
-        }
-        else if (IsPlayerWithinRange(detectionRadius2))
-        {
-            //Debug.Log("범위 2: 경로 따라 이동 중");
-            isPlayerInSight = false;
-            SavePlayerPath();
-            FollowPlayerPath();
-            RotateTowards(player.transform.position - transform.position); 
-        }
-        else
-        {
-            //Debug.Log("범위 2 및 3 벗어남: 마지막 위치로 이동");
-            timeSinceLastSeen += Time.deltaTime;
-
-            if (timeSinceLastSeen > lostPlayerDelay)
+            agent.SetDestination(player.position); // 플레이어 추적
+            if (Vector3.Dot(transform.forward, directionToPlayer) > 0.9f) // 완전히 정면에 있는 경우에만 회전
             {
-                //Debug.Log("Idle 상태로 전환");
-                currentState = AIState.Idle;
-            }
-            else
-            {
-                MoveTowards(lastKnownPosition);
-                RotateTowards(lastKnownPosition - transform.position); 
-            }
-        }
-
-        spotlight.gameObject.SetActive(true);
-    }
-
-    void DetectPlayer()
-    {
-        if (spotlight.gameObject.activeSelf && IsPlayerInFieldOfView())
-        {
-            float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
-
-            if (distanceToPlayer <= detectionRadius1)
-            {
-                //Debug.Log("플레이어 감지: 추적 시작");
-                currentState = AIState.Chasing;
-                timeSinceLastSeen = 0f;
-                lastKnownPosition = player.transform.position;
+                transform.LookAt(new Vector3(player.position.x, transform.position.y, player.position.z));
             }
         }
     }
 
-    void SavePlayerPath()
+    void FixedUpdate()
     {
-        if (playerPath.Count == 0 || Vector3.Distance(player.transform.position, playerPath[playerPath.Count - 1]) > positionThreshold)
+        // 플레이어가 몹에게 밀리지 않도록 물리적 충돌 제거 및 정밀 제어 추가
+        if (rb != null)
         {
-            //Debug.Log("경로 저장: " + player.transform.position);
-            playerPath.Add(player.transform.position);
-        }
-    }
-
-    void FollowPlayerPath()
-    {
-        if (playerPath.Count > 0)
-        {
-            Vector3 targetPosition = playerPath[0];
-            float distanceToTarget = Vector3.Distance(transform.position, targetPosition);
-
-            if (distanceToTarget <= positionThreshold)
-            {
-                //Debug.Log("경로 지점 도달: " + targetPosition);
-                playerPath.RemoveAt(0);
-            }
-            else
-            {
-                //Debug.Log("경로 따라 이동 중: " + targetPosition);
-                MoveTowards(targetPosition);
-            }
-        }
-        else
-        {
-            //Debug.Log("경로 없음: 마지막 위치로 이동");
-            MoveTowards(lastKnownPosition);
-        }
-    }
-
-    void MoveTowards(Vector3 targetPosition)
-    {
-        Vector3 directionToTarget = (targetPosition - transform.position).normalized;
-
-        
-        if (Physics.Raycast(transform.position, directionToTarget, out RaycastHit hit, obstacleAvoidanceDistance))
-        {
-            if (hit.collider.CompareTag("Wall"))
-            {
-                //Debug.Log("장애물 감지: 회피 중");
-                Vector3 avoidDirection = Vector3.Cross(hit.normal, Vector3.up).normalized;
-                directionToTarget = (directionToTarget + avoidDirection).normalized;
-            }
-        }
-
-        rb.velocity = directionToTarget * chaseSpeed;
-
-        RotateTowards(directionToTarget);
-    }
-
-    void RotateTowards(Vector3 direction)
-    {
-        if (direction != Vector3.zero)
-        {
-            Quaternion targetRotation = Quaternion.LookRotation(direction);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
-        }
-    }
-
-    bool IsPlayerInFieldOfView()
-    {
-        Vector3 directionToPlayer = player.transform.position - transform.position;
-        float angle = Vector3.Angle(transform.forward, directionToPlayer);
-        return angle < viewAngle;
-    }
-
-    bool IsPlayerWithinRange(float range)
-    {
-        return Vector3.Distance(transform.position, player.transform.position) <= range;
-    }
-
-    System.Collections.IEnumerator ToggleSpotlight()
-    {
-        while (true)
-        {
-            if (currentState == AIState.Idle)
-            {
-                spotlight.gameObject.SetActive(!spotlight.gameObject.activeSelf);
-                yield return new WaitForSeconds(2f);
-            }
-            else
-            {
-                spotlight.gameObject.SetActive(true);
-                yield return null;
-            }
-        }
-    }
-
-    void OnDrawGizmos()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, detectionRadius1);
-
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position, detectionRadius2);
-
-        Gizmos.color = Color.cyan;
-        Gizmos.DrawWireSphere(transform.position, detectionRadius3);
-
-        Gizmos.color = Color.blue;
-        for (int i = 0; i < playerPath.Count - 1; i++)
-        {
-            Gizmos.DrawLine(playerPath[i], playerPath[i + 1]);
-        }
-
-        if (playerPath.Count > 0)
-        {
-            Gizmos.DrawLine(transform.position, playerPath[0]);
+            rb.velocity = Vector3.zero; // 이동 중 미끄러짐 방지
+            rb.angularVelocity = Vector3.zero;
+            rb.freezeRotation = true; // 회전 잠금
+            rb.constraints = RigidbodyConstraints.FreezeAll; // 모든 이동 및 회전 방지 (완전 고정)
         }
     }
 }
+
+
