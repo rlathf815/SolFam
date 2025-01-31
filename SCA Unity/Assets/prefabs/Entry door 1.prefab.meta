@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:SCA Unity/Assets/yuchan/Glass door.prefab.meta
+guid: 3913c0778ecd0e34f8cc9b7386dd8f19
+========
 guid: 78b82dce5470a6c4fa586059a89c2d4f
+>>>>>>>> main:SCA Unity/Assets/prefabs/Entry door 1.prefab.meta
 PrefabImporter:
   externalObjects: {}
   userData: 
