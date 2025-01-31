@@ -8,7 +8,7 @@ public class FirstPersonMovement : MonoBehaviour
     [Header("Running")]
     public static bool canRun = true;
     public bool IsRunning { get; private set; }
-    public static float runSpeed = 5;
+    public static float runSpeed = 4;
     public KeyCode runningKey = KeyCode.LeftShift;
 
     Rigidbody rigidbody;
