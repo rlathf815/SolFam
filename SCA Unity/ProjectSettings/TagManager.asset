@@ -19,6 +19,7 @@ TagManager:
   - button f1
   - button f6
   - table
+  - activeCoffee
   layers:
   - Default
   - TransparentFX
