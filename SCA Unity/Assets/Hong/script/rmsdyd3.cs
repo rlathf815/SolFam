@@ -54,7 +54,7 @@ public class EnemyAI : MonoBehaviour
         {
             isChasing = true; // 감지 시작
             alertLight.enabled = false; // 감지되면 빛 끄기
-            Debug.Log("[EnemyAI] Player detected! Chasing started.");
+            //Debug.Log("[EnemyAI] Player detected! Chasing started.");
         }
 
         if (isChasing)
@@ -65,22 +65,6 @@ public class EnemyAI : MonoBehaviour
             if (angleToPlayer <= 45f)
             {
                 transform.LookAt(new Vector3(player.position.x, transform.position.y, player.position.z));
-            }
-
-            // Walking 애니메이션 제어
-            if (animator != null)
-            {
-                animator.SetBool("walking", true); // 추적 중일 때 걷기 애니메이션 실행
-                Debug.Log("Walking Animation Triggered: " + true); // 디버그 로그 추가
-            }
-        }
-        else
-        {
-            // 추적 중이 아니면 걷기 애니메이션 멈추기
-            if (animator != null)
-            {
-                animator.SetBool("walking", false); // 걷기 멈추기
-                Debug.Log("Walking Animation Triggered: " + false); // 디버그 로그 추가
             }
         }
     }
