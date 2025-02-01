@@ -13,11 +13,13 @@ public class EnemyAI : MonoBehaviour
     private NavMeshAgent agent;
     private bool isChasing = false; // 감지 여부 체크
     private Rigidbody rb;
+    private Animator animator; // 애니메이터 추가
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         rb = GetComponent<Rigidbody>();
+        animator = GetComponent<Animator>(); // Animator 컴포넌트 가져오기
 
         agent.updateRotation = true; // NavMeshAgent가 자동으로 회전하도록 설정
         agent.updatePosition = true;
@@ -52,7 +54,7 @@ public class EnemyAI : MonoBehaviour
         {
             isChasing = true; // 감지 시작
             alertLight.enabled = false; // 감지되면 빛 끄기
-            Debug.Log("[EnemyAI] Player detected! Chasing started.");
+            //Debug.Log("[EnemyAI] Player detected! Chasing started.");
         }
 
         if (isChasing)
@@ -79,3 +81,4 @@ public class EnemyAI : MonoBehaviour
         }
     }
 }
+
