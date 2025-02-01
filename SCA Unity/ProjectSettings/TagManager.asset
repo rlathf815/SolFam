@@ -9,6 +9,8 @@ TagManager:
   - crm13
   - corridor
   - playerArea
+  - Yuna
+  - Fire
   layers:
   - Default
   - TransparentFX
