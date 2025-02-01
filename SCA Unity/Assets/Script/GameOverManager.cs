@@ -25,12 +25,18 @@ public class GameOverManager : MonoBehaviour
 
     public void RestartGame()
     {
-        SceneManager.LoadScene("SOL"); // MainScene으로 이동 (Retry 버튼)
+        SceneManager.LoadScene("GameScene"); // GameScene으로 이동 (Retry 버튼)
     }
 
     public void ExitGame()
     {
         Application.Quit(); // 게임 종료 (Exit 버튼)
     }
+
+    public void StartGame()
+    {
+        SceneManager.LoadScene("GameScene");
+    }
+
 
 }
