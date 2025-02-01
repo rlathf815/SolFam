@@ -22,7 +22,7 @@ public class EnemyAI : MonoBehaviour
         agent.updateRotation = true; // NavMeshAgent가 자동으로 회전하도록 설정
         agent.updatePosition = true;
         agent.avoidancePriority = 50; // 다른 오브젝트와 충돌 시 우선순위 조정
-        agent.stoppingDistance = 0f; // 플레이어를 끝까지 추적
+        agent.stoppingDistance = 2f; // 플레이어를 끝까지 추적
         agent.autoBraking = false; // 감속 없이 계속 이동
 
         if (player == null)
@@ -47,8 +47,8 @@ public class EnemyAI : MonoBehaviour
         Vector3 directionToPlayer = (player.position - transform.position).normalized;
         float angleToPlayer = Vector3.Angle(transform.forward, directionToPlayer);
 
-        // 뒤쪽 및 측면 감지 완전 차단 (몹이 정면에 있는 플레이어만 감지)
-        if (!isChasing && (distance <= closeRangeDetection || (distance <= detectionRange && angleToPlayer <= detectionAngle / 2 && Vector3.Dot(transform.forward, directionToPlayer) > 0.999f)))
+        // 뒤쪽 감지 차단: 플레이어가 180도 뒤쪽에 있으면 추적을 시작하지 않음
+        if (!isChasing && distance <= detectionRange && angleToPlayer <= detectionAngle / 2 && angleToPlayer < 90f)
         {
             isChasing = true; // 감지 시작
             alertLight.enabled = false; // 감지되면 빛 끄기
@@ -58,7 +58,9 @@ public class EnemyAI : MonoBehaviour
         if (isChasing)
         {
             agent.SetDestination(player.position); // 플레이어 추적
-            if (Vector3.Dot(transform.forward, directionToPlayer) > 0.9f) // 완전히 정면에 있는 경우에만 회전
+
+            // 정면과 약간 측면도 감지되도록 각도 완화 (45도 내외에서 감지)
+            if (angleToPlayer <= 45f)
             {
                 transform.LookAt(new Vector3(player.position.x, transform.position.y, player.position.z));
             }
@@ -77,5 +79,3 @@ public class EnemyAI : MonoBehaviour
         }
     }
 }
-
-
