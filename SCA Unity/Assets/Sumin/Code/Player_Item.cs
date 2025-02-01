@@ -52,6 +52,7 @@ public class Player_Item : MonoBehaviour
         // 지정된 시간만큼 대기
         yield return new WaitForSeconds(time);
         FirstPersonMovement.speed = 3;
+        FirstPersonMovement.runSpeed = 4;
         speedUpIcon.SetActive(false);
     }
 
