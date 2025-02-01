@@ -34,15 +34,24 @@ public class Rest : MonoBehaviour
         {
             point -= 1;
             Debug.Log("1");
-        } 
-        else if(other.gameObject.tag == "corridor" && FirstPersonMovement.speed > 3 )
+        }
+        else if (other.gameObject.tag == "corridor" && FirstPersonMovement.speed > 3)
         {
             point -= 1;
             Debug.Log("2");
         }
-        else if(other.gameObject.tag == "crm" && other.gameObject.tag == "item")
+        else if (other.gameObject.tag == "crm" && other.gameObject.tag == "item")
         {
             point -= 1;
+        }
+        else if (other.gameObject.tag == "up")
+        {
+            point -= 3;
+        }
+        else if (other.gameObject.tag == "table")
+        {
+            point -= 1;
+            Debug.Log("»Æ¿Œ");
         }
     }
 }

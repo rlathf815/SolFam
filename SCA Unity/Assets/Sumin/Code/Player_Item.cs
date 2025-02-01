@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Player_Item : MonoBehaviour
 {
-    public GameObject coffee_ui;
 
     public static int HP = 3;
     public int Coffee_I = 0;
@@ -21,7 +20,6 @@ public class Player_Item : MonoBehaviour
     void Start()
     {
         speedUpIcon.SetActive(false);
-        coffee_ui.SetActive(false);
     }
     public void EnergyDrink()
     {
@@ -45,6 +43,7 @@ public class Player_Item : MonoBehaviour
         Debug.Log("플레이어는 커피(뇌물)을 사용했다!");
         //미완
         PlayerStats.Instance.TakeDamage(2);
+        yun_ui.openui = false;
     }
 
     public IEnumerator DisappearAfterTime(float time, GameObject target)
@@ -53,18 +52,5 @@ public class Player_Item : MonoBehaviour
         yield return new WaitForSeconds(time);
         FirstPersonMovement.speed = 3;
         speedUpIcon.SetActive(false);
-    }
-
-    public void OnCollisionEnter(Collision other)
-    {
-        if(Coffee_I >=1 && other.gameObject.tag == "Yuna")
-        {
-            coffee_ui.SetActive(true);
-        }
-
-        if(Coffee_I >= 1 && other.gameObject.tag == "gn")
-        {
-
-        }
     }
 }
