@@ -15,6 +15,7 @@ public class EnemyAI : MonoBehaviour
     private bool isChasing = false; // 감지 여부 체크
     private Rigidbody rb;
     private Animator animator; // 애니메이터 추가
+    public GameObject CoffeeInHand;
 
     void Start()
     {
@@ -41,6 +42,10 @@ public class EnemyAI : MonoBehaviour
         alertLight.spotAngle = detectionAngle; // 감지 각도 조정
 
         alertLight.enabled = true; // 빛을 항상 켜둠 (감지 기준이므로)
+        if (CoffeeInHand != null)
+        {
+            CoffeeInHand.SetActive(false); // 게임 시작 시 비활성화
+        }
     }
 
     void Update()
@@ -58,13 +63,13 @@ public class EnemyAI : MonoBehaviour
         // activeCoffee를 추적할 때
         if (activeCoffeeTarget != null)
         {
-            // activeCoffee 추적 로직
             float coffeeDistance = Vector3.Distance(transform.position, activeCoffeeTarget.position);
             agent.stoppingDistance = 0f; // activeCoffee 추적 시 stoppingDistance를 0으로 설정 (거리를 두지 않음)
 
             if (coffeeDistance <= detectionRange)
             {
                 isChasing = true; // activeCoffee를 추적 중
+                animator.SetBool("isChasing", true); // 애니메이션 변경
                 alertLight.enabled = false; // 빛 끄기
                 agent.SetDestination(activeCoffeeTarget.position); // activeCoffee로 이동
             }
@@ -75,6 +80,7 @@ public class EnemyAI : MonoBehaviour
                 Destroy(activeCoffeeTarget.gameObject); // activeCoffee 오브젝트 삭제
                 activeCoffeeTarget = null; // activeCoffeeTarget을 null로 설정
                 isChasing = false; // 추적 종료
+                animator.SetBool("isChasing", false); // 애니메이션 변경
                 alertLight.enabled = true; // 경고 빛 다시 켜기
             }
         }
@@ -93,6 +99,7 @@ public class EnemyAI : MonoBehaviour
                 if (distance <= closeRangeDetection)
                 {
                     isChasing = true;
+                    animator.SetBool("isChasing", true); // 애니메이션 변경
                     alertLight.enabled = false; // 감지되면 빛 끄기
                     agent.stoppingDistance = 2f; // 플레이어를 추적할 때 멈추는 거리 2f로 설정
                     agent.SetDestination(player.position); // 플레이어 추적
@@ -100,6 +107,7 @@ public class EnemyAI : MonoBehaviour
                 else if (!isChasing && distance <= detectionRange)
                 {
                     isChasing = true; // 감지 시작
+                    animator.SetBool("isChasing", true); // 애니메이션 변경
                     alertLight.enabled = false; // 감지되면 빛 끄기
                     agent.stoppingDistance = 2f; // 플레이어를 감지했을 때 stoppingDistance를 2로 설정
                     agent.SetDestination(player.position); // 플레이어 추적
@@ -134,7 +142,25 @@ public class EnemyAI : MonoBehaviour
             Destroy(collision.gameObject); // activeCoffee 오브젝트 삭제
             activeCoffeeTarget = null; // activeCoffee 추적을 멈춤
             isChasing = false; // 추적 종료
+            animator.SetBool("isChasing", false); // 애니메이션 변경
             alertLight.enabled = true; // 경고 빛 다시 켜기
+            StartCoroutine(HandleCoffeeInteraction());
         }
+    }
+    private IEnumerator HandleCoffeeInteraction()
+    {
+        yield return new WaitForSeconds(3f);
+        if (CoffeeInHand != null)
+        {
+            CoffeeInHand.SetActive(true); // 커피를 든 상태로 변경
+        }
+
+        yield return new WaitForSeconds(10f); // 5초 동안 유지
+
+        if (CoffeeInHand != null)
+        {
+            CoffeeInHand.SetActive(false); // 다시 비활성화
+        }
+
     }
 }
