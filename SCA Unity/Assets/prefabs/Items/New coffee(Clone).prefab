@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: -8007432174189368198}
   m_Layer: 0
   m_Name: New coffee(Clone)
-  m_TagString: Untagged
+  m_TagString: activeCoffee
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -56,8 +56,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 14.947357, y: 17.564608, z: 13.498201}
+  m_Center: {x: 0.19920349, y: 8.419884, z: -0.12683392}
 --- !u!114 &3356216943653171649
 MonoBehaviour:
   m_ObjectHideFlags: 0
