@@ -9,6 +9,7 @@ TagManager:
   - crm13
   - corridor
   - playerArea
+  - activeCoffee
   layers:
   - Default
   - TransparentFX

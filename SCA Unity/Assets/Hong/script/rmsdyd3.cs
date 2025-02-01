@@ -5,10 +5,11 @@ using UnityEngine.AI;
 public class EnemyAI : MonoBehaviour
 {
     public Transform player; // 플레이어 오브젝트
-    public float detectionRange = 10f; // 감지 거리 증가
+    public float detectionRange = 10f; // 감지 거리
     public Light alertLight; // 경고 빛
-    public float detectionAngle = 60f; // 감지 각도 더욱 좁게 설정하여 측면 및 뒤쪽 감지 원천 차단
-    public float closeRangeDetection = 4f; // 근거리 감지 거리 증가
+    public float detectionAngle = 60f; // 감지 각도
+    public float closeRangeDetection = 4f; // 근거리 감지 거리
+    private Transform activeCoffeeTarget; // activeCoffee 태그를 가진 오브젝트
 
     private NavMeshAgent agent;
     private bool isChasing = false; // 감지 여부 체크
@@ -24,7 +25,6 @@ public class EnemyAI : MonoBehaviour
         agent.updateRotation = true; // NavMeshAgent가 자동으로 회전하도록 설정
         agent.updatePosition = true;
         agent.avoidancePriority = 50; // 다른 오브젝트와 충돌 시 우선순위 조정
-        agent.stoppingDistance = 2f; // 플레이어를 끝까지 추적
         agent.autoBraking = false; // 감속 없이 계속 이동
 
         if (player == null)
@@ -37,7 +37,7 @@ public class EnemyAI : MonoBehaviour
         }
 
         // 감지 거리 및 각도를 빛의 범위에 맞게 조정
-        alertLight.range = detectionRange * 1.1f; // 감지 거리보다 약간 넓게 조정
+        alertLight.range = detectionRange; // 경고 빛의 범위를 감지 범위와 동일하게 설정
         alertLight.spotAngle = detectionAngle; // 감지 각도 조정
 
         alertLight.enabled = true; // 빛을 항상 켜둠 (감지 기준이므로)
@@ -45,26 +45,71 @@ public class EnemyAI : MonoBehaviour
 
     void Update()
     {
-        float distance = Vector3.Distance(transform.position, player.position);
-        Vector3 directionToPlayer = (player.position - transform.position).normalized;
-        float angleToPlayer = Vector3.Angle(transform.forward, directionToPlayer);
-
-        // 뒤쪽 감지 차단: 플레이어가 180도 뒤쪽에 있으면 추적을 시작하지 않음
-        if (!isChasing && distance <= detectionRange && angleToPlayer <= detectionAngle / 2 && angleToPlayer < 90f)
+        // activeCoffee 태그를 가진 오브젝트가 있다면 그걸 우선 추적
+        if (activeCoffeeTarget == null)
         {
-            isChasing = true; // 감지 시작
-            alertLight.enabled = false; // 감지되면 빛 끄기
-            //Debug.Log("[EnemyAI] Player detected! Chasing started.");
+            GameObject coffee = GameObject.FindGameObjectWithTag("activeCoffee");
+            if (coffee != null)
+            {
+                activeCoffeeTarget = coffee.transform; // activeCoffee가 있으면 그걸 추적
+            }
         }
 
-        if (isChasing)
+        // activeCoffee를 추적할 때
+        if (activeCoffeeTarget != null)
         {
-            agent.SetDestination(player.position); // 플레이어 추적
+            // activeCoffee 추적 로직
+            float coffeeDistance = Vector3.Distance(transform.position, activeCoffeeTarget.position);
+            agent.stoppingDistance = 0f; // activeCoffee 추적 시 stoppingDistance를 0으로 설정 (거리를 두지 않음)
 
-            // 정면과 약간 측면도 감지되도록 각도 완화 (45도 내외에서 감지)
-            if (angleToPlayer <= 45f)
+            if (coffeeDistance <= detectionRange)
             {
-                transform.LookAt(new Vector3(player.position.x, transform.position.y, player.position.z));
+                isChasing = true; // activeCoffee를 추적 중
+                alertLight.enabled = false; // 빛 끄기
+                agent.SetDestination(activeCoffeeTarget.position); // activeCoffee로 이동
+            }
+
+            // activeCoffee에 도달하면, 원래 상태로 돌아가기
+            if (coffeeDistance <= agent.stoppingDistance)
+            {
+                Destroy(activeCoffeeTarget.gameObject); // activeCoffee 오브젝트 삭제
+                activeCoffeeTarget = null; // activeCoffeeTarget을 null로 설정
+                isChasing = false; // 추적 종료
+                alertLight.enabled = true; // 경고 빛 다시 켜기
+            }
+        }
+        else
+        {
+            // 플레이어 감지 로직
+            float distance = Vector3.Distance(transform.position, player.position);
+            Vector3 directionToPlayer = (player.position - transform.position).normalized;
+
+            // 전방에서 플레이어를 감지하려면 Dot product를 사용
+            float dotProduct = Vector3.Dot(transform.forward, directionToPlayer);
+
+            // 플레이어가 정면 범위 내에 있을 경우만 감지 (Dot product가 양수일 때만 정면)
+            if (dotProduct > Mathf.Cos(detectionAngle * Mathf.Deg2Rad) && distance <= detectionRange)
+            {
+                if (distance <= closeRangeDetection)
+                {
+                    isChasing = true;
+                    alertLight.enabled = false; // 감지되면 빛 끄기
+                    agent.stoppingDistance = 2f; // 플레이어를 추적할 때 멈추는 거리 2f로 설정
+                    agent.SetDestination(player.position); // 플레이어 추적
+                }
+                else if (!isChasing && distance <= detectionRange)
+                {
+                    isChasing = true; // 감지 시작
+                    alertLight.enabled = false; // 감지되면 빛 끄기
+                    agent.stoppingDistance = 2f; // 플레이어를 감지했을 때 stoppingDistance를 2로 설정
+                    agent.SetDestination(player.position); // 플레이어 추적
+                }
+            }
+
+            // 플레이어 추적
+            if (isChasing)
+            {
+                agent.SetDestination(player.position); // 플레이어 추적
             }
         }
     }
@@ -80,5 +125,16 @@ public class EnemyAI : MonoBehaviour
             rb.constraints = RigidbodyConstraints.FreezeAll; // 모든 이동 및 회전 방지 (완전 고정)
         }
     }
-}
 
+    // activeCoffee 태그를 가진 오브젝트와 충돌했을 때 해당 오브젝트 삭제
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("activeCoffee"))
+        {
+            Destroy(collision.gameObject); // activeCoffee 오브젝트 삭제
+            activeCoffeeTarget = null; // activeCoffee 추적을 멈춤
+            isChasing = false; // 추적 종료
+            alertLight.enabled = true; // 경고 빛 다시 켜기
+        }
+    }
+}
