@@ -13,11 +13,13 @@ public class EnemyAI : MonoBehaviour
     private NavMeshAgent agent;
     private bool isChasing = false; // 감지 여부 체크
     private Rigidbody rb;
+    private Animator animator; // 애니메이터 추가
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         rb = GetComponent<Rigidbody>();
+        animator = GetComponent<Animator>(); // Animator 컴포넌트 가져오기
 
         agent.updateRotation = true; // NavMeshAgent가 자동으로 회전하도록 설정
         agent.updatePosition = true;
@@ -64,6 +66,22 @@ public class EnemyAI : MonoBehaviour
             {
                 transform.LookAt(new Vector3(player.position.x, transform.position.y, player.position.z));
             }
+
+            // Walking 애니메이션 제어
+            if (animator != null)
+            {
+                animator.SetBool("walking", true); // 추적 중일 때 걷기 애니메이션 실행
+                Debug.Log("Walking Animation Triggered: " + true); // 디버그 로그 추가
+            }
+        }
+        else
+        {
+            // 추적 중이 아니면 걷기 애니메이션 멈추기
+            if (animator != null)
+            {
+                animator.SetBool("walking", false); // 걷기 멈추기
+                Debug.Log("Walking Animation Triggered: " + false); // 디버그 로그 추가
+            }
         }
     }
 
@@ -79,3 +97,4 @@ public class EnemyAI : MonoBehaviour
         }
     }
 }
+
