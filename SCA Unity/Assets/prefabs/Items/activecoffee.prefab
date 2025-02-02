@@ -11,12 +11,11 @@ GameObject:
   - component: {fileID: 9179488530053468686}
   - component: {fileID: -8588772167682245185}
   - component: {fileID: 3356216943653171649}
-  - component: {fileID: 7269649777574512900}
   - component: {fileID: 7187092059229229308}
   - component: {fileID: -8007432174189368198}
   m_Layer: 0
-  m_Name: New coffee(Clone)
-  m_TagString: Untagged
+  m_Name: activecoffee
+  m_TagString: activeCoffee
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -56,7 +55,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 14.947357, y: 17.564608, z: 13.498201}
   m_Center: {x: 0.19920349, y: 8.419884, z: -0.12683392}
 --- !u!114 &3356216943653171649
 MonoBehaviour:
@@ -65,7 +64,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 702359653272919827}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1e2a0650d79394740b1bdb39be00be6b, type: 3}
   m_Name: 
@@ -80,27 +79,6 @@ MonoBehaviour:
   references:
     version: 2
     RefIds: []
---- !u!114 &7269649777574512900
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 702359653272919827}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68165cdf1896c89479a91b2478670c0a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  saveable: 1
-  m_Items:
-  - {fileID: -1018607806659806927, guid: acb2ef3ef6e42a14c92c8cb847284b7a, type: 2}
-  m_Amounts: 01000000
-  m_Modifiers:
-  - modifiers: []
-  onChange:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!54 &7187092059229229308
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -135,7 +113,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 702359653272919827}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 95ff8949b55037043a6183d61fd8dcff, type: 3}
   m_Name: 

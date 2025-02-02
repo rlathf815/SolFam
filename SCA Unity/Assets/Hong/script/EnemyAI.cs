@@ -1,32 +1,44 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using Leguar.LowHealth;
 
 public class EnemyAI : MonoBehaviour
 {
+    public LowHealthController shaderControllerScript;
+
     public Transform player; // 플레이어 오브젝트
     public float detectionRange = 10f; // 감지 거리
     public Light alertLight; // 경고 빛
     public float detectionAngle = 60f; // 감지 각도
     public float closeRangeDetection = 4f; // 근거리 감지 거리
-    private Transform activeCoffeeTarget; // activeCoffee 태그를 가진 오브젝트
+    public float attackRange = 1.5f;
+    public float moveRadius = 10f; // 랜덤 이동 범위
+    public float waitTime = 2f; // 랜덤 이동 도착 후 대기 시간
 
+    private Transform activeCoffeeTarget;
     private NavMeshAgent agent;
-    private bool isChasing = false; // 감지 여부 체크
+    private bool isChasing = false;
+    private bool isRoaming = true; // 랜덤 이동 활성화
+    private bool isAttacking = false;
     private Rigidbody rb;
-    private Animator animator; // 애니메이터 추가
+    private Animator animator;
     public GameObject CoffeeInHand;
+    public GameObject playerCam;
+    public GameObject attackCam;
+
+    private Vector3 startPosition;
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         rb = GetComponent<Rigidbody>();
-        animator = GetComponent<Animator>(); // Animator 컴포넌트 가져오기
+        animator = GetComponent<Animator>();
 
-        agent.updateRotation = true; // NavMeshAgent가 자동으로 회전하도록 설정
+        agent.updateRotation = true;
         agent.updatePosition = true;
-        agent.avoidancePriority = 50; // 다른 오브젝트와 충돌 시 우선순위 조정
-        agent.autoBraking = false; // 감속 없이 계속 이동
+        agent.avoidancePriority = 50;
+        agent.autoBraking = false;
 
         if (player == null)
         {
@@ -37,130 +49,213 @@ public class EnemyAI : MonoBehaviour
             alertLight = GetComponentInChildren<Light>();
         }
 
-        // 감지 거리 및 각도를 빛의 범위에 맞게 조정
-        alertLight.range = detectionRange; // 경고 빛의 범위를 감지 범위와 동일하게 설정
-        alertLight.spotAngle = detectionAngle; // 감지 각도 조정
+        alertLight.range = detectionRange;
+        alertLight.spotAngle = detectionAngle;
+        alertLight.enabled = true;
 
-        alertLight.enabled = true; // 빛을 항상 켜둠 (감지 기준이므로)
         if (CoffeeInHand != null)
         {
             CoffeeInHand.SetActive(false); // 게임 시작 시 비활성화
         }
+        playerCam.SetActive(true);
+        attackCam.SetActive(false);
+        startPosition = transform.position; // 시작 위치 저장
+        StartCoroutine(MoveRandomly()); // 랜덤 이동 시작
     }
 
     void Update()
     {
-        // activeCoffee 태그를 가진 오브젝트가 있다면 그걸 우선 추적
+        if (isAttacking) return;
+
+        DetectCoffee(); // 커피 감지
+        if (activeCoffeeTarget != null)
+        {
+            ChaseCoffee(); // 커피 추적
+        }
+        else
+        {
+            DetectPlayer(); // 플레이어 감지
+            if (isChasing)
+            {
+                ChasePlayer();
+                //agent.SetDestination(player.position); // 플레이어 추적
+            }
+        }
+    }
+
+    void DetectCoffee()
+    {
         if (activeCoffeeTarget == null)
         {
             GameObject coffee = GameObject.FindGameObjectWithTag("activeCoffee");
             if (coffee != null)
             {
-                activeCoffeeTarget = coffee.transform; // activeCoffee가 있으면 그걸 추적
+                activeCoffeeTarget = coffee.transform;
             }
         }
+    }
 
-        // activeCoffee를 추적할 때
-        if (activeCoffeeTarget != null)
+    void ChaseCoffee()
+    {
+        float coffeeDistance = Vector3.Distance(transform.position, activeCoffeeTarget.position);
+        agent.stoppingDistance = 1f;
+
+        if (coffeeDistance <= detectionRange)
         {
-            float coffeeDistance = Vector3.Distance(transform.position, activeCoffeeTarget.position);
-            agent.stoppingDistance = 0f; // activeCoffee 추적 시 stoppingDistance를 0으로 설정 (거리를 두지 않음)
+            isChasing = true;
+            isRoaming = false; // 랜덤 이동 중지
+            animator.SetBool("isChasing", true);
+            alertLight.enabled = false;
+            agent.SetDestination(activeCoffeeTarget.position);
+        }
 
-            if (coffeeDistance <= detectionRange)
-            {
-                isChasing = true; // activeCoffee를 추적 중
-                animator.SetBool("isChasing", true); // 애니메이션 변경
-                alertLight.enabled = false; // 빛 끄기
-                agent.SetDestination(activeCoffeeTarget.position); // activeCoffee로 이동
-            }
+        if (coffeeDistance <= agent.stoppingDistance)
+        {
+            Destroy(activeCoffeeTarget.gameObject);
+            activeCoffeeTarget = null;
+            isChasing = false;
+            isRoaming = false;
+            animator.SetBool("isChasing", false);
+            alertLight.enabled = true;
+            StartCoroutine(HandleCoffeeInteraction());
 
-            // activeCoffee에 도달하면, 원래 상태로 돌아가기
-            if (coffeeDistance <= agent.stoppingDistance)
+        }
+    }
+
+    void DetectPlayer()
+    {
+        float distance = Vector3.Distance(transform.position, player.position);
+        Vector3 directionToPlayer = (player.position - transform.position).normalized;
+        float dotProduct = Vector3.Dot(transform.forward, directionToPlayer);
+
+        if (dotProduct > Mathf.Cos(detectionAngle * Mathf.Deg2Rad) && distance <= detectionRange)
+        {
+            if (distance <= closeRangeDetection)
             {
-                Destroy(activeCoffeeTarget.gameObject); // activeCoffee 오브젝트 삭제
-                activeCoffeeTarget = null; // activeCoffeeTarget을 null로 설정
-                isChasing = false; // 추적 종료
-                animator.SetBool("isChasing", false); // 애니메이션 변경
-                alertLight.enabled = true; // 경고 빛 다시 켜기
+                isChasing = true;
+                isRoaming = false;
+                animator.SetBool("isChasing", true);
+                alertLight.enabled = false;
+                agent.stoppingDistance = 2f;
+                agent.SetDestination(player.position);
             }
+            else if (!isChasing && distance <= detectionRange)
+            {
+                isChasing = true;
+                isRoaming = false;
+                animator.SetBool("isChasing", true);
+                alertLight.enabled = false;
+                agent.stoppingDistance = 2f;
+                agent.SetDestination(player.position);
+
+            }
+        }
+    }
+    void ChasePlayer()
+    {
+        float distance = Vector3.Distance(transform.position, player.position);
+
+        if (distance > attackRange)
+        {
+            agent.SetDestination(player.position); //  일정 거리 이상이면 계속 추적
         }
         else
         {
-            // 플레이어 감지 로직
-            float distance = Vector3.Distance(transform.position, player.position);
-            Vector3 directionToPlayer = (player.position - transform.position).normalized;
-
-            // 전방에서 플레이어를 감지하려면 Dot product를 사용
-            float dotProduct = Vector3.Dot(transform.forward, directionToPlayer);
-
-            // 플레이어가 정면 범위 내에 있을 경우만 감지 (Dot product가 양수일 때만 정면)
-            if (dotProduct > Mathf.Cos(detectionAngle * Mathf.Deg2Rad) && distance <= detectionRange)
+            if (!isAttacking)
             {
-                if (distance <= closeRangeDetection)
-                {
-                    isChasing = true;
-                    animator.SetBool("isChasing", true); // 애니메이션 변경
-                    alertLight.enabled = false; // 감지되면 빛 끄기
-                    agent.stoppingDistance = 2f; // 플레이어를 추적할 때 멈추는 거리 2f로 설정
-                    agent.SetDestination(player.position); // 플레이어 추적
-                }
-                else if (!isChasing && distance <= detectionRange)
-                {
-                    isChasing = true; // 감지 시작
-                    animator.SetBool("isChasing", true); // 애니메이션 변경
-                    alertLight.enabled = false; // 감지되면 빛 끄기
-                    agent.stoppingDistance = 2f; // 플레이어를 감지했을 때 stoppingDistance를 2로 설정
-                    agent.SetDestination(player.position); // 플레이어 추적
-                }
-            }
-
-            // 플레이어 추적
-            if (isChasing)
-            {
-                agent.SetDestination(player.position); // 플레이어 추적
+                StartCoroutine(AttackPlayer()); // 일정 거리 내에 들어오면 공격 실행
             }
         }
+    }
+    IEnumerator MoveRandomly()
+    {
+        while (true)
+        {
+            if (!isChasing) // 플레이어를 추적 중이 아닐 때만 랜덤 이동
+            {
+                isRoaming = true;
+                Vector3 randomDestination = GetRandomPoint(startPosition, moveRadius);
+                agent.SetDestination(randomDestination);
+
+                while (agent.pathPending || agent.remainingDistance > agent.stoppingDistance)
+                {
+                    yield return null;
+                }
+
+                yield return new WaitForSeconds(waitTime);
+            }
+            else
+            {
+                isRoaming = false;
+            }
+            yield return null;
+        }
+    }
+
+    Vector3 GetRandomPoint(Vector3 center, float radius)
+    {
+        for (int i = 0; i < 10; i++)
+        {
+            Vector3 randomPos = center + Random.insideUnitSphere * radius;
+            randomPos.y = center.y;
+
+            if (NavMesh.SamplePosition(randomPos, out NavMeshHit hit, 2f, NavMesh.AllAreas))
+            {
+                return hit.position;
+            }
+        }
+        return center;
     }
 
     void FixedUpdate()
     {
-        // 플레이어가 몹에게 밀리지 않도록 물리적 충돌 제거 및 정밀 제어 추가
         if (rb != null)
         {
-            rb.velocity = Vector3.zero; // 이동 중 미끄러짐 방지
+            rb.velocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
-            rb.freezeRotation = true; // 회전 잠금
-            rb.constraints = RigidbodyConstraints.FreezeAll; // 모든 이동 및 회전 방지 (완전 고정)
+            rb.freezeRotation = true;
+            rb.constraints = RigidbodyConstraints.FreezeAll;
         }
     }
 
-    // activeCoffee 태그를 가진 오브젝트와 충돌했을 때 해당 오브젝트 삭제
-    void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("activeCoffee"))
-        {
-            Destroy(collision.gameObject); // activeCoffee 오브젝트 삭제
-            activeCoffeeTarget = null; // activeCoffee 추적을 멈춤
-            isChasing = false; // 추적 종료
-            animator.SetBool("isChasing", false); // 애니메이션 변경
-            alertLight.enabled = true; // 경고 빛 다시 켜기
-            StartCoroutine(HandleCoffeeInteraction());
-        }
-    }
+
+
     private IEnumerator HandleCoffeeInteraction()
     {
+        agent.isStopped = true;
         yield return new WaitForSeconds(3f);
         if (CoffeeInHand != null)
         {
-            CoffeeInHand.SetActive(true); // 커피를 든 상태로 변경
+            CoffeeInHand.SetActive(true);
         }
 
-        yield return new WaitForSeconds(10f); // 5초 동안 유지
+        yield return new WaitForSeconds(10f);
 
         if (CoffeeInHand != null)
         {
-            CoffeeInHand.SetActive(false); // 다시 비활성화
+            CoffeeInHand.SetActive(false);
         }
+        agent.isStopped = false;
+    }
+    void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log(collision.other.name);
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            StartCoroutine(AttackPlayer());
+        }
+    }
+    private IEnumerator AttackPlayer()
+    {
 
+        isAttacking = true; // 공격 중 상태 설정
+        agent.isStopped = true; //공격 중 이동 멈추기
+        playerCam.SetActive(false);
+        attackCam.SetActive(true);
+        yield return new WaitForSeconds(0.1f);
+        shaderControllerScript.SetPlayerHealthSmoothly(0, 3f);
+        animator.SetTrigger("Attack");
+        yield return new WaitForSeconds(3f);
+        PlayerStats.Instance.TakeDamage(3);
     }
 }

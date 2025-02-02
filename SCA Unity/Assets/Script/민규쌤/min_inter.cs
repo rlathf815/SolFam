@@ -39,7 +39,7 @@ public class min_inter : MonoBehaviour
     }
     void OnTriggerStay(Collider col)
     {
-        if (col.tag == "Player"&&Input.GetKey(KeyCode.E)&&opened==false)
+        if (col.tag == "Player"&&Input.GetKey(KeyCode.F)&&opened==false)
         {
             opened = true;
             min_ui.Eopen = false;
