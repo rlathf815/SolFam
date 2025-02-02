@@ -5,6 +5,7 @@ using UnityEngine;
 public class com_On : MonoBehaviour
 {
     private bool state;
+    private bool CamState;
     private bool isClose;
     private bool on;
     private bool PcClose;
@@ -17,6 +18,7 @@ public class com_On : MonoBehaviour
     void Start()
     {
         state = false; //화면상태
+        CamState = false; //화면상태
         isClose = false;
         PlayerC = true;
         PcClose = false;
@@ -45,9 +47,9 @@ public class com_On : MonoBehaviour
         // 마우스 클릭 시 전체화면 전환
         if (state == true && isClose == true)
         {
-            if (Input.GetMouseButtonDown(0)) // 왼쪽 마우스 버튼 클릭
+            if (Input.GetKeyDown(KeyCode.F)&& CamState) 
             {
-                Debug.Log("왼쪽 버튼 클릭");
+                //Debug.Log("왼쪽 버튼 클릭");
                 PlayerCam.SetActive(false);
                 PlayerC = false;
                 PcCam.SetActive(true);
