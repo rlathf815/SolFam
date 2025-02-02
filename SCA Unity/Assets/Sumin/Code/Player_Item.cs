@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using UnityEngine;
 
 public class Player_Item : MonoBehaviour
@@ -10,12 +11,15 @@ public class Player_Item : MonoBehaviour
     public int MenSeter_I = 0;
     public int Noudell_I = 0;
     public float speedMultiplier = 2.0f;
+    public float throwForce = 5f;
 
     public Transform player;
     public GameObject prefab;
 
     public CoolDownUI coolDownUI;
     public GameObject speedUpIcon;
+
+    public GameObject coffeePrefab;
 
     void Start()
     {
@@ -34,16 +38,33 @@ public class Player_Item : MonoBehaviour
     public void Ramen()
     {
         Debug.Log("플레이어는 라면을 먹었다!");
-        PlayerStats.Instance.Heal(1);
-        if(HP<3) HP++;
+        if (HP < 3)
+        {
+            PlayerStats.Instance.Heal(1);
+            HP++; 
+        }
     }
 
     public void Coffee()
     {
         Debug.Log("플레이어는 커피(뇌물)을 사용했다!");
-        //미완
-        PlayerStats.Instance.TakeDamage(2);
-        yun_ui.openui = false;
+
+        if (coffeePrefab != null)
+        {
+            
+            Vector3 spawnPosition = player.position + player.forward * 1.0f + Vector3.up * 1.0f; 
+           
+            GameObject spawnedCoffee = Instantiate(coffeePrefab, spawnPosition, Quaternion.identity);
+            spawnedCoffee.tag = "activeCoffee"; 
+
+          
+            Rigidbody coffeeRb = spawnedCoffee.GetComponent<Rigidbody>();
+            if (coffeeRb != null)
+            {
+                coffeeRb.AddForce(player.forward * throwForce + Vector3.up * 2f, ForceMode.Impulse); 
+            }
+        }
+
     }
 
     public IEnumerator DisappearAfterTime(float time, GameObject target)
