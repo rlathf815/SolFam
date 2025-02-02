@@ -31174,7 +31174,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   distanceThreshold: 0.15
-  isGrounded: 0
+  isGrounded: 1
 --- !u!1 &3417808464259376589
 GameObject:
   m_ObjectHideFlags: 0
@@ -64901,7 +64901,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 23529.844}
+  m_AnchoredPosition: {x: 0, y: 67674.72}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &3433751922378135573
@@ -78162,7 +78162,7 @@ MonoBehaviour:
   prefab: {fileID: 0}
   coolDownUI: {fileID: 622856292440828275}
   speedUpIcon: {fileID: 2219378516813436867}
-  coffeePrefab: {fileID: 0}
+  coffeePrefab: {fileID: 702359653272919827, guid: 61bd271c45c1a5a4b901b6107423799a, type: 3}
 --- !u!1 &8940146047904245448
 GameObject:
   m_ObjectHideFlags: 0

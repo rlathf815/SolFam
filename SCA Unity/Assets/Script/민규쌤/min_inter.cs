@@ -45,7 +45,7 @@ public class min_inter : MonoBehaviour
             min_ui.Eopen = false;
             min_ui.Sopen = true;
             anim.SetTrigger("isHello");
-
+            /*
             yeppy_player.catched = true;
             yeppy_player.gojung = player.transform.rotation;
             Jump.jumpStrength = 0;
@@ -55,6 +55,7 @@ public class min_inter : MonoBehaviour
             FirstPersonMovement.speed = 0;
             FirstPersonLook.canlook = false;
             Crouch.movementSpeed = 0;
+            */
         }
     }
 }
