@@ -9,6 +9,7 @@ public class Nam_yun : MonoBehaviour
     public GameObject player;
     private NavMeshAgent agent;
     private Animator anim;
+    public static bool punch=false;
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -20,6 +21,11 @@ public class Nam_yun : MonoBehaviour
 
     void Update()
     {
+        if (punch)
+        {
+            punch = false;
+            anim.SetTrigger("Punch");
+        }
         if (yun_ui.hasopenui == true&&yun_ui.openui==true)
         {
             agent.isStopped = true;
