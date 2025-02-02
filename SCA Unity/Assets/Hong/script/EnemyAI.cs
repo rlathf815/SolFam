@@ -229,7 +229,7 @@ public class EnemyAI : MonoBehaviour
             CoffeeInHand.SetActive(true);
         }
 
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(11f);
 
         if (CoffeeInHand != null)
         {
