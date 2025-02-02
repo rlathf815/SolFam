@@ -6,6 +6,19 @@ using UnityEngine;
 public class Yun_button : MonoBehaviour
 {
     public GameObject canvas;
+    public static int moonjaeDab;
+
+    public void PressButton(int a)
+    {
+        if (a == moonjaeDab)
+        {
+            isGood();
+        }
+        else
+        {
+            isBad();
+        }
+    }
     public void isGood()
     {
         yun_ui.openui = false;
@@ -16,9 +29,17 @@ public class Yun_button : MonoBehaviour
 
     public void isBad()
     {
-        yun_ui.openui = false;
+        Nam_yun.punch = true;
         canvas.SetActive(false);
+        StartCoroutine("Waitthe");
+    }
+
+    IEnumerator Waitthe()
+    {
+        yield return new WaitForSeconds(3.5f);
+        PlayerStats.Instance.TakeDamage(3);
         Reset();
+        yun_ui.openui = false;
         Yun_Spawn.spawn = false;
     }
 
