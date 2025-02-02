@@ -25,13 +25,13 @@ public class minInter : MonoBehaviour
 
         if (animator.GetBool("isTalking"))
         {
-            Debug.Log("isTalking on");
+            //Debug.Log("isTalking on");
             agent.isStopped = true; // �ŷ� ���̸� �̵� ����
             LookAtPlayer();
         }
         else
         {
-            Debug.Log("isTalking off");
+            //Debug.Log("isTalking off");
             agent.isStopped = false; // �ŷ� ���� �ƴ� �� �̵� ����
         }
 

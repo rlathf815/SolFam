@@ -12,6 +12,7 @@ public class com_text : MonoBehaviour
     void Start()
     {
         isClose = false;
+        text.SetActive(false);
     }
 
     // Update is called once per frame

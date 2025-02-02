@@ -239,7 +239,7 @@ public class EnemyAI : MonoBehaviour
     }
     void OnCollisionEnter(Collision collision)
     {
-        Debug.Log(collision.other.name);
+        //Debug.Log(collision.other.name);
         if (collision.gameObject.CompareTag("Player"))
         {
             StartCoroutine(AttackPlayer());
