@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class DialogueManager : MonoBehaviour
 
     private Queue<DialogueLine> dialogueQueue; // 대사 큐
     private bool isDialogueActive = false;     // 대화 중인지 확인
+
+    public Image fadeOutPanel;
 
     [System.Serializable]
     public class DialogueLine
@@ -62,14 +65,32 @@ public class DialogueManager : MonoBehaviour
         Name.text = "";
         context.text = "";
         Debug.Log("대화 종료");
+
+        StartCoroutine(FadeOutAndLoadScene()); // 페이드아웃 실행
     }
 
     private void Update()
     {
-        // 스페이스바를 눌러 다음 대사 출력
         if (isDialogueActive && Input.GetKeyDown(KeyCode.Space))
         {
             DisplayNextLine();
         }
+    }
+
+    private IEnumerator FadeOutAndLoadScene()
+    {
+        float duration = 2f; // 2초 동안 페이드아웃
+        float elapsedTime = 0f;
+        Color color = fadeOutPanel.color;
+
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            color.a = Mathf.Lerp(0, 1, elapsedTime / duration); // 알파값 증가 (0 → 1)
+            fadeOutPanel.color = color;
+            yield return null;
+        }
+
+        SceneManager.LoadScene("GameScene"); // 씬 전환
     }
 }
