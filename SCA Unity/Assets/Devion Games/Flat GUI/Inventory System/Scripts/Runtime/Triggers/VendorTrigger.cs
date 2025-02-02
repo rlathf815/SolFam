@@ -9,6 +9,7 @@ namespace DevionGames.InventorySystem
 {
     public class VendorTrigger : Trigger, ITriggerUnUsedHandler
     {
+
         public override string[] Callbacks
         {
             get
@@ -69,6 +70,9 @@ namespace DevionGames.InventorySystem
         private ItemContainer m_PurchasedStorageContainer;
         private ItemContainer m_PaymentContainer;
 
+        public Animator animator;
+
+
         protected static void Execute(ITriggerSelectSellItem handler, Item item, GameObject player)
         {
             handler.OnSelectSellItem(item, player);
@@ -102,6 +106,8 @@ namespace DevionGames.InventorySystem
         protected override void Start()
         {
             base.Start();
+
+
             this.m_BuySellDialog = WidgetUtility.Find<DialogBox>(this.m_BuySellDialogName);
             if (this.m_BuySellDialog != null) {
                this.m_AmountSpinner = this.m_BuySellDialog.GetComponentInChildren<Spinner>();
@@ -137,7 +143,6 @@ namespace DevionGames.InventorySystem
         }
 
         public void BuyItem(Item item,int amount, bool showDialog = true) {
-           
             if (showDialog)
             {
                 this.m_AmountSpinner.gameObject.SetActive(this.m_DisplaySpinner);
@@ -157,6 +162,10 @@ namespace DevionGames.InventorySystem
                 this.m_AmountSpinner.onChange.Invoke(this.m_AmountSpinner.current);
 
                 ExecuteEvent<ITriggerSelectBuyItem>(Execute, item);
+                //추가한코드
+                if (animator != null) animator.SetBool("isTalking", true);
+
+
                 this.m_BuySellDialog.Show(this.m_BuyDialogTitle, this.m_BuyDialogText, item.Icon, delegate (int result)
                 {
                     if (result == 0){
@@ -302,6 +311,10 @@ namespace DevionGames.InventorySystem
         {
             if (Trigger.currentUsedTrigger == this && this.m_BuySellDialog.IsVisible) {
                 this.m_BuySellDialog.Close();
+
+                //추가한코드
+                if (animator != null) animator.SetBool("isTalking", false);
+
             }
         }
 
