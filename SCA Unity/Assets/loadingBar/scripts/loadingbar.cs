@@ -3,15 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class loadingbar : MonoBehaviour {
-
+public class LoadingBar : MonoBehaviour
+{
     private RectTransform rectComponent;
     private Image imageComp;
-    public float speed = 0.0f;
-   
+    public float speed = 0.1f; // 로딩 속도
 
-    // Use this for initialization
-    void Start () {
+    void Start()
+    {
         rectComponent = GetComponent<RectTransform>();
         imageComp = rectComponent.GetComponent<Image>();
         imageComp.fillAmount = 0.0f;
@@ -19,15 +18,17 @@ public class loadingbar : MonoBehaviour {
 
     void Update()
     {
-        if (imageComp.fillAmount != 1f)
-        {
-            imageComp.fillAmount = imageComp.fillAmount + Time.deltaTime * speed;
-            
-        }
-        else
-        {
-            imageComp.fillAmount = 0.0f;
-            
-        }
+        // `R` 키를 누르고 있을 때만 게이지 증가
+
+            if (imageComp.fillAmount < 1f)
+            {
+                imageComp.fillAmount += Time.deltaTime * speed;
+            }
+            else
+            {
+                Debug.Log("로딩 완료");
+                imageComp.fillAmount = 0.0f; // 자동 초기화 (필요 없으면 제거 가능)
+            }
+        
     }
 }
