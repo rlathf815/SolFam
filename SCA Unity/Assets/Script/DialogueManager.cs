@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using System;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -12,12 +11,8 @@ public class DialogueManager : MonoBehaviour
 
     private Queue<DialogueLine> dialogueQueue; // 대사 큐
     private bool isDialogueActive = false;     // 대화 중인지 확인
-    public FastGlitch glitch;
 
     public Image fadeOutPanel;
-
-    public AudioSource audio;
-    public AudioSource bgm;
 
     [System.Serializable]
     public class DialogueLine
@@ -87,17 +82,12 @@ public class DialogueManager : MonoBehaviour
         float duration = 2f; // 2초 동안 페이드아웃
         float elapsedTime = 0f;
         Color color = fadeOutPanel.color;
-        bgm.Stop();
-        audio.Play();
-        glitch.PixelGlitch = 1.0f;
+
         while (elapsedTime < duration)
         {
             elapsedTime += Time.deltaTime;
             color.a = Mathf.Lerp(0, 1, elapsedTime / duration); // 알파값 증가 (0 → 1)
             fadeOutPanel.color = color;
-            glitch.PixelGlitch = Mathf.Lerp(0, 1, elapsedTime / duration);
-            glitch.FrameGlitch = Mathf.Lerp(0, 1, elapsedTime / duration);
-            glitch.ChromaticGlitch = Mathf.Lerp(0, 1, elapsedTime / duration);
             yield return null;
         }
 

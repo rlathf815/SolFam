@@ -14,7 +14,6 @@ public class minAnimationControl : MonoBehaviour
         if (animator != null)
         {
             animator.SetBool("isTalking", true);
-            animator.applyRootMotion = true;
         }
         else
         {
@@ -34,8 +33,6 @@ public class minAnimationControl : MonoBehaviour
         if (animator != null)
         {
             animator.SetBool("isTalking", false);
-            animator.applyRootMotion = false;
-
         }
         if (wasCursorLocked)
         {
