@@ -13,6 +13,9 @@ public class minInter : MonoBehaviour
     private Vector3 startPosition; // �ʱ� ��ġ
     public Animator animator;
 
+    public AudioSource hi;
+    private bool hasPlayedSound = false; // 오디오 중복 실행 방지용
+
     void Start()
     {
         agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
@@ -28,11 +31,17 @@ public class minInter : MonoBehaviour
             //Debug.Log("isTalking on");
             agent.isStopped = true; // �ŷ� ���̸� �̵� ����
             LookAtPlayer();
+            if (!hasPlayedSound)
+            {
+                hi.Play();
+                hasPlayedSound = true;
+            }
         }
         else
         {
             //Debug.Log("isTalking off");
             agent.isStopped = false; // �ŷ� ���� �ƴ� �� �̵� ����
+            hasPlayedSound = false;
         }
 
     }
