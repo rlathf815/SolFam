@@ -16,6 +16,9 @@ public class Nam_yun : MonoBehaviour
 
     public GameObject playerCam;
     public GameObject attackCam;
+
+    public AudioSource comeHere;
+
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -23,6 +26,7 @@ public class Nam_yun : MonoBehaviour
         anim = GetComponent<Animator>();
         agent.isStopped = false;
         anim.SetBool("isWalk",true);
+        comeHere.Play();
     }
 
     void Update()
@@ -30,8 +34,10 @@ public class Nam_yun : MonoBehaviour
         if (punch)
         {
             punch = false;
-            StartCoroutine(AttackPlayer());
-            //anim.SetTrigger("Punch");
+            if (!isAttacking)
+            {
+                StartCoroutine(AttackPlayer()); 
+            }
         }
         if (yun_ui.hasopenui == true&&yun_ui.openui==true)
         {
