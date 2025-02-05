@@ -1,15 +1,21 @@
 using System.Collections;
-using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using Leguar.LowHealth;
 
 public class Nam_yun : MonoBehaviour
 {
+    public LowHealthController shaderControllerScript;
+
     public GameObject player;
     private NavMeshAgent agent;
     private Animator anim;
     public static bool punch=false;
+    private bool isAttacking=false;
+
+    public GameObject playerCam;
+    public GameObject attackCam;
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -24,7 +30,8 @@ public class Nam_yun : MonoBehaviour
         if (punch)
         {
             punch = false;
-            anim.SetTrigger("Punch");
+            StartCoroutine(AttackPlayer());
+            //anim.SetTrigger("Punch");
         }
         if (yun_ui.hasopenui == true&&yun_ui.openui==true)
         {
@@ -57,5 +64,22 @@ public class Nam_yun : MonoBehaviour
             FirstPersonMovement.speed = 0f;
             Crouch.movementSpeed = 0f;
         }
+    }
+    private IEnumerator AttackPlayer()
+    {
+
+        isAttacking = true; // 공격 중 상태 설정
+        agent.isStopped = true; //공격 중 이동 멈추기
+        playerCam.SetActive(false);
+        attackCam.SetActive(true);
+
+        yield return new WaitForSeconds(0.1f);
+
+        shaderControllerScript.SetPlayerHealthSmoothly(0, 3f);
+        anim.SetTrigger("Punch");
+
+        yield return new WaitForSeconds(3f);
+        PlayerStats.Instance.TakeDamage(3);
+
     }
 }

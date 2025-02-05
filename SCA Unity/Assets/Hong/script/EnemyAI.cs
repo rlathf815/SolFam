@@ -252,10 +252,14 @@ public class EnemyAI : MonoBehaviour
         agent.isStopped = true; //공격 중 이동 멈추기
         playerCam.SetActive(false);
         attackCam.SetActive(true);
+
         yield return new WaitForSeconds(0.1f);
+
         shaderControllerScript.SetPlayerHealthSmoothly(0, 3f);
         animator.SetTrigger("Attack");
+
         yield return new WaitForSeconds(3f);
         PlayerStats.Instance.TakeDamage(3);
+
     }
 }
