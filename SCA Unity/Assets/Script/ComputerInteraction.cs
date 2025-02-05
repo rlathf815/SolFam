@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-
 public class ComputerInteraction : MonoBehaviour
 {
     public bool hasCertificateFile = false; // 이 컴퓨터에 자격증 파일이 있는가?
@@ -22,6 +21,8 @@ public class ComputerInteraction : MonoBehaviour
     private bool isLoading = false; // 현재 로딩 중인지
     private float currentLoad = 0f; // 로딩 바 진행도
     private static int acquiredCertificates = 0; // 취득한 자격증 개수
+    private static ComputerInteraction activeComputer = null; // 현재 켜져 있는 컴퓨터 (하나만 켜지도록 관리)
+
     public GameObject Etext; //"press E to turn on"
 
     public AudioSource click;
@@ -32,9 +33,8 @@ public class ComputerInteraction : MonoBehaviour
 
     void Start()
     {
-        // 자격증 파일이 있는 컴퓨터라면 아이콘 활성화
         StartCoroutine(wait(2f));
-        
+
         // UI 기본값 설정
         screenUI.SetActive(false);
         loadingBarUI.SetActive(false);
@@ -44,7 +44,8 @@ public class ComputerInteraction : MonoBehaviour
 
     void Update()
     {
-        if (isPlayerNear && !isComputerOn)
+        // 플레이어가 근처에 있고, 컴퓨터가 꺼져 있으며 다른 컴퓨터가 켜져 있지 않거나 **내가 킨 컴퓨터**라면 E 버튼 활성화
+        if (isPlayerNear && (!isComputerOn || activeComputer == this))
         {
             Etext.SetActive(true);
         }
@@ -53,7 +54,7 @@ public class ComputerInteraction : MonoBehaviour
             Etext.SetActive(false);
         }
 
-        // 플레이어가 근처에 있고 'E'를 누르면 컴퓨터를 켜고 끔
+        // 'E' 키를 눌러서 컴퓨터를 켜거나 끌 수 있음
         if (isPlayerNear && Input.GetKeyDown(KeyCode.E))
         {
             click.Play();
@@ -70,7 +71,7 @@ public class ComputerInteraction : MonoBehaviour
         // 'R' 키를 누르면 로딩 진행 & 사운드 재생
         if (isLoading && Input.GetKey(KeyCode.R))
         {
-            if (!isPlayingLoadSound) // 로딩 사운드가 이미 재생 중이 아닐 때만 실행
+            if (!isPlayingLoadSound)
             {
                 load.Play();
                 isPlayingLoadSound = true;
@@ -88,9 +89,33 @@ public class ComputerInteraction : MonoBehaviour
 
     void ToggleComputer()
     {
-        isComputerOn = !isComputerOn;
-        screenUI.SetActive(isComputerOn);
-        Debug.Log(isComputerOn ? "컴퓨터 켜짐" : "컴퓨터 꺼짐");
+        if (!isComputerOn)
+        {
+            // 다른 컴퓨터가 켜져 있다면 끄고 현재 컴퓨터를 켬
+            if (activeComputer != null && activeComputer != this)
+            {
+                activeComputer.ForceTurnOff();
+            }
+
+            isComputerOn = true;
+            activeComputer = this; // 현재 컴퓨터를 활성 컴퓨터로 설정
+            screenUI.SetActive(true);
+            Debug.Log("컴퓨터 켜짐");
+        }
+        else
+        {
+            isComputerOn = false;
+            activeComputer = null; // 다른 컴퓨터를 켤 수 있도록 설정
+            screenUI.SetActive(false);
+            Debug.Log("컴퓨터 꺼짐");
+        }
+    }
+
+    // 강제로 컴퓨터 끄기 (다른 컴퓨터가 켜질 때 호출됨)
+    public void ForceTurnOff()
+    {
+        isComputerOn = false;
+        screenUI.SetActive(false);
     }
 
     void StartLoading()
@@ -121,7 +146,7 @@ public class ComputerInteraction : MonoBehaviour
 
     void CompleteLoading()
     {
-        load.Stop(); // 로딩 완료 시 로딩 사운드 정지
+        load.Stop();
         isPlayingLoadSound = false;
 
         Debug.Log($"{certificateType} 취득 완료!");
@@ -130,7 +155,7 @@ public class ComputerInteraction : MonoBehaviour
         completionMessage.SetActive(true);
         StartCoroutine(HideCompletionMessage());
         complete.Play();
-        // 자격증 개수 업데이트
+
         acquiredCertificates++;
         Debug.Log(acquiredCertificates);
         progressText.text = $"{acquiredCertificates}/5";
@@ -142,7 +167,6 @@ public class ComputerInteraction : MonoBehaviour
         completionMessage.SetActive(false);
     }
 
-    //  플레이어가 컴퓨터 근처에 들어올 때
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -152,7 +176,6 @@ public class ComputerInteraction : MonoBehaviour
         }
     }
 
-    //  플레이어가 컴퓨터에서 멀어질 때
     void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -161,13 +184,12 @@ public class ComputerInteraction : MonoBehaviour
             Debug.Log("player trigger off");
         }
     }
+
     private IEnumerator wait(float sec)
     {
-     
         yield return new WaitForSeconds(sec);
         Debug.Log(hasCertificateFile);
         certificateIcon.SetActive(hasCertificateFile);
         if (hasCertificateFile) Debug.Log(certificateType);
-
     }
 }
