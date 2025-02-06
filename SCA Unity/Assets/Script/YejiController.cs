@@ -28,6 +28,8 @@ public class YejiController : MonoBehaviour
     private int playerMoney = 0;
     public ItemCollection playerInventory; // 액션바
 
+    public AudioSource gun;
+
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -80,10 +82,8 @@ public class YejiController : MonoBehaviour
             
             // 지정된 포인트를 따라 이동
             foreach (Transform point in roamingPoints)
-            {
-                
+            {          
                 animator.applyRootMotion = false;
-
                 agent.SetDestination(point.position);
                 animator.SetBool("isWalking", true);
                 if (lobbyTrigger.IsPlayerInLobby())
@@ -163,6 +163,7 @@ public class YejiController : MonoBehaviour
         {
             PlayerStats.Instance.TakeDamage(1);
             animator.SetTrigger("shoot");
+            gun.Play();
             dialogueQueue.Enqueue("돈이 없잖아?!");
         }
 
