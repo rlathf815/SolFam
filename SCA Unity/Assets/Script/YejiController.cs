@@ -29,6 +29,7 @@ public class YejiController : MonoBehaviour
     public ItemCollection playerInventory; // 액션바
 
     public AudioSource gun;
+    public AudioSource money;
 
     private void Start()
     {
@@ -157,6 +158,7 @@ public class YejiController : MonoBehaviour
         {
             playerInventory.DeductMoney(3000);
             animator.SetTrigger("pay");
+            money.Play();
             dialogueQueue.Enqueue("결제 완료됐어^^");
         }
         else
