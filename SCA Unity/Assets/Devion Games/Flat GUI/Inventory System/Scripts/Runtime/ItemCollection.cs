@@ -298,5 +298,36 @@ namespace DevionGames.InventorySystem
             }
         }
 
+        public bool HasEnoughMoney(int amount)
+        {
+            foreach (Item item in m_Items)
+            {
+                if (item is Currency currency && currency.Stack >= amount)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public bool DeductMoney(int amount)
+        {
+            foreach (Item item in m_Items)
+            {
+                if (item is Currency currency && currency.Stack >= amount)
+                {
+                    currency.Stack -= amount;
+                    if (currency.Stack == 0)
+                    {
+                        Remove(currency);
+                    }
+                    onChange.Invoke(); // UI 갱신
+                    return true;
+                }
+            }
+            return false;
+        }
+
+
     }
 }
