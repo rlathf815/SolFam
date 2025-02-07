@@ -1125,7 +1125,7 @@ MonoBehaviour:
   saveable: 1
   m_Items:
   - {fileID: 5159491216954419924, guid: acb2ef3ef6e42a14c92c8cb847284b7a, type: 2}
-  m_Amounts: d0070000
+  m_Amounts: 01000000
   m_Modifiers:
   - modifiers: []
   onChange:
