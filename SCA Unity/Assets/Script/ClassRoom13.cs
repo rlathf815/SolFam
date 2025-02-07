@@ -19,6 +19,9 @@ public class ClassRoom13 : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            VirusGUI.PopupVariables vars = new VirusGUI.PopupVariables("규칙", "13강의실은 존재하지 않습니다.", gameObject, "OpenDoor", "", "CancelWindow", "");
+            VirusGUI.MultiWindow multi = new VirusGUI.MultiWindow(50, 20, vars);
+            multi.popupVariables.runFromCursor = true;
             Debug.Log("로비 감지됨!");
             PlayerStats.Instance.TakeDamage(3);
         }
