@@ -11,8 +11,9 @@ public class VirusGUI : MonoBehaviour {
 	public GUISkin virusGUI;
 	public PopupWindow[] popupWindows;
 	public MultiWindow[] multiWindows;
+    //public AudioSource audio;
 
-	public enum WindowType { Error, Warning };
+    public enum WindowType { Error, Warning };
 
 	public VirusGUI() {
 		virus = this;
@@ -176,7 +177,7 @@ public class VirusGUI : MonoBehaviour {
 	public class PopupVariables {
 		public string title = "";
 		public string message = "";
-
+        public AudioSource audio;
 		public WindowType windowType = WindowType.Error;
 
 		public bool stayOnScreen = true;
@@ -269,10 +270,10 @@ public class VirusGUI : MonoBehaviour {
 		public PopupVariables popupVariables;
 
 		public int desiredAmount = 1;
-
-		[HideInInspector]
+        public AudioSource audio;
+        [HideInInspector]
 		public int currentAmount = 0;
-
+        //public AudioSource audio;
 		public float popupSpeed = 10;
 		float time = 1;
 
@@ -282,10 +283,11 @@ public class VirusGUI : MonoBehaviour {
 			this.popupVariables = popupVariables;
 			virus.Add(this);
 		}
-		public MultiWindow(int windowAmount, int popupSpeed, PopupVariables popupVariables){
+		public MultiWindow(int windowAmount, int popupSpeed, PopupVariables popupVariables, AudioSource ding){
 			desiredAmount = windowAmount;
 			this.popupVariables = popupVariables;
 			this.popupSpeed = popupSpeed;
+			this.audio = ding;
 			virus.Add(this);
 		}
 
@@ -299,6 +301,7 @@ public class VirusGUI : MonoBehaviour {
 					currentAmount++;
 
 					new PopupWindow(popupVariables, RandomPointOnScreen());
+					audio.Play(); 
 				}
 			}
 			else {
