@@ -24,6 +24,8 @@ public class ComputerInteraction : MonoBehaviour
     private static ComputerInteraction activeComputer = null; // 현재 켜져 있는 컴퓨터 (하나만 켜지도록 관리)
 
     public GameObject Etext; //"press E to turn on"
+    public GameObject Offtext; //"press E to turn off"
+    public GameObject Otext; //"other computer turn off"
 
     public AudioSource click;
     public AudioSource load;
@@ -51,6 +53,15 @@ public class ComputerInteraction : MonoBehaviour
         else
         {
             Etext.SetActive(false);
+        }
+
+        if (isPlayerNear && isComputerOn)
+        {
+            Offtext.SetActive(true);
+        }
+        else
+        {
+            Offtext.SetActive(false);
         }
 
         if (isPlayerNear && Input.GetKeyDown(KeyCode.E))
@@ -86,9 +97,10 @@ public class ComputerInteraction : MonoBehaviour
     {
         if (!isComputerOn)
         {
-            if (activeComputer != null && activeComputer != this)
+            if (activeComputer != null)
             {
-                activeComputer.ForceTurnOff();
+                Debug.Log("이미 다른 컴퓨터가 켜져 있습니다!");
+                return; // 다른 컴퓨터가 켜져 있으면 새 컴퓨터를 켜지 않음
             }
 
             isComputerOn = true;
@@ -104,6 +116,7 @@ public class ComputerInteraction : MonoBehaviour
             Debug.Log("컴퓨터 꺼짐");
         }
     }
+
 
     public void ForceTurnOff()
     {
