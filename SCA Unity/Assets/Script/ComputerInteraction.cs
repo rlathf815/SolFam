@@ -44,7 +44,6 @@ public class ComputerInteraction : MonoBehaviour
 
     void Update()
     {
-        // 플레이어가 근처에 있고, 컴퓨터가 꺼져 있으며 다른 컴퓨터가 켜져 있지 않거나 **내가 킨 컴퓨터**라면 E 버튼 활성화
         if (isPlayerNear && (!isComputerOn || activeComputer == this))
         {
             Etext.SetActive(true);
@@ -54,21 +53,18 @@ public class ComputerInteraction : MonoBehaviour
             Etext.SetActive(false);
         }
 
-        // 'E' 키를 눌러서 컴퓨터를 켜거나 끌 수 있음
         if (isPlayerNear && Input.GetKeyDown(KeyCode.E))
         {
             click.Play();
             ToggleComputer();
         }
 
-        // 컴퓨터가 켜져 있고, 자격증 파일이 있는 경우 'F' 키로 파일을 열 수 있음
         if (isComputerOn && hasCertificateFile && Input.GetKeyDown(KeyCode.F))
         {
             click.Play();
             StartLoading();
         }
 
-        // 'R' 키를 누르면 로딩 진행 & 사운드 재생
         if (isLoading && Input.GetKey(KeyCode.R))
         {
             if (!isPlayingLoadSound)
@@ -79,7 +75,6 @@ public class ComputerInteraction : MonoBehaviour
             UpdateLoading();
         }
 
-        // 'R' 키에서 손을 떼면 로딩 사운드 정지
         if (isLoading && Input.GetKeyUp(KeyCode.R))
         {
             load.Stop();
@@ -91,27 +86,25 @@ public class ComputerInteraction : MonoBehaviour
     {
         if (!isComputerOn)
         {
-            // 다른 컴퓨터가 켜져 있다면 끄고 현재 컴퓨터를 켬
             if (activeComputer != null && activeComputer != this)
             {
                 activeComputer.ForceTurnOff();
             }
 
             isComputerOn = true;
-            activeComputer = this; // 현재 컴퓨터를 활성 컴퓨터로 설정
+            activeComputer = this;
             screenUI.SetActive(true);
             Debug.Log("컴퓨터 켜짐");
         }
         else
         {
             isComputerOn = false;
-            activeComputer = null; // 다른 컴퓨터를 켤 수 있도록 설정
+            activeComputer = null;
             screenUI.SetActive(false);
             Debug.Log("컴퓨터 꺼짐");
         }
     }
 
-    // 강제로 컴퓨터 끄기 (다른 컴퓨터가 켜질 때 호출됨)
     public void ForceTurnOff()
     {
         isComputerOn = false;
@@ -120,7 +113,7 @@ public class ComputerInteraction : MonoBehaviour
 
     void StartLoading()
     {
-        if (!isLoading)
+        if (!isLoading && hasCertificateFile)
         {
             Debug.Log($" {certificateType} 파일 열기 시작");
             loadingBarUI.SetActive(true);
@@ -157,8 +150,10 @@ public class ComputerInteraction : MonoBehaviour
         complete.Play();
 
         acquiredCertificates++;
-        Debug.Log(acquiredCertificates);
         progressText.text = $"{acquiredCertificates}/5";
+
+        hasCertificateFile = false;
+        certificateIcon.SetActive(false);
     }
 
     IEnumerator HideCompletionMessage()
