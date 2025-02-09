@@ -101,6 +101,6 @@ public class DialogueManager : MonoBehaviour
             yield return null;
         }
 
-        SceneManager.LoadScene("GameScene"); // ¾À ÀüÈ¯
+        SceneManager.LoadScene("VirusScene"); // ¾À ÀüÈ¯
     }
 }

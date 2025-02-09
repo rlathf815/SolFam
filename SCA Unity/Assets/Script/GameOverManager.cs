@@ -25,7 +25,7 @@ public class GameOverManager : MonoBehaviour
 
     public void RestartGame()
     {
-        SceneManager.LoadScene("GameScene"); // GameScene으로 이동 (Retry 버튼)
+        SceneManager.LoadScene("VirusScene"); // GameScene으로 이동 (Retry 버튼)
     }
 
     public void ExitGame()
@@ -35,7 +35,7 @@ public class GameOverManager : MonoBehaviour
 
     public void StartGame()
     {
-        SceneManager.LoadScene("GameScene");
+        SceneManager.LoadScene("VirusScene");
     }
 
 
