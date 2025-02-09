@@ -333,7 +333,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d88d618f80ea7324e900fce278bbe503, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  yunaT: {fileID: 598485828837473723, guid: 0e719b5c0d2be87498a461cb71bf3e27, type: 3}
+  yunaT: {fileID: 4012661321689963196, guid: 6bcce03232c40e2489a2f4103091f6ab, type: 3}
 --- !u!1 &4046562199730236202
 GameObject:
   m_ObjectHideFlags: 0

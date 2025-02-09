@@ -34,7 +34,7 @@ public class ClassRoom13 : MonoBehaviour
     private IEnumerator Death()
     {
         VirusGUI.PopupVariables vars = new VirusGUI.PopupVariables("규칙", "13강의실은 존재하지 않습니다.", gameObject, "OpenDoor", "", "CancelWindow", "");
-        VirusGUI.MultiWindow multi = new VirusGUI.MultiWindow(100, 80, vars,audio);
+        VirusGUI.MultiWindow multi = new VirusGUI.MultiWindow(50, 20, vars,audio);
 
         shaderControllerScript.SetPlayerHealthSmoothly(0, 3f);
         float duration = 3f; // 2초 동안 페이드아웃
@@ -44,7 +44,7 @@ public class ClassRoom13 : MonoBehaviour
         glitch.ChromaticGlitch = 1f;
         
 
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(3f);
         PlayerStats.Instance.TakeDamage(3);
 
     }

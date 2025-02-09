@@ -91,7 +91,7 @@ public class Nam_yun : MonoBehaviour
         beam.Play();
         yield return new WaitForSeconds(1.5f);
         choke.Play();
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(3f);
 
         PlayerStats.Instance.TakeDamage(3);
 
