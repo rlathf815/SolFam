@@ -380,8 +380,8 @@ MonoBehaviour:
   m_Name: Custom Database
   m_EditorClassIdentifier: 
   items:
-  - {fileID: 1376978777363189}
   - {fileID: -7435678795052779386}
+  - {fileID: 1376978777363189}
   - {fileID: -1018607806659806927}
   currencies:
   - {fileID: 5159491216954419924}
