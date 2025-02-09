@@ -28,6 +28,12 @@ public class EnemyAI : MonoBehaviour
     public GameObject attackCam;
 
     private Vector3 startPosition;
+    private Coroutine gilRoutine;
+    public AudioSource gil;
+    private float gilInterval = 5f;
+    private bool isGilPlaying = false;
+
+    public AudioSource punch;
 
     void Start()
     {
@@ -61,6 +67,8 @@ public class EnemyAI : MonoBehaviour
         attackCam.SetActive(false);
         startPosition = transform.position; // 시작 위치 저장
         StartCoroutine(MoveRandomly()); // 랜덤 이동 시작
+
+        InvokeRepeating("PlayGilSound", 5f, 5f);
     }
 
     void Update()
@@ -124,12 +132,25 @@ public class EnemyAI : MonoBehaviour
 
     void DetectPlayer()
     {
+
         float distance = Vector3.Distance(transform.position, player.position);
         Vector3 directionToPlayer = (player.position - transform.position).normalized;
         float dotProduct = Vector3.Dot(transform.forward, directionToPlayer);
 
         if (dotProduct > Mathf.Cos(detectionAngle * Mathf.Deg2Rad) && distance <= detectionRange)
         {
+
+            if(!isChasing)
+            {
+
+                if (!isGilPlaying)
+                {
+                    CancelInvoke("PlayGillSound");
+                    InvokeRepeating("PlayGilSound", 0f, 1f);
+                    isGilPlaying = true;
+                }
+            }
+            //StartGilSound(1f);
             if (distance <= closeRangeDetection)
             {
                 isChasing = true;
@@ -138,6 +159,8 @@ public class EnemyAI : MonoBehaviour
                 alertLight.enabled = false;
                 agent.stoppingDistance = 2f;
                 agent.SetDestination(player.position);
+                //StartGilSound(1f);
+               
             }
             else if (!isChasing && distance <= detectionRange)
             {
@@ -147,16 +170,20 @@ public class EnemyAI : MonoBehaviour
                 alertLight.enabled = false;
                 agent.stoppingDistance = 2f;
                 agent.SetDestination(player.position);
+                //StartGilSound(1f);
 
+               
             }
         }
     }
     void ChasePlayer()
     {
+        //StartGilSound(1f);
         float distance = Vector3.Distance(transform.position, player.position);
 
         if (distance > attackRange)
         {
+
             agent.SetDestination(player.position); //  일정 거리 이상이면 계속 추적
         }
         else
@@ -222,6 +249,9 @@ public class EnemyAI : MonoBehaviour
 
     private IEnumerator HandleCoffeeInteraction()
     {
+        CancelInvoke("PlayGilSound");
+        InvokeRepeating("PlayGilSound", 15f, 5f);
+        isGilPlaying = false;
         agent.isStopped = true;
         yield return new WaitForSeconds(3f);
         if (CoffeeInHand != null)
@@ -247,6 +277,7 @@ public class EnemyAI : MonoBehaviour
     }
     private IEnumerator AttackPlayer()
     {
+        CancelInvoke("PlayGilSound");
 
         isAttacking = true; // 공격 중 상태 설정
         agent.isStopped = true; //공격 중 이동 멈추기
@@ -254,12 +285,20 @@ public class EnemyAI : MonoBehaviour
         attackCam.SetActive(true);
 
         yield return new WaitForSeconds(0.1f);
-
+        InvokeRepeating("PlayPunchSound", 0f, 1f);
         shaderControllerScript.SetPlayerHealthSmoothly(0, 3f);
         animator.SetTrigger("Attack");
 
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(1.5f);
+        CancelInvoke("PlayPunchSound");
+        yield return new WaitForSeconds(1.5f);
         PlayerStats.Instance.TakeDamage(3);
 
     }
+    void PlayGilSound()
+    {
+        gil.Play();
+    }
+    void PlayPunchSound()
+    { punch.Play(); }
 }

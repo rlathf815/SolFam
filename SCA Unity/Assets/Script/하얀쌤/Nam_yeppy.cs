@@ -15,6 +15,7 @@ public class Nam_yeppy : MonoBehaviour
     private bool isAttacking = false;
 
     public AudioSource what;
+    public AudioSource punch;
 
     public GameObject playerCam;
     public GameObject attackCam;
@@ -95,13 +96,15 @@ public class Nam_yeppy : MonoBehaviour
         PlayerStats.Instance.TakeDamage(1);
         currentHP = PlayerStats.Instance.Health;
         yield return new WaitForSeconds(0.1f);
+        InvokeRepeating("PlayPunchSound", 0f, 1f);
 
         shaderControllerScript.SetPlayerHealthSmoothly(0.2f, 3f);
         anim.SetTrigger("Attack");
 
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(1.5f);
+        CancelInvoke("PlayPunchSound");
+        yield return new WaitForSeconds(1.5f);
 
-        
 
         isAttacking = false; 
         agent.isStopped = false; //공격 중 이동 멈추기
@@ -110,5 +113,7 @@ public class Nam_yeppy : MonoBehaviour
         yeppy_spawn.spawned = false;
         Destroy(gameObject);
     }
+    void PlayPunchSound()
+    { punch.Play(); }
 }
 

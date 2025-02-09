@@ -18,6 +18,10 @@ public class Nam_yun : MonoBehaviour
     public GameObject attackCam;
 
     public AudioSource comeHere;
+    public AudioSource choke;
+    public AudioSource beam;
+
+
 
     void Start()
     {
@@ -80,11 +84,15 @@ public class Nam_yun : MonoBehaviour
         attackCam.SetActive(true);
 
         yield return new WaitForSeconds(0.1f);
-
+        
         shaderControllerScript.SetPlayerHealthSmoothly(0, 3f);
         anim.SetTrigger("Punch");
+        yield return new WaitForSeconds(0.1f);
+        beam.Play();
+        yield return new WaitForSeconds(1.5f);
+        choke.Play();
+        yield return new WaitForSeconds(1.5f);
 
-        yield return new WaitForSeconds(3f);
         PlayerStats.Instance.TakeDamage(3);
 
     }
