@@ -226,15 +226,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 14f8c69cb91f470449b91b96f9d13031, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.66
+      value: 1.81
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 14f8c69cb91f470449b91b96f9d13031, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.00000011920929
+      value: -0.5800009
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 14f8c69cb91f470449b91b96f9d13031, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.83
+      value: 4.74
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 14f8c69cb91f470449b91b96f9d13031, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1737,6 +1737,8 @@ MonoBehaviour:
   playerCam: {fileID: 0}
   attackCam: {fileID: 5388252159888413599}
   gil: {fileID: 1223007109334193349}
+  normalSpeed: 2
+  chaseSpeed: 5
   punch: {fileID: 219779672010479890}
 --- !u!195 &8544459535194806172
 NavMeshAgent:
@@ -1748,7 +1750,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 2
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -1844,7 +1846,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 3
+  MinDistance: 5
   MaxDistance: 25
   Pan2D: 0
   rolloffMode: 0

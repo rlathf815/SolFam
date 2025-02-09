@@ -32,7 +32,8 @@ public class EnemyAI : MonoBehaviour
     public AudioSource gil;
     private float gilInterval = 5f;
     private bool isGilPlaying = false;
-
+    public float normalSpeed = 2f;  // 기본 속도
+    public float chaseSpeed = 5f;   // 쫓아갈 때 속도
     public AudioSource punch;
 
     void Start()
@@ -67,7 +68,7 @@ public class EnemyAI : MonoBehaviour
         attackCam.SetActive(false);
         startPosition = transform.position; // 시작 위치 저장
         StartCoroutine(MoveRandomly()); // 랜덤 이동 시작
-
+        agent.speed = normalSpeed;
         InvokeRepeating("PlayGilSound", 5f, 5f);
     }
 
@@ -160,7 +161,8 @@ public class EnemyAI : MonoBehaviour
                 agent.stoppingDistance = 2f;
                 agent.SetDestination(player.position);
                 //StartGilSound(1f);
-               
+                agent.speed = chaseSpeed;
+
             }
             else if (!isChasing && distance <= detectionRange)
             {
@@ -172,7 +174,7 @@ public class EnemyAI : MonoBehaviour
                 agent.SetDestination(player.position);
                 //StartGilSound(1f);
 
-               
+                agent.speed = chaseSpeed;
             }
         }
     }
@@ -201,6 +203,7 @@ public class EnemyAI : MonoBehaviour
             if (!isChasing) // 플레이어를 추적 중이 아닐 때만 랜덤 이동
             {
                 isRoaming = true;
+                agent.speed = normalSpeed;
                 Vector3 randomDestination = GetRandomPoint(startPosition, moveRadius);
                 agent.SetDestination(randomDestination);
 
