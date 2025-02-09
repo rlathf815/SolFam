@@ -30,6 +30,7 @@ public class YejiController : MonoBehaviour
 
     public AudioSource gun;
     public AudioSource money;
+    public AudioSource interact;
 
     private void Start()
     {
@@ -135,7 +136,7 @@ public class YejiController : MonoBehaviour
     {
         dialogueQueue.Clear();
         dialogueQueue.Enqueue("학생, 결제하고 가야지~?");
-
+        interact.Play();
         dialogueUI.SetActive(true);
         Name.text = "실장님";
         DisplayNextLine();
