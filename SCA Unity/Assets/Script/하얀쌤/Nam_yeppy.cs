@@ -1,7 +1,6 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
-using Leguar.LowHealth;
 
 public class Nam_yeppy : MonoBehaviour
 {
@@ -20,7 +19,6 @@ public class Nam_yeppy : MonoBehaviour
     public GameObject playerCam;
     public GameObject attackCam;
 
-    public LowHealthController shaderControllerScript;
     private float currentHP;
 
     void Start()
@@ -98,7 +96,6 @@ public class Nam_yeppy : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         InvokeRepeating("PlayPunchSound", 0f, 1f);
 
-        shaderControllerScript.SetPlayerHealthSmoothly(0.2f, 3f);
         anim.SetTrigger("Attack");
 
         yield return new WaitForSeconds(1.5f);

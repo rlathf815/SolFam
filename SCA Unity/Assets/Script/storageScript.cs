@@ -1,4 +1,3 @@
-using Leguar.LowHealth;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,7 +8,6 @@ public class storageScript : MonoBehaviour
     public Animator animator;
     private bool isPlayerClose = false;
     public AudioSource audio;
-    public LowHealthController shaderControllerScript;
     public FastGlitch glitch;
     // Start is called before the first frame update
     void Start()
@@ -52,7 +50,6 @@ public class storageScript : MonoBehaviour
         VirusGUI.MultiWindow multi = new VirusGUI.MultiWindow(20, 10, vars, audio);
         VirusGUI.MultiWindow multi2 = new VirusGUI.MultiWindow(20, 10, vars2, audio);
 
-        shaderControllerScript.SetPlayerHealthSmoothly(0, 3f);
         float duration = 3f; // 2초 동안 페이드아웃
         float elapsedTime = 0f;
         glitch.PixelGlitch = 1f;

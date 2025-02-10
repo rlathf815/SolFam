@@ -2,13 +2,11 @@ using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
-using Leguar.LowHealth;
 using System.Drawing;
 
 public class ClassRoom13 : MonoBehaviour
 {
     //public event Action onPlayerEnter; // 플레이어 감지 이벤트
-    public LowHealthController shaderControllerScript;
     public FastGlitch glitch;
     public new AudioSource audio;
     // Start is called before the first frame update
@@ -36,7 +34,6 @@ public class ClassRoom13 : MonoBehaviour
         VirusGUI.PopupVariables vars = new VirusGUI.PopupVariables("규칙", "13강의실은 존재하지 않습니다.", gameObject, "OpenDoor", "", "CancelWindow", "");
         VirusGUI.MultiWindow multi = new VirusGUI.MultiWindow(50, 20, vars,audio);
 
-        shaderControllerScript.SetPlayerHealthSmoothly(0, 3f);
         float duration = 3f; // 2초 동안 페이드아웃
         float elapsedTime = 0f;
         glitch.PixelGlitch = 1f;

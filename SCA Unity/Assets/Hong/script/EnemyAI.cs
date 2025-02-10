@@ -1,11 +1,10 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
-using Leguar.LowHealth;
 
 public class EnemyAI : MonoBehaviour
 {
-    public LowHealthController shaderControllerScript;
+    public FastGlitch glitch;
 
     public Transform player; // 플레이어 오브젝트
     public float detectionRange = 10f; // 감지 거리
@@ -289,9 +288,11 @@ public class EnemyAI : MonoBehaviour
 
         yield return new WaitForSeconds(0.1f);
         InvokeRepeating("PlayPunchSound", 0f, 1f);
-        shaderControllerScript.SetPlayerHealthSmoothly(0, 3f);
+        //shaderControllerScript.SetPlayerHealthSmoothly(0, 3f);
         animator.SetTrigger("Attack");
-
+        glitch.PixelGlitch = 1f;
+        glitch.FrameGlitch = 1f;
+        glitch.ChromaticGlitch = 1f;
         yield return new WaitForSeconds(1.5f);
         CancelInvoke("PlayPunchSound");
         yield return new WaitForSeconds(1.5f);

@@ -2,11 +2,10 @@ using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
-using Leguar.LowHealth;
 
 public class Nam_yun : MonoBehaviour
 {
-    public LowHealthController shaderControllerScript;
+    public FastGlitch glitch;
 
     public GameObject player;
     private NavMeshAgent agent;
@@ -25,6 +24,7 @@ public class Nam_yun : MonoBehaviour
 
     void Start()
     {
+        yeppy_player.catched = false;
         player = GameObject.FindGameObjectWithTag("Player");
         agent =GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
@@ -59,17 +59,24 @@ public class Nam_yun : MonoBehaviour
     }
     void OnTriggerStay(Collider col)
     {
-        if (col.tag == "Player"&&yeppy_player.catched==false)
+        if (col.CompareTag("Player") && !yeppy_player.catched)
         {
             anim.SetBool("isWalk", false);
             yun_ui.openui = true;
-            yeppy_player.catched = true;
+            yeppy_player.catched = true; // 중복 방지
+
+            // 기존 상태 저장
             yeppy_player.gojung = player.transform.rotation;
-            FirstPersonLook.canlook = false;
+
+            // 플레이어 조작 불가
+            if (FirstPersonLook.canlook)
+            {
+                FirstPersonLook.canlook = false;
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None; // 한 번만 설정
+            }
+
             Jump.jumpStrength = 0;
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
-            yeppy_player.catched = true;
             FirstPersonMovement.canRun = false;
             FirstPersonMovement.speed = 0f;
             Crouch.movementSpeed = 0f;
@@ -84,8 +91,11 @@ public class Nam_yun : MonoBehaviour
         attackCam.SetActive(true);
 
         yield return new WaitForSeconds(0.1f);
-        
-        shaderControllerScript.SetPlayerHealthSmoothly(0, 3f);
+
+        glitch.PixelGlitch = 1f;
+        glitch.FrameGlitch = 1f;
+        glitch.ChromaticGlitch = 1f;
+
         anim.SetTrigger("Punch");
         yield return new WaitForSeconds(0.1f);
         beam.Play();

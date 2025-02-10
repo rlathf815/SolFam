@@ -126,6 +126,7 @@ public class YejiController : MonoBehaviour
     private void TeleportToPlayer()
     {
         transform.position = player.transform.position + player.transform.forward * 1.5f;
+        //agent.Warp(player.transform.position + player.transform.forward * 1.5f);
         transform.LookAt(player.transform);
 
         dialogueCam.SetActive(true);
@@ -207,12 +208,21 @@ public class YejiController : MonoBehaviour
         animator.SetBool("isSitting", true);
         isRoaming = false;
 
-        // 즉시 자리로 순간이동
-        transform.position = deskPosition.position;
-        transform.rotation = deskPosition.rotation;
+        // NavMeshAgent가 있다면 Warp() 사용
+        if (agent != null)
+        {
+            agent.Warp(deskPosition.position);
+        }
+        else
+        {
+            transform.position = deskPosition.position;
+        }
 
-        // 에이전트 멈춤
+        transform.rotation = deskPosition.rotation;
         agent.isStopped = true;
+
+        Debug.Log("실장님이 데스크로 이동 완료: " + transform.position);
+
         StartCoroutine(RoamingRoutine());
     }
 

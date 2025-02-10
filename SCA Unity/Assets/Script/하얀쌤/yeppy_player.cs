@@ -11,6 +11,7 @@ public class yeppy_player : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        catched = false;
     }
     void Update()
     {
