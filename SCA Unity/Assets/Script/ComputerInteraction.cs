@@ -9,7 +9,9 @@ public class ComputerInteraction : MonoBehaviour
     public bool hasCertificateFile = false; // 이 컴퓨터에 자격증 파일이 있는가?
     public string certificateType; // 자격증 종류 (COSpro, ITQ 등)
     public GameObject screenUI; // 컴퓨터 화면 (켜졌을 때 UI)
-    public GameObject certificateIcon; // 자격증 파일 아이콘
+    private GameObject certificateIcon; // 자격증 파일 아이콘
+    public GameObject certificateUI; // 자격증 파일 아이콘
+    public List<GameObject> Icons;
     public GameObject loadingBarUI; // 로딩 바 UI
     public Image loadingBar; // 로딩 바 이미지
     public Text progressText; // 1/5 자격증 UI 텍스트
@@ -40,11 +42,13 @@ public class ComputerInteraction : MonoBehaviour
         loadingBarUI.SetActive(false);
         completionMessage.SetActive(false);
         loadingBar.fillAmount = 0f;
+        
+
     }
 
     void Update()
     {
-        if (isPlayerNear && (!isComputerOn || activeComputer == this))
+        if (isPlayerNear && !isComputerOn)
         {
             Etext.SetActive(true);
         }
@@ -94,6 +98,7 @@ public class ComputerInteraction : MonoBehaviour
             isComputerOn = true;
             activeComputer = this;
             screenUI.SetActive(true);
+            Etext.SetActive(false);
             Debug.Log("컴퓨터 켜짐");
         }
         else
@@ -101,6 +106,7 @@ public class ComputerInteraction : MonoBehaviour
             isComputerOn = false;
             activeComputer = null;
             screenUI.SetActive(false);
+            Etext.SetActive(true);
             Debug.Log("컴퓨터 꺼짐");
         }
     }
@@ -184,7 +190,31 @@ public class ComputerInteraction : MonoBehaviour
     {
         yield return new WaitForSeconds(sec);
         Debug.Log(hasCertificateFile);
+        Debug.Log(certificateType);
+        certificateUI.SetActive(hasCertificateFile);
+
+
+        if (hasCertificateFile)
+        {
+            switch (certificateType)
+            {
+                case ("COSpro"):
+                    certificateIcon = Icons[0];
+                    break;
+                case ("ITQ"):
+                    certificateIcon = Icons[1];
+                    break;
+                case ("컴활"):
+                    certificateIcon = Icons[2];
+                    break;
+                case ("정처기"):
+                    certificateIcon = Icons[3];
+                    break;
+                case ("FAT"):
+                    certificateIcon = Icons[4];
+                    break;
+            }
+        }
         certificateIcon.SetActive(hasCertificateFile);
-        if (hasCertificateFile) Debug.Log(certificateType);
     }
 }
