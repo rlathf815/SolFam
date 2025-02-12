@@ -25,6 +25,7 @@ public class Nam_yeppy : MonoBehaviour
     {
         //Debug.Log(PlayerStats.Instance.Health);
         player = GameObject.FindGameObjectWithTag("Player");
+        playerCam = GameObject.FindGameObjectWithTag("MainCamera");
         agent = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
 

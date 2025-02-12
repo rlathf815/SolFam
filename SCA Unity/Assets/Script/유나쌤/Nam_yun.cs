@@ -26,7 +26,9 @@ public class Nam_yun : MonoBehaviour
     {
         yeppy_player.catched = false;
         player = GameObject.FindGameObjectWithTag("Player");
-        agent =GetComponent<NavMeshAgent>();
+        playerCam = GameObject.FindGameObjectWithTag("MainCamera");
+
+        agent = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
         agent.isStopped = false;
         anim.SetBool("isWalk",true);
